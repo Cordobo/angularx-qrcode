@@ -1,1 +1,1 @@
-export * from './ngx-qrcode';
+export * from './angularx-qrcode';

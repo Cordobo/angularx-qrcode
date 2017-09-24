@@ -1,3 +1,3 @@
-export { NgxQrcodeComponent } from './components';
-export { NgxQrcodeModule } from './ngx-qrcode.module';
+export { QRCodeComponent } from './components';
+export { QRCodeModule } from './angularx-qrcode.module';
 //# sourceMappingURL=index.js.map

@@ -1,8 +1,8 @@
 /// <reference path="qrcodejs2.d.ts" />
 import { Component, Input, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import * as QRCode from 'qrcodejs2';
-var NgxQrcodeComponent = /** @class */ (function () {
-    function NgxQrcodeComponent(el) {
+var QRCodeComponent = /** @class */ (function () {
+    function QRCodeComponent(el) {
         this.el = el;
         this.qrdata = '';
         this.size = 256;
@@ -11,7 +11,7 @@ var NgxQrcodeComponent = /** @class */ (function () {
         this.colorlight = '#ffffff';
         this.usesvg = false;
     }
-    NgxQrcodeComponent.prototype.ngOnInit = function () {
+    QRCodeComponent.prototype.ngOnInit = function () {
         try {
             if (!this.isValidQrCodeText(this.qrdata)) {
                 throw new Error('Empty QR Code data');
@@ -30,7 +30,7 @@ var NgxQrcodeComponent = /** @class */ (function () {
             console.error('Error generating QR Code: ' + e.message);
         }
     };
-    NgxQrcodeComponent.prototype.ngOnChanges = function (changes) {
+    QRCodeComponent.prototype.ngOnChanges = function (changes) {
         if (!this.qrcode) {
             return;
         }
@@ -40,10 +40,10 @@ var NgxQrcodeComponent = /** @class */ (function () {
             this.qrcode.makeCode(qrData.currentValue);
         }
     };
-    NgxQrcodeComponent.prototype.isValidQrCodeText = function (data) {
+    QRCodeComponent.prototype.isValidQrCodeText = function (data) {
         return !(typeof data === 'undefined' || data === '');
     };
-    NgxQrcodeComponent.decorators = [
+    QRCodeComponent.decorators = [
         { type: Component, args: [{
                     selector: 'qrcode',
                     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -51,10 +51,10 @@ var NgxQrcodeComponent = /** @class */ (function () {
                 },] },
     ];
     /** @nocollapse */
-    NgxQrcodeComponent.ctorParameters = function () { return [
+    QRCodeComponent.ctorParameters = function () { return [
         { type: ElementRef, },
     ]; };
-    NgxQrcodeComponent.propDecorators = {
+    QRCodeComponent.propDecorators = {
         'qrdata': [{ type: Input },],
         'size': [{ type: Input },],
         'level': [{ type: Input },],
@@ -62,7 +62,7 @@ var NgxQrcodeComponent = /** @class */ (function () {
         'colorlight': [{ type: Input },],
         'usesvg': [{ type: Input },],
     };
-    return NgxQrcodeComponent;
+    return QRCodeComponent;
 }());
-export { NgxQrcodeComponent };
-//# sourceMappingURL=ngx-qrcode.component.js.map
+export { QRCodeComponent };
+//# sourceMappingURL=angularx-qrcode.component.js.map

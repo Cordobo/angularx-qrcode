@@ -1,8 +1,8 @@
 /**
- * ngx-qrcode - Angular4+ QRCode generator using qrcodejs
+ * angularx-qrcode - Angular4+ QRCode generator using qrcodejs
  * @version v1.0.0
- * @author Andreas Jacob
- * @link https://github.com/cordobo/ngx-qrcode#readme
+ * @author Andreas Jacob <andreas@cordobo.de>
+ * @link https://github.com/cordobo/angularx-qrcode#readme
  * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -93,7 +93,7 @@ function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
 Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(3));
+__export(__webpack_require__(4));
 
 
 /***/ }),
@@ -117,40 +117,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(1);
 var components_1 = __webpack_require__(0);
-var NgxQrcodeModule = /** @class */ (function () {
-    function NgxQrcodeModule() {
+var QRCodeModule = /** @class */ (function () {
+    function QRCodeModule() {
     }
-    NgxQrcodeModule = __decorate([
+    QRCodeModule = __decorate([
         core_1.NgModule({
             providers: [],
             declarations: [
-                components_1.NgxQrcodeComponent,
+                components_1.QRCodeComponent,
             ],
             exports: [
-                components_1.NgxQrcodeComponent,
+                components_1.QRCodeComponent,
             ]
         })
-    ], NgxQrcodeModule);
-    return NgxQrcodeModule;
+    ], QRCodeModule);
+    return QRCodeModule;
 }());
-exports.NgxQrcodeModule = NgxQrcodeModule;
+exports.QRCodeModule = QRCodeModule;
 
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-Object.defineProperty(exports, "__esModule", { value: true });
-__export(__webpack_require__(4));
-
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -168,8 +155,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__(1);
 var QRCode = __webpack_require__(6);
-var NgxQrcodeComponent = /** @class */ (function () {
-    function NgxQrcodeComponent(el) {
+var QRCodeComponent = /** @class */ (function () {
+    function QRCodeComponent(el) {
         this.el = el;
         this.qrdata = '';
         this.size = 256;
@@ -178,7 +165,7 @@ var NgxQrcodeComponent = /** @class */ (function () {
         this.colorlight = '#ffffff';
         this.usesvg = false;
     }
-    NgxQrcodeComponent.prototype.ngOnInit = function () {
+    QRCodeComponent.prototype.ngOnInit = function () {
         try {
             if (!this.isValidQrCodeText(this.qrdata)) {
                 throw new Error('Empty QR Code data');
@@ -197,7 +184,7 @@ var NgxQrcodeComponent = /** @class */ (function () {
             console.error('Error generating QR Code: ' + e.message);
         }
     };
-    NgxQrcodeComponent.prototype.ngOnChanges = function (changes) {
+    QRCodeComponent.prototype.ngOnChanges = function (changes) {
         if (!this.qrcode) {
             return;
         }
@@ -207,44 +194,57 @@ var NgxQrcodeComponent = /** @class */ (function () {
             this.qrcode.makeCode(qrData.currentValue);
         }
     };
-    NgxQrcodeComponent.prototype.isValidQrCodeText = function (data) {
+    QRCodeComponent.prototype.isValidQrCodeText = function (data) {
         return !(typeof data === 'undefined' || data === '');
     };
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
-    ], NgxQrcodeComponent.prototype, "qrdata", void 0);
+    ], QRCodeComponent.prototype, "qrdata", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Number)
-    ], NgxQrcodeComponent.prototype, "size", void 0);
+    ], QRCodeComponent.prototype, "size", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
-    ], NgxQrcodeComponent.prototype, "level", void 0);
+    ], QRCodeComponent.prototype, "level", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
-    ], NgxQrcodeComponent.prototype, "colordark", void 0);
+    ], QRCodeComponent.prototype, "colordark", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", String)
-    ], NgxQrcodeComponent.prototype, "colorlight", void 0);
+    ], QRCodeComponent.prototype, "colorlight", void 0);
     __decorate([
         core_1.Input(),
         __metadata("design:type", Boolean)
-    ], NgxQrcodeComponent.prototype, "usesvg", void 0);
-    NgxQrcodeComponent = __decorate([
+    ], QRCodeComponent.prototype, "usesvg", void 0);
+    QRCodeComponent = __decorate([
         core_1.Component({
             selector: 'qrcode',
             changeDetection: core_1.ChangeDetectionStrategy.OnPush,
             template: ''
         }),
         __metadata("design:paramtypes", [core_1.ElementRef])
-    ], NgxQrcodeComponent);
-    return NgxQrcodeComponent;
+    ], QRCodeComponent);
+    return QRCodeComponent;
 }());
-exports.NgxQrcodeComponent = NgxQrcodeComponent;
+exports.QRCodeComponent = QRCodeComponent;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+function __export(m) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+Object.defineProperty(exports, "__esModule", { value: true });
+__export(__webpack_require__(3));
 
 
 /***/ }),
@@ -255,9 +255,9 @@ exports.NgxQrcodeComponent = NgxQrcodeComponent;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 var components_1 = __webpack_require__(0);
-exports.NgxQrcodeComponent = components_1.NgxQrcodeComponent;
-var ngx_qrcode_module_1 = __webpack_require__(2);
-exports.NgxQrcodeModule = ngx_qrcode_module_1.NgxQrcodeModule;
+exports.QRCodeComponent = components_1.QRCodeComponent;
+var angularx_qrcode_module_1 = __webpack_require__(2);
+exports.QRCodeModule = angularx_qrcode_module_1.QRCodeModule;
 
 
 /***/ }),

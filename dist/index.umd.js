@@ -1,6 +1,6 @@
 /**
  * angularx-qrcode - Angular4+ QRCode generator using qrcodejs
- * @version v1.0.0
+ * @version v0.0.1
  * @author Andreas Jacob <andreas@cordobo.de>
  * @link https://github.com/cordobo/angularx-qrcode#readme
  * @license MIT

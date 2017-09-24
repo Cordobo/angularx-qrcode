@@ -34,36 +34,36 @@ export class QRCodeComponent implements OnChanges, OnInit {
 
   public ngOnInit() {
     try {
-      if (!this.isValidQrCodeText(this.qrdata)) {
+      if ( !this.isValidQrCodeText(this.qrdata) ) {
         throw new Error('Empty QR Code data');
       }
-      this.qrcode = new QRCode(this.el.nativeElement, {
-        text: this.qrdata,
-        width: this.size,
-        height: this.size,
+      this.qrcode = new QRCode( this.el.nativeElement, {
         colorDark: this.colordark,
         colorLight: this.colorlight,
+        correctLevel: QRCode.CorrectLevel[this.level.toString()],
+        height: this.size,
+        text: this.qrdata,
         useSVG: this.usesvg,
-        correctLevel: QRCode.CorrectLevel[this.level.toString()]
+        width: this.size,
       });
-    } catch (e) {
+    } catch ( e ) {
       console.error('Error generating QR Code: ' + e.message);
     }
   }
 
-  public ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    if (!this.qrcode) {
+  public ngOnChanges( changes: {[propertyName: string]: SimpleChange} ) {
+    if ( !this.qrcode ) {
       return;
     }
     const qrData = changes['qrdata'];
-    if (qrData && this.isValidQrCodeText(qrData.currentValue)) {
+    if ( qrData && this.isValidQrCodeText(qrData.currentValue) ) {
       this.qrcode.clear();
       this.qrcode.makeCode(qrData.currentValue);
     }
   }
 
-  protected isValidQrCodeText(data: string) {
-    return !(typeof data === 'undefined' || data === '');
+  protected isValidQrCodeText( data: string ) {
+    return !( typeof data === 'undefined' || data === '' );
   }
 
 }

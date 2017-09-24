@@ -1,6 +1,6 @@
 /**
  * angularx-qrcode - Angular4+ QRCode generator using qrcodejs
- * @version v0.0.3
+ * @version v0.0.4
  * @author Andreas Jacob <andreas@cordobo.de>
  * @link https://github.com/cordobo/angularx-qrcode#readme
  * @license MIT
@@ -171,13 +171,13 @@ var QRCodeComponent = /** @class */ (function () {
                 throw new Error('Empty QR Code data');
             }
             this.qrcode = new QRCode(this.el.nativeElement, {
-                text: this.qrdata,
-                width: this.size,
-                height: this.size,
                 colorDark: this.colordark,
                 colorLight: this.colorlight,
+                correctLevel: QRCode.CorrectLevel[this.level.toString()],
+                height: this.size,
+                text: this.qrdata,
                 useSVG: this.usesvg,
-                correctLevel: QRCode.CorrectLevel[this.level.toString()]
+                width: this.size,
             });
         }
         catch (e) {

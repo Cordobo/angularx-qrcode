@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "removeComments": false,
+    "noImplicitAny": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "pretty": true,
+    "stripInternal": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "rootDir": "./tmp/src-inlined"
+  },
+  "files": [
+    "./tmp/src-inlined/index.ts"
+  ],
+  "angularCompilerOptions": {
+    "genDir": "dist",
+    "debug": false,
+    "skipTemplateCodegen": true,
+    "skipMetadataEmit": false,
+    "strictMetadataEmit": true
+  }
+}

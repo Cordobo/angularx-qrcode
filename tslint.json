@@ -1,0 +1,28 @@
+{
+  "extends": ["tslint:recommended"],
+  "rulesDirectory": ["node_modules/codelyzer"],
+  "rules": {
+    "component-class-suffix": true,
+    "directive-class-suffix": true,
+    "interface-name": false,
+    "invoke-injectable": true,
+    "max-line-length": [true, 100],
+    "no-access-missing-member": false,
+    "no-attribute-parameter-decorator": true,
+    "no-console": [true, "time", "timeEnd", "trace"],
+    "no-forward-ref": true,
+    "no-input-rename": true,
+    "no-output-rename": true,
+    "no-string-literal": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "pipe-naming": [true, "camelCase", "my"],
+    "quotemark": [true, "single", "avoid-escape"],
+    "trailing-comma": [false, {"multiline": "always", "singleline": "never"}],
+    "use-host-property-decorator": true,
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-pipe-transform-interface": true,
+    "variable-name": [true, "allow-leading-underscore", "ban-keywords", "check-format"]
+  }
+}

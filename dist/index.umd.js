@@ -1,6 +1,6 @@
 /**
  * angularx-qrcode - Angular4+ QRCode generator using qrcodejs
- * @version v0.0.1
+ * @version v0.0.3
  * @author Andreas Jacob <andreas@cordobo.de>
  * @link https://github.com/cordobo/angularx-qrcode#readme
  * @license MIT
@@ -142,7 +142,7 @@ exports.QRCodeModule = QRCodeModule;
 
 "use strict";
 
-/// <reference path="qrcodejs2.d.ts" />
+/// <reference path="angularx-qrcode.component.d.ts" />
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);

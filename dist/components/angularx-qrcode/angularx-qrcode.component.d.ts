@@ -1,4 +1,4 @@
-/// <reference path="../../../tmp/src-inlined/components/angularx-qrcode/qrcodejs2.d.ts" />
+/// <reference path="../../../tmp/src-inlined/components/angularx-qrcode/angularx-qrcode.component.d.ts" />
 import { ElementRef, OnChanges, OnInit, SimpleChange } from '@angular/core';
 export declare class QRCodeComponent implements OnChanges, OnInit {
     private el;

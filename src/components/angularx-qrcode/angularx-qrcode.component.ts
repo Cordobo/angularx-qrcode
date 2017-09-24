@@ -1,4 +1,4 @@
-/// <reference path="qrcodejs2.d.ts" />
+/// <reference path="angularx-qrcode.component.d.ts" />
 
 import {
   Component,
@@ -19,12 +19,12 @@ import * as QRCode from 'qrcodejs2';
 })
 export class QRCodeComponent implements OnChanges, OnInit {
 
-  @Input() qrdata: string = '';
-  @Input() size: number = 256;
-  @Input() level: string = 'M';
-  @Input() colordark: string = '#000000';
-  @Input() colorlight: string = '#ffffff';
-  @Input() usesvg: boolean = false;
+  @Input() public qrdata: string = '';
+  @Input() public size: number = 256;
+  @Input() public level: string = 'M';
+  @Input() public colordark: string = '#000000';
+  @Input() public colorlight: string = '#ffffff';
+  @Input() public usesvg: boolean = false;
 
   private qrcode: any;
 
@@ -32,7 +32,7 @@ export class QRCodeComponent implements OnChanges, OnInit {
     private el: ElementRef
   ) { }
 
-  ngOnInit() {
+  public ngOnInit() {
     try {
       if (!this.isValidQrCodeText(this.qrdata)) {
         throw new Error('Empty QR Code data');
@@ -51,7 +51,7 @@ export class QRCodeComponent implements OnChanges, OnInit {
     }
   }
 
-  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
+  public ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
     if (!this.qrcode) {
       return;
     }
@@ -67,4 +67,3 @@ export class QRCodeComponent implements OnChanges, OnInit {
   }
 
 }
-

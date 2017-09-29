@@ -12,6 +12,7 @@
 
     yarn add angularx-qrcode
 
+
 ## Basic Usage
 
 ### Import the module and add it to your imports section in your main AppModule (file: app.module.ts)

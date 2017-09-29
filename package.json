@@ -1,11 +1,11 @@
 {
   "name": "angularx-qrcode",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
   },
-  "description": "Angular4+ QRCode generator using qrcodejs",
+  "description": "Ionic 3 and Angular4+ QRCode module generator using qrcodejs",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -16,6 +16,8 @@
     "ng-qrcode",
     "angular",
     "angular4",
+    "ionic",
+    "ionic3",
     "aot",
     "aot-compatible",
     "aot-compilation",

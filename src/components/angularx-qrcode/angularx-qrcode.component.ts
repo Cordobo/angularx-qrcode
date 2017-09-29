@@ -1,4 +1,4 @@
-/// <reference path="angularx-qrcode.component.d.ts" />
+/// <reference path="./qrcodejs2.d.ts" />
 
 import {
   Component,
@@ -19,6 +19,7 @@ import * as QRCode from 'qrcodejs2';
 })
 export class QRCodeComponent implements OnChanges, OnInit {
 
+  /** @internal */
   @Input() public qrdata: string = '';
   @Input() public size: number = 256;
   @Input() public level: string = 'M';
@@ -26,10 +27,10 @@ export class QRCodeComponent implements OnChanges, OnInit {
   @Input() public colorlight: string = '#ffffff';
   @Input() public usesvg: boolean = false;
 
-  private qrcode: any;
+  public qrcode: any;
 
   constructor(
-    private el: ElementRef
+    public el: ElementRef
   ) { }
 
   public ngOnInit() {

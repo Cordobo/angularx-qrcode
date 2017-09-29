@@ -24,6 +24,6 @@
     "use-input-property-decorator": true,
     "use-output-property-decorator": true,
     "use-pipe-transform-interface": true,
-    "variable-name": [true, "allow-leading-underscore", "ban-keywords", "check-format"]
+    "variable-name": [true, "allow-leading-underscore", "ban-keywords", "check-format", "allow-pascal-case"]
   }
 }

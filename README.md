@@ -12,7 +12,7 @@ An Angular4+ QRCode generator Component library for Generating QR Codes (Quick R
 
 ```
 // all your imports
-import { QRCodeModule } from 'angularx-qrcode'
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
 declarations: [

@@ -1,6 +1,6 @@
 {
   "name": "angularx-qrcode",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -33,7 +33,7 @@
   "homepage": "https://github.com/cordobo/angularx-qrcode#readme",
   "scripts": {
     "build": "npm run build:esm && npm run build:umd",
-    "build:esm": "gulp inline-templates && npm run ngcompile",
+    "build:esm": "npm run ngcompile",
     "build:esm:watch": "gulp build:esm:watch",
     "build:umd": "webpack --config webpack-umd.config.ts",
     "build:umd:watch": "npm run build:umd -- --watch",

@@ -59,11 +59,11 @@ we add two lines of code to our controller `example.ts`.
 export class QRCodeComponent {
     public angularxQrCode: string = '';
     // assign a value anywhere in/below your constructor
-    this.myAngularxQrCode = 'Your QR code data string';
+    this.angularxQrCode = 'Your QR code data string';
 }
 
 // example.html:
-<qrcode [qrdata]="myAngularxQrCode" [size]="256" [level]="'M'"></qrcode>
+<qrcode [qrdata]="angularxQrCode" [size]="256" [level]="'M'"></qrcode>
 ```
 
 ## Parameters

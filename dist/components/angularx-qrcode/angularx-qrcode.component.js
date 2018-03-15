@@ -1,4 +1,3 @@
-/// <reference path="./qrcodejs2.d.ts" />
 import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
 import * as QRCode from 'qrcodejs2';
 var QRCodeComponent = /** @class */ (function () {
@@ -62,14 +61,14 @@ var QRCodeComponent = /** @class */ (function () {
         { type: ElementRef, },
     ]; };
     QRCodeComponent.propDecorators = {
-        'allowEmptyString': [{ type: Input },],
-        'colordark': [{ type: Input },],
-        'colorlight': [{ type: Input },],
-        'level': [{ type: Input },],
-        'hidetitle': [{ type: Input },],
-        'qrdata': [{ type: Input },],
-        'size': [{ type: Input },],
-        'usesvg': [{ type: Input },],
+        "allowEmptyString": [{ type: Input },],
+        "colordark": [{ type: Input },],
+        "colorlight": [{ type: Input },],
+        "level": [{ type: Input },],
+        "hidetitle": [{ type: Input },],
+        "qrdata": [{ type: Input },],
+        "size": [{ type: Input },],
+        "usesvg": [{ type: Input },],
     };
     return QRCodeComponent;
 }());

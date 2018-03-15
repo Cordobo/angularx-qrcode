@@ -1,6 +1,6 @@
 /**
- * angularx-qrcode - Ionic 3 and Angular4+ QRCode module generator using qrcodejs
- * @version v1.0.2
+ * angularx-qrcode - Ionic 3 and Angular5+ QRCode module generator using qrcodejs
+ * @version v1.1.0
  * @author Andreas Jacob <andreas@cordobo.de>
  * @link https://github.com/cordobo/angularx-qrcode#readme
  * @license MIT

@@ -1,11 +1,11 @@
 {
     "name": "angularx-qrcode",
-    "version": "1.0.2",
+    "version": "1.1.0",
     "author": {
         "name": "Andreas Jacob <andreas@cordobo.de>",
         "url": "http://cordobo.com/"
     },
-    "description": "Ionic 3 and Angular4+ QRCode module generator using qrcodejs",
+    "description": "Ionic 3 and Angular5+ QRCode module generator using qrcodejs",
     "main": "./dist/index.umd.js",
     "module": "./dist/index.js",
     "typings": "./dist/index.d.ts",
@@ -15,7 +15,6 @@
         "angular-qrcode",
         "ng-qrcode",
         "angular",
-        "angular4",
         "angular5",
         "ionic",
         "ionic3",
@@ -64,16 +63,16 @@
         "qrcodejs2": "0.0.2"
     },
     "peerDependencies": {
-        "@angular/common": "^4.0.0",
-        "@angular/core": "^4.0.0"
+        "@angular/common": "^5.0.0",
+        "@angular/core": "^5.0.0"
     },
     "devDependencies": {
-        "@angular/common": "^4.0.0",
-        "@angular/compiler": "^4.0.0",
-        "@angular/compiler-cli": "^4.0.0",
-        "@angular/core": "^4.0.0",
-        "@angular/platform-browser": "^4.0.0",
-        "@angular/platform-browser-dynamic": "^4.0.0",
+        "@angular/common": "^5.0.0",
+        "@angular/compiler": "^5.0.0",
+        "@angular/compiler-cli": "^5.0.0",
+        "@angular/core": "^5.0.0",
+        "@angular/platform-browser": "^5.0.0",
+        "@angular/platform-browser-dynamic": "^5.0.0",
         "@compodoc/compodoc": "^1.0.0-beta.9",
         "@types/jasmine": "^2.5.47",
         "@types/karma": "^1.7.3",

@@ -1,16 +1,35 @@
 /// <reference path="./qrcodejs2.d.ts" />
-import { Component, Input, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
 import * as QRCode from 'qrcodejs2';
 var QRCodeComponent = /** @class */ (function () {
     function QRCodeComponent(el) {
+        var _this = this;
         this.el = el;
         /** @internal */
-        this.qrdata = '';
-        this.size = 256;
-        this.level = 'M';
+        this.allowEmptyString = false;
         this.colordark = '#000000';
         this.colorlight = '#ffffff';
+        this.level = 'M';
+        this.hidetitle = false;
+        this.qrdata = '';
+        this.size = 256;
         this.usesvg = false;
+        this.ngOnChanges = function (changes) {
+            if (!_this.qrcode) {
+                return;
+            }
+            var qrData = changes['qrdata'];
+            if (qrData && _this.isValidQrCodeText(qrData.currentValue)) {
+                _this.qrcode.clear();
+                _this.qrcode.makeCode(qrData.currentValue);
+            }
+        };
+        this.isValidQrCodeText = function (data) {
+            if (_this.allowEmptyString === false) {
+                return !(typeof data === 'undefined' || data === '');
+            }
+            return !(typeof data === 'undefined');
+        };
     }
     QRCodeComponent.prototype.ngOnInit = function () {
         try {
@@ -22,7 +41,7 @@ var QRCodeComponent = /** @class */ (function () {
                 colorLight: this.colorlight,
                 correctLevel: QRCode.CorrectLevel[this.level.toString()],
                 height: this.size,
-                text: this.qrdata,
+                text: this.qrdata || ' ',
                 useSVG: this.usesvg,
                 width: this.size,
             });
@@ -30,19 +49,6 @@ var QRCodeComponent = /** @class */ (function () {
         catch (e) {
             console.error('Error generating QR Code: ' + e.message);
         }
-    };
-    QRCodeComponent.prototype.ngOnChanges = function (changes) {
-        if (!this.qrcode) {
-            return;
-        }
-        var qrData = changes['qrdata'];
-        if (qrData && this.isValidQrCodeText(qrData.currentValue)) {
-            this.qrcode.clear();
-            this.qrcode.makeCode(qrData.currentValue);
-        }
-    };
-    QRCodeComponent.prototype.isValidQrCodeText = function (data) {
-        return !(typeof data === 'undefined' || data === '');
     };
     QRCodeComponent.decorators = [
         { type: Component, args: [{
@@ -56,11 +62,13 @@ var QRCodeComponent = /** @class */ (function () {
         { type: ElementRef, },
     ]; };
     QRCodeComponent.propDecorators = {
-        'qrdata': [{ type: Input },],
-        'size': [{ type: Input },],
-        'level': [{ type: Input },],
+        'allowEmptyString': [{ type: Input },],
         'colordark': [{ type: Input },],
         'colorlight': [{ type: Input },],
+        'level': [{ type: Input },],
+        'hidetitle': [{ type: Input },],
+        'qrdata': [{ type: Input },],
+        'size': [{ type: Input },],
         'usesvg': [{ type: Input },],
     };
     return QRCodeComponent;

@@ -18,16 +18,6 @@ import * as QRCode from 'qrcodejs2';
     template: ''
 })
 
-export interface IQRCode {
-    colorDark: string;
-    colorLight: string;
-    correctLevel: string;
-    height: number;
-    text: string;
-    useSVG: boolean;
-    width: number;
-}
-
 export class QRCodeComponent implements OnChanges, OnInit {
 
     /** @internal */
@@ -40,7 +30,7 @@ export class QRCodeComponent implements OnChanges, OnInit {
     @Input() public size: number = 256;
     @Input() public usesvg: boolean = false;
 
-    public qrcode: IQRCode;
+    public qrcode: any;
 
     constructor(
         public el: ElementRef

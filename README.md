@@ -70,15 +70,16 @@ export class QRCodeComponent {
 
 | Attribute        | Type           | Default | Description  |
 | ------------- |-------------| -----|------------|
-| qrdata      | String | '' | String to encode |
-| size      | Number | 256     | Height / Width (any value) |
-| level | String | 'M'    | QR Correction level ('L', 'M', 'Q', 'H') |
+| allowEmptyString      | Boolean | false     | Allow empty string |
 | colorlight      | String | '#ffffff'     | Dark color |
 | colordark      | String | '#000000'     | Light Color |
+| level | String | 'M'    | QR Correction level ('L', 'M', 'Q', 'H') |
+| qrdata      | String | '' | String to encode |
+| size      | Number | 256     | Height / Width (any value) |
 | usesvg      | Boolean | false     | SVG Output |
 
 ## Note
-Depending on the size of the *qrdata* to encode, a minimum *size* might be required.
+Depending on the size (amoutn of data) of the *qrdata* to encode, a minimum *size* might be required.
 
 ## License
 MIT License

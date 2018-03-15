@@ -17,9 +17,21 @@ import * as QRCode from 'qrcodejs2';
     changeDetection: ChangeDetectionStrategy.OnPush,
     template: ''
 })
+
+export interface IQRCode {
+    colorDark: string;
+    colorLight: string;
+    correctLevel: string;
+    height: number;
+    text: string;
+    useSVG: boolean;
+    width: number;
+}
+
 export class QRCodeComponent implements OnChanges, OnInit {
 
     /** @internal */
+    @Input() public allowEmptyString: boolean = false;
     @Input() public colordark: string = '#000000';
     @Input() public colorlight: string = '#ffffff';
     @Input() public level: string = 'M';
@@ -28,7 +40,7 @@ export class QRCodeComponent implements OnChanges, OnInit {
     @Input() public size: number = 256;
     @Input() public usesvg: boolean = false;
 
-    public qrcode: any;
+    public qrcode: IQRCode;
 
     constructor(
         public el: ElementRef
@@ -36,15 +48,16 @@ export class QRCodeComponent implements OnChanges, OnInit {
 
     public ngOnInit() {
         try {
-            if ( !this.isValidQrCodeText(this.qrdata) ) {
+            if (!this.isValidQrCodeText(this.qrdata)) {
                 throw new Error('Empty QR Code data');
             }
+
             this.qrcode = new QRCode(this.el.nativeElement, {
                 colorDark: this.colordark,
                 colorLight: this.colorlight,
                 correctLevel: QRCode.CorrectLevel[this.level.toString()],
                 height: this.size,
-                text: this.qrdata,
+                text: this.qrdata || ' ',
                 useSVG: this.usesvg,
                 width: this.size,
             });
@@ -57,7 +70,9 @@ export class QRCodeComponent implements OnChanges, OnInit {
         if (!this.qrcode) {
             return;
         }
+
         const qrData = changes['qrdata'];
+
         if (qrData && this.isValidQrCodeText(qrData.currentValue)) {
             this.qrcode.clear();
             this.qrcode.makeCode(qrData.currentValue);
@@ -65,6 +80,9 @@ export class QRCodeComponent implements OnChanges, OnInit {
     }
 
     protected isValidQrCodeText = (data: string): boolean => {
+        if (this.allowEmptyString === false) {
+            return !( typeof data === 'undefined' || data === '' );
+        }
         return !(typeof data === 'undefined');
     }
 

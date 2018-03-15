@@ -8,14 +8,14 @@ const exec = require('child_process').exec;
  * @see  https://github.com/ludohenin/gulp-inline-ng2-template
  */
 const INLINE_TEMPLATES = {
-  SRC: './src/**/*.ts',
-  DIST: './tmp/src-inlined',
-  CONFIG: {
-    base: '/src',
-    target: 'es6',
-    useRelativePaths: true,
-    styleProcessor: compileSass
-  }
+    SRC: './src/**/*.ts',
+    DIST: './tmp/src-inlined',
+    CONFIG: {
+        base: '/src',
+        target: 'es6',
+        useRelativePaths: true,
+        styleProcessor: compileSass
+    }
 };
 
 /**
@@ -23,9 +23,9 @@ const INLINE_TEMPLATES = {
  * @see: https://github.com/ludohenin/gulp-inline-ng2-template
  */
 gulp.task('inline-templates', () => {
-  return gulp.src(INLINE_TEMPLATES.SRC)
-    .pipe(inlineTemplates(INLINE_TEMPLATES.CONFIG))
-    .pipe(gulp.dest(INLINE_TEMPLATES.DIST));
+    return gulp.src(INLINE_TEMPLATES.SRC)
+        .pipe(inlineTemplates(INLINE_TEMPLATES.CONFIG))
+        .pipe(gulp.dest(INLINE_TEMPLATES.DIST));
 });
 
 /**
@@ -34,10 +34,10 @@ gulp.task('inline-templates', () => {
  * @see: https://github.com/angular/angular/issues/12867
  */
 gulp.task('build:esm', ['inline-templates'], (callback) => {
-  exec('npm run ngcompile', function (error, stdout, stderr) {
-    console.log(stdout, stderr);
-    callback(error)
-  });
+    exec('npm run ngcompile', function (error, stdout, stderr) {
+        console.log(stdout, stderr);
+        callback(error)
+    });
 });
 
 /**
@@ -46,7 +46,7 @@ gulp.task('build:esm', ['inline-templates'], (callback) => {
  * @see: https://github.com/angular/angular/issues/12867
  */
 gulp.task('build:esm:watch', ['build:esm'], () => {
-  gulp.watch('src/**/*', ['build:esm']);
+    gulp.watch('src/**/*', ['build:esm']);
 });
 
 /**
@@ -55,9 +55,9 @@ gulp.task('build:esm:watch', ['build:esm'], () => {
  * @see https://github.com/sass/node-sass
  */
 function compileSass(path, ext, file, callback) {
-  let compiledCss = sass.renderSync({
-    file: path,
-    outputStyle: 'compressed',
-  });
-  callback(null, compiledCss.css);
+    let compiledCss = sass.renderSync({
+        file: path,
+        outputStyle: 'compressed',
+    });
+    callback(null, compiledCss.css);
 }

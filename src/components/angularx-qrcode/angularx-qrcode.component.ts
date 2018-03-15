@@ -20,11 +20,12 @@ import * as QRCode from 'qrcodejs2';
 export class QRCodeComponent implements OnChanges, OnInit {
 
   /** @internal */
-  @Input() public qrdata: string = '';
-  @Input() public size: number = 256;
-  @Input() public level: string = 'M';
   @Input() public colordark: string = '#000000';
   @Input() public colorlight: string = '#ffffff';
+  @Input() public level: string = 'M';
+  @Input() public hidetitle: boolean = false;
+  @Input() public qrdata: string = '';
+  @Input() public size: number = 256;
   @Input() public usesvg: boolean = false;
 
   public qrcode: any;

@@ -94,7 +94,7 @@ export class QRCodeComponent {
 | usesvg      | Boolean | false     | SVG Output |
 
 ## Note
-Depending on the size (amoutn of data) of the *qrdata* to encode, a minimum *size* might be required.
+Depending on the size (amount of data) of the *qrdata* to encode, a minimum *size* might be required.
 
 ## License
 MIT License

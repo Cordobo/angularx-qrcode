@@ -12,8 +12,8 @@ export declare class QRCodeComponent implements OnChanges, OnInit {
     qrcode: any;
     constructor(el: ElementRef);
     ngOnInit(): void;
-    ngOnChanges: (changes: {
+    ngOnChanges(changes: {
         [propertyName: string]: SimpleChange;
-    }) => void;
+    }): void;
     protected isValidQrCodeText: (data: string) => boolean;
 }

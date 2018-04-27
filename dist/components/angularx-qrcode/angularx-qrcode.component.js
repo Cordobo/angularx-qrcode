@@ -1,4 +1,3 @@
-/// <reference path="./qrcodejs2.d.ts" />
 import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
 import * as QRCode from 'qrcodejs2';
 var QRCodeComponent = /** @class */ (function () {
@@ -14,16 +13,6 @@ var QRCodeComponent = /** @class */ (function () {
         this.qrdata = '';
         this.size = 256;
         this.usesvg = false;
-        this.ngOnChanges = function (changes) {
-            if (!_this.qrcode) {
-                return;
-            }
-            var qrData = changes['qrdata'];
-            if (qrData && _this.isValidQrCodeText(qrData.currentValue)) {
-                _this.qrcode.clear();
-                _this.qrcode.makeCode(qrData.currentValue);
-            }
-        };
         this.isValidQrCodeText = function (data) {
             if (_this.allowEmptyString === false) {
                 return !(typeof data === 'undefined' || data === '');
@@ -50,6 +39,16 @@ var QRCodeComponent = /** @class */ (function () {
             console.error('Error generating QR Code: ' + e.message);
         }
     };
+    QRCodeComponent.prototype.ngOnChanges = function (changes) {
+        if (!this.qrcode) {
+            return;
+        }
+        var qrData = changes['qrdata'];
+        if (qrData && this.isValidQrCodeText(qrData.currentValue)) {
+            this.qrcode.clear();
+            this.qrcode.makeCode(qrData.currentValue);
+        }
+    };
     QRCodeComponent.decorators = [
         { type: Component, args: [{
                     selector: 'qrcode',
@@ -62,14 +61,14 @@ var QRCodeComponent = /** @class */ (function () {
         { type: ElementRef, },
     ]; };
     QRCodeComponent.propDecorators = {
-        'allowEmptyString': [{ type: Input },],
-        'colordark': [{ type: Input },],
-        'colorlight': [{ type: Input },],
-        'level': [{ type: Input },],
-        'hidetitle': [{ type: Input },],
-        'qrdata': [{ type: Input },],
-        'size': [{ type: Input },],
-        'usesvg': [{ type: Input },],
+        "allowEmptyString": [{ type: Input },],
+        "colordark": [{ type: Input },],
+        "colorlight": [{ type: Input },],
+        "level": [{ type: Input },],
+        "hidetitle": [{ type: Input },],
+        "qrdata": [{ type: Input },],
+        "size": [{ type: Input },],
+        "usesvg": [{ type: Input },],
     };
     return QRCodeComponent;
 }());

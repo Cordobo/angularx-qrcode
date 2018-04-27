@@ -14,8 +14,6 @@ var QRCodeModule = /** @class */ (function () {
                     ]
                 },] },
     ];
-    /** @nocollapse */
-    QRCodeModule.ctorParameters = function () { return []; };
     return QRCodeModule;
 }());
 export { QRCodeModule };

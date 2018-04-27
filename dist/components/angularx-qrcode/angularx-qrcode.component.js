@@ -13,16 +13,6 @@ var QRCodeComponent = /** @class */ (function () {
         this.qrdata = '';
         this.size = 256;
         this.usesvg = false;
-        this.ngOnChanges = function (changes) {
-            if (!_this.qrcode) {
-                return;
-            }
-            var qrData = changes['qrdata'];
-            if (qrData && _this.isValidQrCodeText(qrData.currentValue)) {
-                _this.qrcode.clear();
-                _this.qrcode.makeCode(qrData.currentValue);
-            }
-        };
         this.isValidQrCodeText = function (data) {
             if (_this.allowEmptyString === false) {
                 return !(typeof data === 'undefined' || data === '');
@@ -47,6 +37,16 @@ var QRCodeComponent = /** @class */ (function () {
         }
         catch (e) {
             console.error('Error generating QR Code: ' + e.message);
+        }
+    };
+    QRCodeComponent.prototype.ngOnChanges = function (changes) {
+        if (!this.qrcode) {
+            return;
+        }
+        var qrData = changes['qrdata'];
+        if (qrData && this.isValidQrCodeText(qrData.currentValue)) {
+            this.qrcode.clear();
+            this.qrcode.makeCode(qrData.currentValue);
         }
     };
     QRCodeComponent.decorators = [

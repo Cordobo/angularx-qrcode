@@ -56,7 +56,7 @@ export class QRCodeComponent implements OnChanges, OnInit {
         }
     }
 
-    public ngOnChanges = (changes: { [propertyName: string]: SimpleChange }) => {
+    public ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {
         if (!this.qrcode) {
             return;
         }

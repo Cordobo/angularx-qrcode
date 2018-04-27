@@ -1,6 +1,6 @@
 {
     "name": "angularx-qrcode",
-    "version": "1.1.5",
+    "version": "1.1.6",
     "author": {
         "name": "Andreas Jacob <andreas@cordobo.de>",
         "url": "http://cordobo.com/"
@@ -77,6 +77,7 @@
         "@types/jasmine": "^2.5.47",
         "@types/karma": "^1.7.3",
         "@types/node": "^7.0.18",
+        "@types/tapable": "^0.2.5",
         "@types/webpack": "^2.2.15",
         "@types/webpack-env": "^1.13.0",
         "angular2-template-loader": "^0.6.2",
@@ -107,7 +108,7 @@
         "to-string-loader": "^1.1.5",
         "ts-node": "^3.0.4",
         "tslint": "^5.9.1",
-        "typescript": "^2.3.2",
+        "typescript": "~2.5.3",
         "webpack": "^2.5.1",
         "webpack-angular-externals": "^1.0.2",
         "webpack-rxjs-externals": "^1.0.0",

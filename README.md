@@ -1,9 +1,9 @@
 # angularx-qrcode
 `angularx-qrcode` is a Ionic 3 and Angular4+ QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4+ app with support for AOT. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on qrcodejs.
 
-For Angular 5+ Support install 1.1.6
+For Angular 5+ Support install 1.1.7
 
-For Angular 4 Support install 1.0.2
+For Angular 4 Support install 1.0.3
 
 ## AOT - Ahead Of Time Compilation
 `angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. For further information see https://angular.io/guide/aot-compiler
@@ -23,11 +23,11 @@ For Angular 4 Support install 1.0.2
 
 ### NPM
 
-    npm install angularx-qrcode@1.0.2 --save
+    npm install angularx-qrcode@1.0.3 --save
 
 ### Yarn
 
-    yarn add angularx-qrcode@1.0.2
+    yarn add angularx-qrcode@1.0.3
 
 
 ## Basic Usage

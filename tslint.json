@@ -3,7 +3,8 @@
         "tslint:recommended"
     ],
     "rulesDirectory": [
-        "node_modules/codelyzer"
+        "node_modules/codelyzer",
+        "node_modules/rxjs-tslint"
     ],
     "rules": {
         "component-class-suffix": true,
@@ -39,6 +40,10 @@
             "single",
             "avoid-escape"
         ],
+        "rxjs-collapse-imports": true,
+        "rxjs-pipeable-operators-only": true,
+        "rxjs-no-static-observable-methods": true,
+        "rxjs-proper-imports": true,
         "trailing-comma": [
             false,
             {

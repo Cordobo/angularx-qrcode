@@ -63,7 +63,6 @@
 		"tslint": "tslint"
 	},
 	"dependencies": {
-		"@angular/cli": "^6.0.0",
 		"qrcodejs2": "0.0.2"
 	},
 	"peerDependencies": {
@@ -72,6 +71,7 @@
 	},
 	"devDependencies": {
 		"@angular/common": "^6.0.0",
+		"@angular/cli": "^6.0.0",
 		"@angular/compiler": "^6.0.0",
 		"@angular/compiler-cli": "^6.0.0",
 		"@angular/core": "^6.0.0",

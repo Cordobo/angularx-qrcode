@@ -2,6 +2,9 @@
 node_modules
 npm-debug.log
 
+# Ignore package lock
+package_lock.json
+
 # Yarn
 yarn-error.log
 

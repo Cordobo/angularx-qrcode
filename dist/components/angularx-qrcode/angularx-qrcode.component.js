@@ -1,4 +1,3 @@
-/// <reference path="./qrcodejs2.d.ts" />
 import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
 import * as QRCode from 'qrcodejs2';
 var QRCodeComponent = /** @class */ (function () {

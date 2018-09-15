@@ -10,22 +10,26 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "lib": [
-            "es2015",
+            "es2017",
             "dom"
         ],
         "typeRoots": [
-            "./node_modules/@types"
+            "node_modules/@types"
         ],
         "types": [
+            "bluebird",
             "jasmine",
             "karma",
             "node",
+            "tapable",
+            "uglify-js",
             "webpack",
             "webpack-env"
         ]
     },
     "include": [
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "typings/qrcodejs2.d.ts"
     ],
     "exclude": [
         "src/**/*.spec.ts",

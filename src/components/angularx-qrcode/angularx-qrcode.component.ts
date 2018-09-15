@@ -1,5 +1,3 @@
-/// <reference path="./qrcodejs2.d.ts" />
-
 import {
     ChangeDetectionStrategy,
     Component,
@@ -10,7 +8,7 @@ import {
     SimpleChange
 } from '@angular/core';
 
-import * as QRCode from 'qrcodejs2';
+import QRCode from 'qrcodejs2';
 
 @Component({
     selector: 'qrcode',

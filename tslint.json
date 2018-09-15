@@ -10,7 +10,6 @@
         "component-class-suffix": true,
         "directive-class-suffix": true,
         "interface-name": false,
-        "invoke-injectable": true,
         "max-line-length": [
             true,
             100
@@ -31,7 +30,6 @@
         "object-literal-sort-keys": false,
         "ordered-imports": false,
         "pipe-naming": [
-            true,
             "camelCase",
             "my"
         ],
@@ -40,10 +38,6 @@
             "single",
             "avoid-escape"
         ],
-        "rxjs-collapse-imports": true,
-        "rxjs-pipeable-operators-only": true,
-        "rxjs-no-static-observable-methods": true,
-        "rxjs-proper-imports": true,
         "trailing-comma": [
             false,
             {

@@ -27,13 +27,6 @@ export default {
             },
 
             {
-                test: /.ts$/,
-                exclude: /(node_modules|\.spec\.ts|\.e2e\.ts$)/,
-                loader: 'istanbul-instrumenter-loader',
-                enforce: 'post'
-            },
-
-            {
                 test: /\.json$/,
                 use: 'json-loader'
             },

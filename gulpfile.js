@@ -1,5 +1,4 @@
 const gulp = require('gulp');
-const sass = require('node-sass');
 const inlineTemplates = require('gulp-inline-ng2-template');
 const exec = require('child_process').exec;
 
@@ -13,8 +12,7 @@ const INLINE_TEMPLATES = {
     CONFIG: {
         base: '/src',
         target: 'es6',
-        useRelativePaths: true,
-        styleProcessor: compileSass
+        useRelativePaths: true
     }
 };
 
@@ -48,16 +46,3 @@ gulp.task('build:esm', ['inline-templates'], (callback) => {
 gulp.task('build:esm:watch', ['build:esm'], () => {
     gulp.watch('src/**/*', ['build:esm']);
 });
-
-/**
- * Compile SASS to CSS.
- * @see https://github.com/ludohenin/gulp-inline-ng2-template
- * @see https://github.com/sass/node-sass
- */
-function compileSass(path, ext, file, callback) {
-    let compiledCss = sass.renderSync({
-        file: path,
-        outputStyle: 'compressed',
-    });
-    callback(null, compiledCss.css);
-}

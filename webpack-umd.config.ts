@@ -57,11 +57,6 @@ export default {
             },
 
             {
-                test: /\.scss$/,
-                use: ['to-string-loader', 'css-loader', 'sass-loader']
-            },
-
-            {
                 test: /\.html$/,
                 use: 'raw-loader'
             }

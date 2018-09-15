@@ -52,11 +52,6 @@ export default {
             },
 
             {
-                test: /\.css$/,
-                use: ['to-string-loader', 'css-loader']
-            },
-
-            {
                 test: /\.html$/,
                 use: 'raw-loader'
             }

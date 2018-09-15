@@ -8,7 +8,7 @@ import {
     SimpleChange
 } from '@angular/core';
 
-import QRCode from 'qrcodejs2';
+import * as QRCode from 'qrcodejs2';
 
 @Component({
     selector: 'qrcode',

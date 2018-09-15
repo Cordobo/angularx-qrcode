@@ -1,5 +1,5 @@
 # angularx-qrcode
-`angularx-qrcode` is a Ionic 3 and Angular4+ QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6+ app with support for AOT. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on qrcodejs.
+`angularx-qrcode` is an Ionic 3 and Angular4+ QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6+ app with support for AOT. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on qrcodejs.
 
 ## Demo App
 
@@ -55,12 +55,12 @@ code in our controller.
 ### Create a QR Code from a variable in your controller
 
 In addition to our `<qrcode>`-directive in `example.html`,
-we add two lines of code to our controller `example.ts`.
+lets add two lines of code to our controller `example.ts`.
 
 ```
 // File: example.ts
 export class QRCodeComponent {
-    public angularxQrCode: string = null;
+    public myAngularxQrCode: string = null;
     constructor () {
         // assign a value
         this.myAngularxQrCode = 'Your QR code data string';
@@ -84,7 +84,15 @@ export class QRCodeComponent {
 | usesvg      | Boolean | false     | SVG Output |
 
 ## AOT - Ahead Of Time Compilation
-`angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. For further information see https://angular.io/guide/aot-compiler
+`angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler
+
+## Available commands
+
+    # Build
+    npm run build
+
+    # Watch
+    npm run watch
 
 ## Note
 Depending on the size (amount of data) of the *qrdata* to encode, a minimum *size* is required.

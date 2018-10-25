@@ -88,6 +88,12 @@ export class QRCodeComponent {
 ## AOT - Ahead Of Time Compilation
 `angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler
 
+
+## SSR - Server Side Rendering
+
+See: [HowTo use Angular QRCode with SSR](https://github.com/Cordobo/angularx-qrcode/issues/5)
+
+
 ## Available commands
 
     # Build

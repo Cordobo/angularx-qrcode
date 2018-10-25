@@ -1,11 +1,11 @@
 {
 	"name": "angularx-qrcode",
-	"version": "1.2.4",
+	"version": "1.3.0",
 	"author": {
 		"name": "Andreas Jacob <andreas@cordobo.de>",
 		"url": "http://cordobo.com/"
 	},
-	"description": "Ionic 3/4 and Angular4/5/6+ QRCode module generator using qrcodejs",
+	"description": "Ionic 3/4 and Angular4/5/6/7+ QRCode module generator using qrcodejs",
 	"main": "./dist/index.umd.js",
 	"module": "./dist/index.js",
 	"typings": "./dist/index.d.ts",
@@ -17,7 +17,7 @@
 		"angular",
 		"angular5",
 		"angular6",
-		"angular6.1",
+		"angular7",
 		"ionic",
 		"ionic3",
 		"ionic4",
@@ -61,17 +61,17 @@
 		"qrcodejs2": "0.0.2"
 	},
 	"peerDependencies": {
-		"@angular/common": "^6.0.0",
-		"@angular/core": "^6.0.0"
+		"@angular/common": "^7.0.0",
+		"@angular/core": "^7.0.0"
 	},
 	"devDependencies": {
-		"@angular/cli": "^6.0.0",
-		"@angular/common": "^6.0.0",
-		"@angular/compiler": "^6.0.0",
-		"@angular/compiler-cli": "^6.0.0",
-		"@angular/core": "^6.0.0",
-		"@angular/platform-browser": "^6.0.0",
-		"@angular/platform-browser-dynamic": "^6.0.0",
+		"@angular/cli": "^7.0.0",
+		"@angular/common": "^7.0.0",
+		"@angular/compiler": "^7.0.0",
+		"@angular/compiler-cli": "^7.0.0",
+		"@angular/core": "^7.0.0",
+		"@angular/platform-browser": "^7.0.0",
+		"@angular/platform-browser-dynamic": "^7.0.0",
 		"@compodoc/compodoc": "^1.0.0-beta.9",
 		"@types/node": "^7.0.18",
 		"@types/tapable": "^0.2.5",
@@ -91,7 +91,7 @@
 		"source-map-explorer": "^1.3.3",
 		"ts-node": "^3.0.4",
 		"tslint": "^5.9.1",
-		"typescript": "^2.9.0",
+		"typescript": "<3.2.0",
 		"webpack": "^2.5.1",
 		"webpack-angular-externals": "^1.0.2",
 		"webpack-rxjs-externals": "^1.0.0",

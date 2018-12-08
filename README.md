@@ -6,9 +6,11 @@
 An Angular app with a working implementation of angularx-qrcode is available on 
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
-## Installation
+## Installation 1.5.0
     # Angular 5/6/6.1/7/7.1 and Ionic
     npm install angularx-qrcode --save
+
+## Older Versions
 
     # Angular 7.1
     npm install angularx-qrcode@1.4.0 --save

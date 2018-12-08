@@ -7,69 +7,69 @@ import * as rxjsExternals from 'webpack-rxjs-externals';
 const pkg = JSON.parse(fs.readFileSync('./package.json').toString());
 
 export default {
-    entry: {
-        'index.umd': './src/index.ts',
-        'index.umd.min': './src/index.ts',
-    },
-    output: {
-        path: path.join(__dirname, 'dist'),
-        filename: '[name].js',
-        libraryTarget: 'umd',
-        library: 'ticktock'
-    },
-    resolve: {
-        extensions: ['.ts', '.js', '.json']
-    },
-    externals: [
-        angularExternals(),
-        rxjsExternals()
-    ],
-    devtool: 'source-map',
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                use: [
-                    {
-                        loader: 'awesome-typescript-loader',
-                        options: {
-                            configFileName: 'tsconfig.json'
-                        }
-                    },
-                    {
-                        loader: 'angular2-template-loader'
-                    }
-                ],
-                exclude: [
-                    /node_modules/,
-                    /\.(spec|e2e)\.ts$/
-                ]
-            },
-
-            {
-                test: /\.json$/,
-                use: 'json-loader'
-            },
-
-            {
-                test: /\.html$/,
-                use: 'raw-loader'
+  entry: {
+    'index.umd': './src/index.ts',
+    'index.umd.min': './src/index.ts',
+  },
+  output: {
+    path: path.join(__dirname, 'dist'),
+    filename: '[name].js',
+    libraryTarget: 'umd',
+    library: 'ticktock'
+  },
+  resolve: {
+    extensions: ['.ts', '.js', '.json']
+  },
+  externals: [
+    angularExternals(),
+    rxjsExternals()
+  ],
+  devtool: 'source-map',
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: [
+          {
+            loader: 'awesome-typescript-loader',
+            options: {
+              configFileName: 'tsconfig.json'
             }
+          },
+          {
+            loader: 'angular2-template-loader'
+          }
+        ],
+        exclude: [
+          /node_modules/,
+          /\.(spec|e2e)\.ts$/
         ]
-    },
-    plugins: [
-        new webpack.ContextReplacementPlugin(
-            /angular(\\|\/)core(\\|\/)@angular/,
-            path.join(__dirname, 'src')
-        ),
+      },
 
-        new webpack.optimize.UglifyJsPlugin({
-            include: /\.min\.js$/,
-            sourceMap: true
-        }),
+      {
+        test: /\.json$/,
+        use: 'json-loader'
+      },
 
-        new webpack.BannerPlugin({
-            banner: `
+      {
+        test: /\.html$/,
+        use: 'raw-loader'
+      }
+    ]
+  },
+  plugins: [
+    new webpack.ContextReplacementPlugin(
+      /angular(\\|\/)core(\\|\/)@angular/,
+      path.join(__dirname, 'src')
+    ),
+
+    new webpack.optimize.UglifyJsPlugin({
+      include: /\.min\.js$/,
+      sourceMap: true
+    }),
+
+    new webpack.BannerPlugin({
+      banner: `
 /**
  * ${pkg.name} - ${pkg.description}
  * @version v${pkg.version}
@@ -78,9 +78,9 @@ export default {
  * @license ${pkg.license}
  */
       `.trim(),
-            raw: true,
-            entryOnly: true
-        })
+      raw: true,
+      entryOnly: true
+    })
 
-    ]
+  ]
 } as webpack.Configuration;

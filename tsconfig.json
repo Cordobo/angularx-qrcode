@@ -1,37 +1,37 @@
 {
-    "compilerOptions": {
-        "target": "es5",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "noEmit": true,
-        "sourceMap": true,
-        "declaration": false,
-        "noImplicitAny": false,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "lib": [
-            "es2015",
-            "dom"
-        ],
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "types": [
-            "node",
-            "tapable",
-            "uglify-js",
-            "webpack",
-            "webpack-env"
-        ]
-    },
-    "include": [
-        "src/**/*.ts",
-        "typings/qrcodejs2.d.ts"
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "sourceMap": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "lib": [
+      "es2015",
+      "dom"
     ],
-    "exclude": [
-        "src/**/*.spec.ts",
-        "node_modules",
-        "demo",
-        "dist"
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node",
+      "tapable",
+      "uglify-js",
+      "webpack",
+      "webpack-env"
     ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "typings/qrcodejs2.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts",
+    "node_modules",
+    "demo",
+    "dist"
+  ]
 }

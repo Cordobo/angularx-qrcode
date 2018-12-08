@@ -2,6 +2,7 @@ import * as webpack from 'webpack';
 import * as path from 'path';
 
 export default {
+  mode: 'development',
   resolve: {
     extensions: ['.ts', '.js', '.json']
   },
@@ -15,9 +16,6 @@ export default {
             options: {
               configFileName: 'tsconfig.json'
             }
-          },
-          {
-            loader: 'angular2-template-loader'
           }
         ],
         exclude: [

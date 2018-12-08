@@ -114,4 +114,4 @@ Based on no-longer-maintained angular2 component https://github.com/PragmaticClu
 ## License
 MIT License
 
-Copyright (c) 2018, [Andreas Jacob (Cordobo.com)](http://cordobo.com/)
+Copyright (c) 2018 - present [Andreas Jacob (Cordobo.com)](http://cordobo.com/)

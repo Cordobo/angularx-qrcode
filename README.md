@@ -7,8 +7,11 @@ An Angular app with a working implementation of angularx-qrcode is available on
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
 ## Installation
-    # Angular 7.1 and Ionic
+    # Angular 5/6/6.1/7/7.1 and Ionic
     npm install angularx-qrcode --save
+
+    # Angular 7.1
+    npm install angularx-qrcode@1.4.0 --save
 
     # Angular 7
     npm install angularx-qrcode@1.3.0 --save
@@ -33,10 +36,10 @@ import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
 declarations: [
-    AppComponent
+  AppComponent
 ],
 imports: [
-    QRCodeModule
+  QRCodeModule
 ],
 providers: [],
 bootstrap: [AppComponent]
@@ -65,11 +68,11 @@ lets add two lines of code to our controller `example.ts`.
 ```
 // File: example.ts
 export class QRCodeComponent {
-    public myAngularxQrCode: string = null;
-    constructor () {
-        // assign a value
-        this.myAngularxQrCode = 'Your QR code data string';
-    }
+  public myAngularxQrCode: string = null;
+  constructor () {
+    // assign a value
+    this.myAngularxQrCode = 'Your QR code data string';
+  }
 }
 
 // File: example.html

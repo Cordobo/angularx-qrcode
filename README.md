@@ -1,31 +1,18 @@
 # angularx-qrcode
-`angularx-qrcode` is an Ionic 3 and Angular4-7.1 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7+ app with support for AOT. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on qrcodejs.
+`angularx-qrcode` is an Ionic 3 and Angular4-7.2 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7+ app with support for AOT. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on qrcodejs.
 
 ## Demo App
 
 An Angular app with a working implementation of angularx-qrcode is available on 
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
-## Installation 1.5.1
-    # Angular 5/6/6.1/7/7.1 and Ionic
+## Installation 1.5.2
+    # Angular 5/6/6.1/7/7.1/7.2 and Ionic
     npm install angularx-qrcode --save
     # Or use yarn
     yarn add angularx-qrcode
 
 ## Older Versions
-
-    # Angular 7.1
-    npm install angularx-qrcode@1.4.0 --save
-
-    # Angular 7
-    npm install angularx-qrcode@1.3.0 --save
-
-    # Angular 6/6.1
-    npm install angularx-qrcode@1.2.4 --save
-
-    # Angular 5
-    npm install angularx-qrcode@1.1.7 --save
-
     # Angular 4
     npm install angularx-qrcode@1.0.3 --save
 
@@ -95,6 +82,10 @@ export class QRCodeComponent {
 | size      | Number | 256     | Height/Width (any value) |
 | usesvg      | Boolean | false     | SVG Output |
 
+### Note
+Depending on the amount of data of the *qrdata* to encode, a minimum *size* is required.
+
+
 ## AOT - Ahead Of Time Compilation
 `angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler
 
@@ -112,11 +103,14 @@ See: [HowTo use Angular QRCode with SSR](https://github.com/Cordobo/angularx-qrc
     # Watch
     npm run watch
 
-## Note
-Depending on the size (amount of data) of the *qrdata* to encode, a minimum *size* is required.
 
 ## Credits
 Based on no-longer-maintained angular2 component https://github.com/PragmaticClub/ng2-qrcode
+
+
+## Contribution
+Please open your PR against the development branch.
+
 
 ## License
 MIT License

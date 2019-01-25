@@ -9,6 +9,11 @@
   "rules": {
     "component-class-suffix": true,
     "directive-class-suffix": true,
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
     "interface-name": false,
     "max-line-length": [
       true,

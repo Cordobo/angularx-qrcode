@@ -109,7 +109,9 @@ Based on no-longer-maintained angular2 component https://github.com/PragmaticClu
 
 
 ## Contribution
-Please open your PR against the development branch.
+- Please open your PR against the development branch.
+- Make sure your editor uses the packages .editorconfig file to minimioze commited code changes.
+- Use `npm run lint` before you commit
 
 
 ## License

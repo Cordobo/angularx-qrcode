@@ -50,7 +50,7 @@
     "clean:tmp": "rimraf coverage dist tmp docs",
     "docs": "compodoc -p tsconfig.json -d docs --disableCoverage --disablePrivate --disableInternal",
     "explorer": "source-map-explorer ./dist/index.umd.js",
-    "lint": "tslint 'src/**/*.ts'",
+    "lint": "tslint 'src/**/*.ts' --fix",
     "ngcompile": "node_modules/.bin/ngc -p tsconfig-aot.json",
     "ngcompile:watch": "node_modules/.bin/ngc -p -w tsconfig-aot.json",
     "postversion": "git push && git push --tags",

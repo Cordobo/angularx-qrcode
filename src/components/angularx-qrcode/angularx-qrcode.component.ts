@@ -4,7 +4,6 @@ import {
   ElementRef,
   Input,
   OnChanges,
-  OnInit,
   SimpleChange,
   AfterViewInit,
   Inject,
@@ -12,7 +11,7 @@ import {
 } from '@angular/core';
 
 declare var require: any;
-var QRCode: any = undefined;
+let QRCode: any;
 
 import { isPlatformServer } from '@angular/common';
 
@@ -22,7 +21,7 @@ import { isPlatformServer } from '@angular/common';
   template: ''
 })
 
-export class QRCodeComponent implements OnChanges, OnInit, AfterViewInit {
+export class QRCodeComponent implements OnChanges, AfterViewInit {
 
   /** @internal */
   @Input() public allowEmptyString: boolean = false;
@@ -41,14 +40,10 @@ export class QRCodeComponent implements OnChanges, OnInit, AfterViewInit {
     @Inject(PLATFORM_ID) private platformId: Object,
   ) { }
 
-  public ngOnInit() {
-  }
-
   public ngAfterViewInit() {
     if (isPlatformServer(this.platformId)) {
       return;
-    }
-    else {
+    } else {
       if (!QRCode) {
         QRCode = require('qrcodejs2');
       }

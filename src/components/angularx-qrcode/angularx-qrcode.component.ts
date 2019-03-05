@@ -5,10 +5,16 @@ import {
   Input,
   OnChanges,
   OnInit,
-  SimpleChange
+  SimpleChange,
+  AfterViewInit,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
 
-import * as QRCode from 'qrcodejs2';
+declare var require: any;
+var QRCode: any = undefined;
+
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'qrcode',
@@ -16,7 +22,7 @@ import * as QRCode from 'qrcodejs2';
   template: ''
 })
 
-export class QRCodeComponent implements OnChanges, OnInit {
+export class QRCodeComponent implements OnChanges, OnInit, AfterViewInit {
 
   /** @internal */
   @Input() public allowEmptyString: boolean = false;
@@ -31,26 +37,38 @@ export class QRCodeComponent implements OnChanges, OnInit {
   public qrcode: any;
 
   constructor(
-    public el: ElementRef
+    public el: ElementRef,
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) { }
 
   public ngOnInit() {
-    try {
-      if (!this.isValidQrCodeText(this.qrdata)) {
-        throw new Error('Empty QR Code data');
-      }
+  }
 
-      this.qrcode = new QRCode(this.el.nativeElement, {
-        colorDark: this.colordark,
-        colorLight: this.colorlight,
-        correctLevel: QRCode.CorrectLevel[this.level.toString()],
-        height: this.size,
-        text: this.qrdata || ' ',
-        useSVG: this.usesvg,
-        width: this.size,
-      });
-    } catch (e) {
-      console.error('Error generating QR Code: ' + e.message);
+  public ngAfterViewInit() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+    else {
+      if (!QRCode) {
+        QRCode = require('qrcodejs2');
+      }
+      try {
+        if (!this.isValidQrCodeText(this.qrdata)) {
+          throw new Error('Empty QR Code data');
+        }
+
+        this.qrcode = new QRCode(this.el.nativeElement, {
+          colorDark: this.colordark,
+          colorLight: this.colorlight,
+          correctLevel: QRCode.CorrectLevel[this.level.toString()],
+          height: this.size,
+          text: this.qrdata || ' ',
+          useSVG: this.usesvg,
+          width: this.size,
+        });
+      } catch (e) {
+        console.error('Error generating QR Code: ' + e.message);
+      }
     }
   }
 

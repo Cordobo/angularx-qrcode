@@ -5,10 +5,15 @@ import {
   Input,
   OnChanges,
   OnInit,
-  SimpleChange
+  SimpleChange,
+  Inject,
+  PLATFORM_ID
 } from '@angular/core';
 
-import * as QRCode from 'qrcodejs2';
+declare var require: any;
+let QRCode: any;
+
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'qrcode',
@@ -31,10 +36,18 @@ export class QRCodeComponent implements OnChanges, OnInit {
   public qrcode: any;
 
   constructor(
-    public el: ElementRef
+    public el: ElementRef,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) { }
 
+  // fix SSR: https://github.com/Cordobo/angularx-qrcode/issues/5#issuecomment-396715508
   public ngOnInit() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+    if (!QRCode) {
+      QRCode = require('qrcodejs2');
+    }
     try {
       if (!this.isValidQrCodeText(this.qrdata)) {
         throw new Error('Empty QR Code data');

@@ -37,33 +37,32 @@ export class QRCodeComponent implements OnChanges, AfterViewInit {
 
   constructor(
     public el: ElementRef,
-    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(PLATFORM_ID) private readonly platformId: any,
   ) { }
 
   public ngAfterViewInit() {
     if (isPlatformServer(this.platformId)) {
       return;
-    } else {
-      if (!QRCode) {
-        QRCode = require('qrcodejs2');
+    }
+    if (!QRCode) {
+      QRCode = require('qrcodejs2');
+    }
+    try {
+      if (!this.isValidQrCodeText(this.qrdata)) {
+        throw new Error('Empty QR Code data');
       }
-      try {
-        if (!this.isValidQrCodeText(this.qrdata)) {
-          throw new Error('Empty QR Code data');
-        }
 
-        this.qrcode = new QRCode(this.el.nativeElement, {
-          colorDark: this.colordark,
-          colorLight: this.colorlight,
-          correctLevel: QRCode.CorrectLevel[this.level.toString()],
-          height: this.size,
-          text: this.qrdata || ' ',
-          useSVG: this.usesvg,
-          width: this.size,
-        });
-      } catch (e) {
-        console.error('Error generating QR Code: ' + e.message);
-      }
+      this.qrcode = new QRCode(this.el.nativeElement, {
+        colorDark: this.colordark,
+        colorLight: this.colorlight,
+        correctLevel: QRCode.CorrectLevel[this.level.toString()],
+        height: this.size,
+        text: this.qrdata || ' ',
+        useSVG: this.usesvg,
+        width: this.size,
+      });
+    } catch (e) {
+      console.error('Error generating QR Code: ' + e.message);
     }
   }
 

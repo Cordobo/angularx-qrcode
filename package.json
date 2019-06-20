@@ -1,11 +1,11 @@
 {
   "name": "angularx-qrcode",
-  "version": "1.5.3",
+  "version": "1.6.1",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
   },
-  "description": "Ionic 3/4 and Angular4/5/6/7+ QRCode module generator using qrcodejs",
+  "description": "Ionic 3/4 and Angular4/5/6/7/8+ QRCode module generator using qrcodejs",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.ts",
@@ -19,6 +19,7 @@
     "angular5",
     "angular6",
     "angular7",
+    "angular8",
     "ionic",
     "ionic3",
     "ionic4",
@@ -63,37 +64,38 @@
     "qrcodejs2": "0.0.2"
   },
   "peerDependencies": {
-    "@angular/common": ">= 5.0.0 < 7.3.0",
-    "@angular/core": ">= 5.0.0 < 7.3.0"
+    "@angular/common": ">= 5.0.0 < 8.1.0",
+    "@angular/core": ">= 5.0.0 < 8.1.0"
   },
   "devDependencies": {
-    "@angular/cli": "^7.2.3",
-    "@angular/common": "^7.2.2",
-    "@angular/compiler": "^7.2.2",
-    "@angular/compiler-cli": "^7.2.2",
-    "@angular/core": "^7.2.2",
-    "@angular/platform-browser": "^7.2.2",
-    "@angular/platform-browser-dynamic": "^7.2.2",
-    "@compodoc/compodoc": "^1.1.7",
-    "@types/node": "^8.9.4",
+    "@angular/cli": "~8.0.1",
+    "@angular/common": "~8.0.0",
+    "@angular/compiler": "~8.0.0",
+    "@angular/compiler-cli": "~8.0.0",
+    "@angular/core": "~8.0.0",
+    "@angular/platform-browser": "~8.0.0",
+    "@angular/platform-browser-dynamic": "~8.0.0",
+    "@compodoc/compodoc": "^1.1.9",
+    "@types/node": "~8.9.4",
     "@types/tapable": "^1.0.4",
     "@types/webpack": "^4.4.20",
     "@types/webpack-env": "^1.13.0",
     "awesome-typescript-loader": "^5.2.1",
-    "codelyzer": "^4.5.0",
+    "codelyzer": "^5.0.0",
     "concurrently": "^3.4.0",
+    "js-yaml": "^3.13.1",
     "json-loader": "^0.5.4",
     "raw-loader": "^0.5.1",
     "rimraf": "2.6.1",
-    "rxjs": "^6.0.0",
-    "rxjs-tslint": "^0.1.6",
+    "rxjs": "~6.4.0",
+    "rxjs-tslint": "^0.1.7",
     "ts-node": "~7.0.0",
-    "tslint": "~5.11.0",
-    "typescript": "~3.1.6",
+    "tslint": "~5.15.0",
+    "typescript": "~3.4.3",
     "webpack": "^4.27.1",
     "webpack-angular-externals": "^1.0.2",
     "webpack-cli": "^3.1.2",
     "webpack-rxjs-externals": "^1.0.0",
-    "zone.js": "^0.8.26"
+    "zone.js": "~0.9.1"
   }
 }

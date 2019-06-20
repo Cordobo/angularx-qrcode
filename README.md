@@ -1,20 +1,40 @@
 # angularx-qrcode
-`angularx-qrcode` is an Ionic 3 and Angular4-7.2 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7+ app with support for AOT. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on qrcodejs.
+`angularx-qrcode` is an Ionic 3 and Angular4-8 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8+ app with support for AOT. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on qrcodejs.
 
 ## Demo App
 
 An Angular app with a working implementation of angularx-qrcode is available on 
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
-## Installation 1.5.3
-    # Angular 5/6/6.1/7/7.1/7.2 and Ionic
-    npm install angularx-qrcode --save
-    # Or use yarn
-    yarn add angularx-qrcode
+## Install 1.6.0 with Angular 8
+
+```
+# Angular 8 and Ionic
+npm install angularx-qrcode --save
+# Or use yarn
+yarn add angularx-qrcode
+```
+
+When you create a production version with `ng build` you might encounter issue #49.
+As a temporary workaround set the `target`-property in your tsconfig.json from **es2015** to **es5**:
+
+```
+"target": "es5"
+```
+
+## Installation 1.6.0
+```
+# Angular 5/6/6.1/7/7.1/7.2 and Ionic
+npm install angularx-qrcode --save
+# Or use yarn
+yarn add angularx-qrcode
+```
 
 ## Older Versions
-    # Angular 4
-    npm install angularx-qrcode@1.0.3 --save
+```
+# Angular 4
+npm install angularx-qrcode@1.0.3 --save
+```
 
 ## Basic Usage
 
@@ -92,7 +112,7 @@ Depending on the amount of data of the *qrdata* to encode, a minimum *size* is r
 
 ## SSR - Server Side Rendering
 
-See: [HowTo use Angular QRCode with SSR](https://github.com/Cordobo/angularx-qrcode/issues/5)
+As of version 1.6.0, SSR support is fully implemented, the following workaround is no longer needed. [HowTo use Angular QRCode with SSR](https://github.com/Cordobo/angularx-qrcode/issues/5)
 
 
 ## Available commands

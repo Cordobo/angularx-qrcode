@@ -6,7 +6,6 @@ import {
   Inject,
   Input,
   OnChanges,
-  OnInit,
   PLATFORM_ID,
   SimpleChange,
 } from '@angular/core';
@@ -21,7 +20,7 @@ let QRCode: any;
   template: ''
 })
 
-export class QRCodeComponent implements OnChanges, OnInit, AfterViewInit {
+export class QRCodeComponent implements OnChanges, AfterViewInit {
 
   /** @internal */
   @Input() public allowEmptyString: boolean = false;
@@ -37,11 +36,8 @@ export class QRCodeComponent implements OnChanges, OnInit, AfterViewInit {
 
   constructor(
     public el: ElementRef,
-    @Inject(PLATFORM_ID) private readonly platformId: any
+    @Inject(PLATFORM_ID) private readonly platformId: any,
   ) { }
-
-  // tslint:disable-next-line: no-empty
-  public ngOnInit() { }
 
   public ngAfterViewInit() {
     if (isPlatformServer(this.platformId)) {

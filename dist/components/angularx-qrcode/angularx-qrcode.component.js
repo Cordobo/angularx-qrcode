@@ -7,12 +7,17 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { ChangeDetectionStrategy, Component, ElementRef, Input } from '@angular/core';
-import * as QRCode from 'qrcodejs2';
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+import { ChangeDetectionStrategy, Component, ElementRef, Inject, Input, PLATFORM_ID, } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+var QRCode;
 var QRCodeComponent = /** @class */ (function () {
-    function QRCodeComponent(el) {
+    function QRCodeComponent(el, platformId) {
         var _this = this;
         this.el = el;
+        this.platformId = platformId;
         /** @internal */
         this.allowEmptyString = false;
         this.colordark = '#000000';
@@ -29,7 +34,14 @@ var QRCodeComponent = /** @class */ (function () {
             return !(typeof data === 'undefined');
         };
     }
-    QRCodeComponent.prototype.ngOnInit = function () {
+    QRCodeComponent.prototype.ngOnInit = function () { };
+    QRCodeComponent.prototype.ngAfterViewInit = function () {
+        if (isPlatformServer(this.platformId)) {
+            return;
+        }
+        if (!QRCode) {
+            QRCode = require('qrcodejs2');
+        }
         try {
             if (!this.isValidQrCodeText(this.qrdata)) {
                 throw new Error('Empty QR Code data');
@@ -96,7 +108,8 @@ var QRCodeComponent = /** @class */ (function () {
             changeDetection: ChangeDetectionStrategy.OnPush,
             template: ''
         }),
-        __metadata("design:paramtypes", [ElementRef])
+        __param(1, Inject(PLATFORM_ID)),
+        __metadata("design:paramtypes", [ElementRef, Object])
     ], QRCodeComponent);
     return QRCodeComponent;
 }());

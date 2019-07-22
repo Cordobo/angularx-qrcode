@@ -1,14 +1,19 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Inject,
   Input,
   OnChanges,
   OnInit,
-  SimpleChange
+  PLATFORM_ID,
+  SimpleChange,
 } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 
-import * as QRCode from 'qrcodejs2';
+declare var require: any;
+let QRCode: any;
 
 @Component({
   selector: 'qrcode',
@@ -16,7 +21,7 @@ import * as QRCode from 'qrcodejs2';
   template: ''
 })
 
-export class QRCodeComponent implements OnChanges, OnInit {
+export class QRCodeComponent implements OnChanges, OnInit, AfterViewInit {
 
   /** @internal */
   @Input() public allowEmptyString: boolean = false;
@@ -31,10 +36,19 @@ export class QRCodeComponent implements OnChanges, OnInit {
   public qrcode: any;
 
   constructor(
-    public el: ElementRef
+    public el: ElementRef,
+    @Inject(PLATFORM_ID) private readonly platformId: any
   ) { }
 
-  public ngOnInit() {
+  public ngOnInit() { }
+
+  public ngAfterViewInit() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+    if (!QRCode) {
+      QRCode = require('qrcodejs2');
+    }
     try {
       if (!this.isValidQrCodeText(this.qrdata)) {
         throw new Error('Empty QR Code data');
@@ -52,6 +66,7 @@ export class QRCodeComponent implements OnChanges, OnInit {
     } catch (e) {
       console.error('Error generating QR Code: ' + e.message);
     }
+
   }
 
   public ngOnChanges(changes: { [propertyName: string]: SimpleChange }) {

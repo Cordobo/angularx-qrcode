@@ -22,7 +22,7 @@ As a temporary workaround set the `target`-property in your tsconfig.json from *
 "target": "es5"
 ```
 
-## Installation 1.6.2
+## Installation 1.6.3
 ```
 # Angular 5/6/6.1/7/7.1/7.2 and Ionic
 npm install angularx-qrcode --save

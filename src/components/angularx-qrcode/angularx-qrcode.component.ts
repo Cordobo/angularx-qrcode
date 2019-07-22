@@ -40,6 +40,7 @@ export class QRCodeComponent implements OnChanges, OnInit, AfterViewInit {
     @Inject(PLATFORM_ID) private readonly platformId: any
   ) { }
 
+  // tslint:disable-next-line: no-empty
   public ngOnInit() { }
 
   public ngAfterViewInit() {

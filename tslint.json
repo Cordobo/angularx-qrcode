@@ -20,7 +20,7 @@
       100
     ],
     "no-access-missing-member": false,
-    "no-attribute-parameter-decorator": true,
+    "no-attribute-decorator": true,
     "no-console": [
       true,
       "time",
@@ -50,9 +50,9 @@
         "singleline": "never"
       }
     ],
-    "use-host-property-decorator": true,
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
+    "no-host-metadata-property": true,
+    "no-inputs-metadata-property": true,
+    "no-outputs-metadata-property": true,
     "use-pipe-transform-interface": true,
     "variable-name": [
       true,

@@ -34,6 +34,7 @@ var QRCodeComponent = /** @class */ (function () {
             return !(typeof data === 'undefined');
         };
     }
+    // tslint:disable-next-line: no-empty
     QRCodeComponent.prototype.ngOnInit = function () { };
     QRCodeComponent.prototype.ngAfterViewInit = function () {
         if (isPlatformServer(this.platformId)) {

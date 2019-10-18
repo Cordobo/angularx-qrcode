@@ -1,6 +1,6 @@
 {
   "name": "angularx-qrcode",
-  "version": "1.7.0-beta.4",
+  "version": "1.7.0-beta.5",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -56,12 +56,18 @@
     "ngcompile": "node_modules/.bin/ngc -p tsconfig-aot.json",
     "ngcompile:watch": "node_modules/.bin/ngc -p -w tsconfig-aot.json",
     "patchPackage": "patch-package",
+    "postinstall": "npm run patchPackage",
     "postversion": "git push && git push --tags",
     "prebuild": "rimraf dist tmp",
     "prebuild:watch": "rimraf dist tmp",
     "prepublishOnly": "npm run ci",
     "preversion": "npm run ci",
     "reinstall": "rm -rf node_modules && npm install"
+  },
+  "dependencies": {
+    "patch-package": "6.2.0",
+    "postinstall-postinstall": "2.0.0",
+    "qrcodejs2": "0.0.2"
   },
   "peerDependencies": {
     "@angular/common": ">= 5.0.0 < 9.0.0",
@@ -85,8 +91,6 @@
     "concurrently": "^3.4.0",
     "js-yaml": "^3.13.1",
     "json-loader": "^0.5.4",
-    "patch-package": "6.2.0",
-    "qrcodejs2": "0.0.2",
     "raw-loader": "^0.5.1",
     "rimraf": "2.6.1",
     "rxjs": "~6.4.0",

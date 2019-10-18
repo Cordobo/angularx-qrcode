@@ -1,6 +1,6 @@
 {
   "name": "angularx-qrcode",
-  "version": "1.7.0-beta.1",
+  "version": "1.7.0-beta.2",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -55,7 +55,6 @@
     "lint": "tslint 'src/**/*.ts' --fix",
     "ngcompile": "node_modules/.bin/ngc -p tsconfig-aot.json",
     "ngcompile:watch": "node_modules/.bin/ngc -p -w tsconfig-aot.json",
-    "postinstall": "patch-package",
     "postversion": "git push && git push --tags",
     "prebuild": "rimraf dist tmp",
     "prebuild:watch": "rimraf dist tmp",

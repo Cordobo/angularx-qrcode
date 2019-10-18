@@ -6,21 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 import { NgModule } from '@angular/core';
 import { QRCodeComponent } from './components';
-var QRCodeModule = /** @class */ (function () {
-    function QRCodeModule() {
-    }
-    QRCodeModule = __decorate([
-        NgModule({
-            providers: [],
-            declarations: [
-                QRCodeComponent,
-            ],
-            exports: [
-                QRCodeComponent,
-            ]
-        })
-    ], QRCodeModule);
-    return QRCodeModule;
-}());
+let QRCodeModule = class QRCodeModule {
+};
+QRCodeModule = __decorate([
+    NgModule({
+        providers: [],
+        declarations: [
+            QRCodeComponent,
+        ],
+        exports: [
+            QRCodeComponent,
+        ]
+    })
+], QRCodeModule);
 export { QRCodeModule };
 //# sourceMappingURL=angularx-qrcode.module.js.map

@@ -1,6 +1,6 @@
 {
   "name": "angularx-qrcode",
-  "version": "1.7.0-beta.3",
+  "version": "1.7.0-beta.4",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/cordobo/angularx-qrcode#readme",
   "scripts": {
-    "build": "npm run build:esm && npm run build:umd",
+    "build": "npm run patchPackage && npm run build:esm && npm run build:umd",
     "build:esm": "npm run ngcompile",
     "build:esm:watch": "npm run ngcompile:watch",
     "build:umd": "webpack --config webpack-umd.config.ts",
@@ -55,7 +55,7 @@
     "lint": "tslint 'src/**/*.ts' --fix",
     "ngcompile": "node_modules/.bin/ngc -p tsconfig-aot.json",
     "ngcompile:watch": "node_modules/.bin/ngc -p -w tsconfig-aot.json",
-    "postinstall": "patch-package",
+    "patchPackage": "patch-package",
     "postversion": "git push && git push --tags",
     "prebuild": "rimraf dist tmp",
     "prebuild:watch": "rimraf dist tmp",

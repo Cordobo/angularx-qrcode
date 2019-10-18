@@ -6,25 +6,9 @@
 An Angular app with a working implementation of angularx-qrcode is available on 
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
-## Install 1.6.4 with Angular 8
-
+## Installation 1.7.0
 ```
-# Angular 8 and Ionic
-npm install angularx-qrcode --save
-# Or use yarn
-yarn add angularx-qrcode
-```
-
-When you create a production version with `ng build` you might encounter issue #49.
-As a temporary workaround set the `target`-property in your tsconfig.json from **es2015** to **es5**:
-
-```
-"target": "es5"
-```
-
-## Installation 1.6.4
-```
-# Angular 5/6/6.1/7/7.1/7.2 and Ionic
+# Angular 5/6/6.1/7/7.1/7.2/8 and Ionic
 npm install angularx-qrcode --save
 # Or use yarn
 yarn add angularx-qrcode

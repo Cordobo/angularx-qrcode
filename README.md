@@ -105,6 +105,12 @@ export class QRCodeComponent {
 ### Note
 Depending on the amount of data of the *qrdata* to encode, a minimum *size* is required.
 
+Note on QR Correction Level: there are 4 error correction levels used for QR codes, with each one adding different amounts of “backup” data depending on how much damage the QR code is expected to suffer in its intended environment, and hence how much error correction may be required:
+Level L – up to 7% damage
+Level M – up to 15% damage
+Level Q – up to 25% damage
+Level H – up to 30% damage
+
 
 ## AOT - Ahead Of Time Compilation
 `angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler

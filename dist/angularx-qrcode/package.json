@@ -8,16 +8,10 @@
   },
   "description": "Simple QRCode module generator for Angular4/5/6/7/8+ and Ionic 3/4 using node-qrcode",
   "license": "MIT",
-  "scripts": {
-    "build": "ng-packagr -p ng-package.json",
-    "lint": "tslint 'src/**/*.ts' --fix",
-    "prebuild": "rimraf dist tmp",
-    "reinstall": "rm -rf node_modules && npm install",
-    "release": "npm run reinstall && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../"
-  },
   "dependencies": {
     "@angular/common": ">= 5.0.0 < 9.0.0",
-    "qrcode": "1.4.2"
+    "qrcode": "1.4.2",
+    "tslib": "^1.9.0"
   },
   "peerDependencies": {
     "@angular/common": ">= 5.0.0 < 9.0.0",
@@ -74,5 +68,15 @@
   "bugs": {
     "url": "https://github.com/cordobo/angularx-qrcode/issues"
   },
-  "homepage": "https://github.com/cordobo/angularx-qrcode#readme"
+  "homepage": "https://github.com/cordobo/angularx-qrcode#readme",
+  "main": "bundles/angularx-qrcode.umd.js",
+  "module": "fesm5/angularx-qrcode.js",
+  "es2015": "fesm2015/angularx-qrcode.js",
+  "esm5": "esm5/angularx-qrcode.js",
+  "esm2015": "esm2015/angularx-qrcode.js",
+  "fesm5": "fesm5/angularx-qrcode.js",
+  "fesm2015": "fesm2015/angularx-qrcode.js",
+  "typings": "angularx-qrcode.d.ts",
+  "metadata": "angularx-qrcode.metadata.json",
+  "sideEffects": false
 }

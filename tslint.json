@@ -3,8 +3,7 @@
     "tslint:recommended"
   ],
   "rulesDirectory": [
-    "node_modules/codelyzer",
-    "node_modules/rxjs-tslint"
+    "codelyzer"
   ],
   "rules": {
     "component-class-suffix": true,
@@ -17,7 +16,7 @@
     "interface-name": false,
     "max-line-length": [
       true,
-      100
+      250
     ],
     "no-access-missing-member": false,
     "no-attribute-decorator": true,

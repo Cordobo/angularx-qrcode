@@ -1,37 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
     "sourceMap": true,
     "declaration": false,
     "noImplicitAny": false,
-    "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
     "lib": [
-      "es2015",
+      "es2018",
       "dom"
     ],
     "typeRoots": [
       "node_modules/@types"
-    ],
-    "types": [
-      "node",
-      "tapable",
-      "uglify-js",
-      "webpack",
-      "webpack-env"
     ]
   },
   "include": [
-    "src/**/*.ts",
-    "typings/qrcodejs2.d.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "src/**/*.spec.ts",
     "node_modules",
-    "demo",
     "dist"
   ]
 }

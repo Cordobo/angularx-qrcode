@@ -109,10 +109,8 @@ export class QRCodeComponent implements OnChanges, AfterViewInit {
           width: this.width,
         }, (err, url) => {
           if (err) {
-            console.error(err);
             reject(err);
           } else {
-            console.log(url);
             resolve(url);
           }
         });
@@ -133,10 +131,8 @@ export class QRCodeComponent implements OnChanges, AfterViewInit {
         width: this.width,
       }, (error) => {
         if (error) {
-          // console.error(error);
           reject(error);
         } else {
-          // console.log('success!');
           resolve('success');
         }
       });
@@ -174,8 +170,7 @@ export class QRCodeComponent implements OnChanges, AfterViewInit {
       switch (this.elementType) {
         case 'canvas':
           element = this.renderer.createElement('canvas');
-          this.toCanvas(element).then((el: Element) => {
-            console.log('[angularx-qrcode] Canvas Element:', el);
+          this.toCanvas(element).then(() => {
             this.renderElement(element);
           }).catch((e) => {
             console.error('[angularx-qrcode] error: ', e);
@@ -188,7 +183,6 @@ export class QRCodeComponent implements OnChanges, AfterViewInit {
         default:
           element = this.renderer.createElement('img');
           this.toDataURL().then((dataUrl: string) => {
-            console.log('[angularx-qrcode] dataUrl:', dataUrl);
             element.setAttribute('src', dataUrl);
             this.renderElement(element);
           }).catch((e) => {

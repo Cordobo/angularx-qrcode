@@ -279,11 +279,9 @@
                     width: _this.width,
                 }, function (err, url) {
                     if (err) {
-                        console.error(err);
                         reject(err);
                     }
                     else {
-                        console.log(url);
                         resolve(url);
                     }
                 });
@@ -304,11 +302,9 @@
                     width: _this.width,
                 }, function (error) {
                     if (error) {
-                        // console.error(error);
                         reject(error);
                     }
                     else {
-                        // console.log('success!');
                         resolve('success');
                     }
                 });
@@ -354,8 +350,7 @@
                 switch (this.elementType) {
                     case 'canvas':
                         element_1 = this.renderer.createElement('canvas');
-                        this.toCanvas(element_1).then(function (el) {
-                            console.log('[angularx-qrcode] Canvas Element:', el);
+                        this.toCanvas(element_1).then(function () {
                             _this.renderElement(element_1);
                         }).catch(function (e) {
                             console.error('[angularx-qrcode] error: ', e);
@@ -368,7 +363,6 @@
                     default:
                         element_1 = this.renderer.createElement('img');
                         this.toDataURL().then(function (dataUrl) {
-                            console.log('[angularx-qrcode] dataUrl:', dataUrl);
                             element_1.setAttribute('src', dataUrl);
                             _this.renderElement(element_1);
                         }).catch(function (e) {

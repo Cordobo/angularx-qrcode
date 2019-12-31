@@ -44,7 +44,7 @@ export class QRCodeComponent implements OnChanges, AfterViewInit {
   @Input() public version: QRCodeVersion;
   @Input() public width: number = 10;
 
-  @ViewChild('qrcElement', null) public qrcElement: ElementRef;
+  @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
 
   public qrcode: any = null;
 

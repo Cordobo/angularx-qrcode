@@ -430,7 +430,7 @@
             core.Input()
         ], QRCodeComponent.prototype, "width", void 0);
         __decorate([
-            core.ViewChild('qrcElement', null)
+            core.ViewChild('qrcElement', { static: true })
         ], QRCodeComponent.prototype, "qrcElement", void 0);
         QRCodeComponent = __decorate([
             core.Component({

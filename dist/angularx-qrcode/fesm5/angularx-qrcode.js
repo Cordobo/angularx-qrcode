@@ -232,7 +232,7 @@ var QRCodeComponent = /** @class */ (function () {
         Input()
     ], QRCodeComponent.prototype, "width", void 0);
     __decorate([
-        ViewChild('qrcElement', null)
+        ViewChild('qrcElement', { static: true })
     ], QRCodeComponent.prototype, "qrcElement", void 0);
     QRCodeComponent = __decorate([
         Component({

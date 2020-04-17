@@ -1,10 +1,10 @@
-import * as tslib_1 from "tslib";
+import { __decorate } from "tslib";
 import { NgModule } from '@angular/core';
 import { QRCodeComponent } from './angularx-qrcode.component';
 var QRCodeModule = /** @class */ (function () {
     function QRCodeModule() {
     }
-    QRCodeModule = tslib_1.__decorate([
+    QRCodeModule = __decorate([
         NgModule({
             providers: [],
             declarations: [

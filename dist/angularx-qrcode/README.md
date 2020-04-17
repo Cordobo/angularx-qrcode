@@ -6,18 +6,36 @@
 An Angular app with a working implementation of angularx-qrcode is available on 
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
-## Install angularx-qrcode 2.x with Angular 6/7/8/9
+## Install angularx-qrcode 2.2.x with Angular 9
 
 ```
-# Angular 6/7/8/9 and Ionic
+# Angular 9 and Ionic
 npm install angularx-qrcode --save
 # Or use yarn
 yarn add angularx-qrcode
 ```
 
+## Install angularx-qrcode 2.1.x with Angular 8
+
+```
+# Angular 8 and Ionic
+npm install angularx-qrcode@^2.1.0 --save
+# Or use yarn
+yarn add angularx-qrcode@^2.1.0
+```
+
+## Install angularx-qrcode 2.0.x with Angular 7
+
+```
+# Angular 7
+npm install angularx-qrcode@^2.0.0 --save
+# Or use yarn
+yarn add angularx-qrcode@^2.0.0
+```
+
 ## Older Angular Versions
 ```
-# Angular 5
+# Angular 5/6
 npm install angularx-qrcode@1.6.4 --save
 # Angular 4
 npm install angularx-qrcode@1.0.3 --save
@@ -25,7 +43,7 @@ npm install angularx-qrcode@1.0.3 --save
 
 ## New in angularx-qrcode 2.x
 
-angularx-qrcode is now based on node-qrcode and as a result ships  a couple of new features (keeping all the known features)
+angularx-qrcode is now based on node-qrcode and as a result ships a couple of new features (keeping all the known features)
 
 * Add your CSS class with `cssClass`
 * New `elementType` field: `url`, `img` and `canvas` 
@@ -35,7 +53,7 @@ angularx-qrcode is now based on node-qrcode and as a result ships  a couple of n
 
 ## Upgrade from 1.x to 2.x
 
-Upgrading should be simple. If any field you use, angularx-qrcode logs warnings to your browser console, telling you which fields should be renamed.
+Upgrading should be simple. If any field you use is deprecated, angularx-qrcode logs warnings to your browser console, telling you which fields should be renamed.
 
 ### Old code in 1.x
 

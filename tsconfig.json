@@ -18,6 +18,11 @@
       "node_modules/@types"
     ]
   },
+  "angularCompilerOptions": {
+    "enableIvy": true,
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  },
   "include": [
     "src/**/*.ts"
   ],

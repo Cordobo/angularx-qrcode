@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "2.1.0",
+  "version": "2.2.1",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -16,34 +16,34 @@
     "release": "npm run reinstall && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../"
   },
   "dependencies": {
-    "@angular/common": ">= 5.0.0 < 9.1.0",
-    "qrcode": "1.4.2"
+    "@angular/common": ">= 9.0.0 < 10.0.0",
+    "qrcode": "1.4.4"
   },
   "peerDependencies": {
-    "@angular/common": ">= 5.0.0 < 9.1.0",
-    "@angular/core": ">= 5.0.0 < 9.1.0"
+    "@angular/common": ">= 9.0.0 < 10.0.0",
+    "@angular/core": ">= 9.0.0 < 10.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "0.803.21",
-    "@angular-devkit/build-ng-packagr": "0.803.21",
-    "@angular/cli": "8.3.21",
-    "@angular/compiler": "8.2.14",
-    "@angular/compiler-cli": "8.2.14",
-    "@angular/core": "8.2.14",
-    "@angular/language-service": "8.2.14",
-    "@angular/platform-browser": "8.2.14",
-    "@angular/platform-browser-dynamic": "8.2.14",
-    "@types/node": "8.9.4",
+    "@angular-devkit/build-angular": "~0.901.1",
+    "@angular-devkit/build-ng-packagr": "~0.901.1",
+    "@angular/cli": "~9.1.1",
+    "@angular/compiler": "~9.1.1",
+    "@angular/compiler-cli": "~9.1.1",
+    "@angular/core": "~9.1.1",
+    "@angular/language-service": "~9.1.1",
+    "@angular/platform-browser": "~9.1.1",
+    "@angular/platform-browser-dynamic": "~9.1.1",
+    "@types/node": "^12.11.1",
     "@types/qrcode": "1.3.4",
-    "codelyzer": "5.2.1",
-    "ng-packagr": "5.7.1",
-    "rimraf": "3.0.0",
-    "rxjs": "6.4.0",
-    "ts-node": "8.5.4",
-    "tslib": "1.10.0",
-    "tslint": "5.20.1",
-    "typescript": "~3.5.3",
-    "zone.js": "0.10.2"
+    "codelyzer": "5.2.2",
+    "ng-packagr": "9.1.1",
+    "rimraf": "3.0.2",
+    "rxjs": "~6.5.4",
+    "ts-node": "~8.3.0",
+    "tslib": "^1.10.0",
+    "tslint": "~6.1.0",
+    "typescript": "~3.8.3",
+    "zone.js": "~0.10.2"
   },
   "keywords": [
     "angularx-qrcode",

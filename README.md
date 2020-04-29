@@ -1,9 +1,10 @@
 # angularx-qrcode
+
 `angularx-qrcode` is a fast and easy-to-use Ionic 3 and Angular4-9 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8/9 app with support for AOT and the Ivy compiler and runtime. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on node-qrcode.
 
 ## Demo App
 
-An Angular app with a working implementation of angularx-qrcode is available at 
+An Angular app with a working implementation of angularx-qrcode is available at
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
 ## Install angularx-qrcode 2.2.x with Angular 9
@@ -19,21 +20,22 @@ yarn add angularx-qrcode
 
 ```
 # Angular 8 and Ionic
-npm install angularx-qrcode@^2.1.0 --save
+npm install angularx-qrcode@~2.1.0 --save
 # Or use yarn
-yarn add angularx-qrcode@^2.1.0
+yarn add angularx-qrcode@~2.1.0
 ```
 
 ## Install angularx-qrcode 2.0.x with Angular 7
 
 ```
 # Angular 7
-npm install angularx-qrcode@^2.0.0 --save
+npm install angularx-qrcode@~2.0.0 --save
 # Or use yarn
-yarn add angularx-qrcode@^2.0.0
+yarn add angularx-qrcode@~2.0.0
 ```
 
 ## Older Angular Versions
+
 ```
 # Angular 5/6
 npm install angularx-qrcode@1.6.4 --save
@@ -43,37 +45,33 @@ npm install angularx-qrcode@1.0.3 --save
 
 ## New in angularx-qrcode 2.x
 
-* Supports Ivy Compiler and Runtime
-* angularx-qrcode is now based on node-qrcode and ships a couple of new features (keeping all the known features)
-* Add your CSS class with `cssClass`
-* New `elementType` field: `url`, `img` and `canvas` 
-* New `margin` field. Define how much wide the quiet zone should be.
-* New `scale`, scale factor. A value of 1 means 1px per modules (black dots). 
-* New `version` field. QR Code version. If not specified the more suitable value will be calculated.
+- Ivy Compiler and Runtime Support
+- angularx-qrcode is now based on node-qrcode and ships a couple of new features (keeping all the known features)
+- Append a CSS class with `cssClass`
+- New `elementType` field: `url`, `img` and `canvas`
+- New `margin` field. Define how wide the quiet zone should be.
+- New `scale`, scale factor. A value of 1 means 1px per module (black dot).
+- New `version` field. QR Code version. If not specified the most suitable value will be calculated.
 
 ## Upgrade from 1.x to 2.x
 
-Upgrading should be simple. If any field you use is deprecated, angularx-qrcode logs warnings to your browser console, telling you which fields should be renamed.
-
-### Old code in 1.x
+Upgrading should be simple. If any deprecated field is used, angularx-qrcode logs a warning to your browser console with the field name which should be renamed.
 
 ```
+# Old code in 1.x
 <qrcode [qrdata]="'Your data'" [size]="256" [level]="'M'"></qrcode>
-```
 
-### New code in 2.x
-
-```
+# New code in 2.x
 <qrcode [qrdata]="'Your data'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
 ```
 
-| Deprecated | New |
-| -----------|-------------|
-| colordark      | colorDark |
-| colorlight     | colorLight |
-| level | errorCorrectionLevel |
-| size | width |
-| usesvg | elementType |
+| Deprecated | New                  |
+| ---------- | -------------------- |
+| colordark  | colorDark            |
+| colorlight | colorLight           |
+| level      | errorCorrectionLevel |
+| size       | width                |
+| usesvg     | elementType          |
 
 ## Basic Usage
 
@@ -131,55 +129,45 @@ export class QRCodeComponent {
 
 ## Parameters
 
-| Attribute        | Type           | Default | Description  |
-| ------------- |-------------| -----|------------|
-| allowEmptyString      | Boolean | false     | Allow empty string |
-| colorDark      | String | '#000000ff'     | RGBA color, color of dark module |
-| colorLight      | String | '#ffffffff'     | RGBA color, color of light module |
-| cssClass      | String | 'qrcode'     | CSS Class |
-| elementType      | String | 'canvas'     | 'url', 'img' or 'canvas' |
-| errorCorrectionLevel | String | 'M'    | QR Correction level ('L', 'M', 'Q', 'H') |
-| margin      | Number | 4 | Define how much wide the quiet zone should be. |
-| qrdata      | String | '' | String to encode |
-| scale      | Number | 4 | Scale factor. A value of 1 means 1px per modules (black dots). |
-| version      | Number | (auto)     | 1-40 |
-| width      | Number | 10     | Height/Width (any value) |
+| Attribute            | Type    | Default     | Description                                                    |
+| -------------------- | ------- | ----------- | -------------------------------------------------------------- |
+| allowEmptyString     | Boolean | false       | Allow empty string                                             |
+| colorDark            | String  | '#000000ff' | RGBA color, color of dark module                               |
+| colorLight           | String  | '#ffffffff' | RGBA color, color of light module                              |
+| cssClass             | String  | 'qrcode'    | CSS Class                                                      |
+| elementType          | String  | 'canvas'    | 'url', 'img' or 'canvas'                                       |
+| errorCorrectionLevel | String  | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                       |
+| margin               | Number  | 4           | Define how much wide the quiet zone should be.                 |
+| qrdata               | String  | ''          | String to encode                                               |
+| scale                | Number  | 4           | Scale factor. A value of 1 means 1px per modules (black dots). |
+| version              | Number  | (auto)      | 1-40                                                           |
+| width                | Number  | 10          | Height/Width (any value)                                       |
 
+## Note
 
-| Deprecated  | | | New value |
-| ------------- |-------------| -----|------------|
-| colordark      | String | '#000000'     | colorDark |
-| colorlight      | String | '#ffffff'     | colorLight |
-| level | String | 'M'    | errorCorrectionLevel |
-| size      | Number | 256     | width |
-| usesvg      | Boolean | false     | elementType |
-
-### Note
-Depending on the amount of data of the *qrdata* to encode, a minimum *width* is required.
-
+Depending on the amount of data of the _qrdata_ to encode, a minimum _width_ is required.
 
 ## AOT - Ahead Of Time Compilation
-`angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler
 
+`angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler
 
 ## SSR - Server Side Rendering
 
 As of version 1.6.0, SSR support is fully implemented, the following workaround is no longer needed. [HowTo use Angular QRCode with SSR](https://github.com/Cordobo/angularx-qrcode/issues/5)
-
 
 ## Available commands
 
     # Build
     npm run build
 
-
 ## Contribution
+
 - Please open your PR against the development branch.
 - Make sure your editor uses the packages .editorconfig file to minimioze commited code changes.
 - Use `npm run lint` before you commit
 
-
 ## License
+
 MIT License
 
 Copyright (c) 2018 - present [Andreas Jacob (Cordobo.com)](http://cordobo.com/)

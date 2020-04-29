@@ -48,7 +48,7 @@ npm install angularx-qrcode@1.0.3 --save
 - Ivy Compiler and Runtime Support
 - angularx-qrcode is now based on node-qrcode and ships a couple of new features (keeping all the known features)
 - Append a CSS class with `cssClass`
-- New `elementType` field: `url`, `img` and `canvas`
+- New `elementType` field: `url`, `img`, `canvas` and `svg`
 - New `margin` field. Define how wide the quiet zone should be.
 - New `scale`, scale factor. A value of 1 means 1px per module (black dot).
 - New `version` field. QR Code version. If not specified the most suitable value will be calculated.
@@ -59,10 +59,10 @@ Upgrading should be simple. If any deprecated field is used, angularx-qrcode log
 
 ```
 # Old code in 1.x
-<qrcode [qrdata]="'Your data'" [size]="256" [level]="'M'"></qrcode>
+<qrcode [qrdata]="'Your data'" [size]="256" [level]="'M'" usesvg="true"></qrcode>
 
 # New code in 2.x
-<qrcode [qrdata]="'Your data'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+<qrcode [qrdata]="'Your data'" [width]="256" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode>
 ```
 
 | Deprecated | New                  |
@@ -135,7 +135,7 @@ export class QRCodeComponent {
 | colorDark            | String  | '#000000ff' | RGBA color, color of dark module                               |
 | colorLight           | String  | '#ffffffff' | RGBA color, color of light module                              |
 | cssClass             | String  | 'qrcode'    | CSS Class                                                      |
-| elementType          | String  | 'canvas'    | 'url', 'img' or 'canvas'                                       |
+| elementType          | String  | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                |
 | errorCorrectionLevel | String  | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                       |
 | margin               | Number  | 4           | Define how much wide the quiet zone should be.                 |
 | qrdata               | String  | ''          | String to encode                                               |

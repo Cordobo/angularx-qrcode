@@ -173,8 +173,8 @@ let QRCodeComponent = class QRCodeComponent {
                     this.toSVG()
                         .then((svgString) => {
                         element.innerHTML = svgString;
-                        this.renderer.setAttribute(element, "height", "256");
-                        this.renderer.setAttribute(element, "width", "256");
+                        this.renderer.setAttribute(element, "height", `${this.width}`);
+                        this.renderer.setAttribute(element, "width", `${this.width}`);
                         this.renderElement(element);
                     })
                         .catch((e) => {

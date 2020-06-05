@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -9,11 +9,9 @@
   "description": "Simple QRCode module generator for Angular4/5/6/7/8/9+ and Ionic 3/4 using node-qrcode",
   "license": "MIT",
   "dependencies": {
-    "@angular/common": ">= 9.0.0 < 10.0.0",
     "qrcode": "1.4.4"
   },
   "peerDependencies": {
-    "@angular/common": ">= 9.0.0 < 10.0.0",
     "@angular/core": ">= 9.0.0 < 10.0.0",
     "tslib": "^1.10.0"
   },

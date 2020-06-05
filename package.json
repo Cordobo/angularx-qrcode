@@ -19,7 +19,6 @@
     "qrcode": "1.4.4"
   },
   "peerDependencies": {
-    "@angular/common": ">= 9.0.0 < 10.0.0",
     "@angular/core": ">= 9.0.0 < 10.0.0"
   },
   "devDependencies": {

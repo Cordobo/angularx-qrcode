@@ -192,8 +192,8 @@ var QRCodeComponent = /** @class */ (function () {
                     this.toSVG()
                         .then(function (svgString) {
                         element_1.innerHTML = svgString;
-                        _this.renderer.setAttribute(element_1, "height", "256");
-                        _this.renderer.setAttribute(element_1, "width", "256");
+                        _this.renderer.setAttribute(element_1, "height", "" + _this.width);
+                        _this.renderer.setAttribute(element_1, "width", "" + _this.width);
                         _this.renderElement(element_1);
                     })
                         .catch(function (e) {

@@ -242,8 +242,8 @@ export class QRCodeComponent implements OnChanges, AfterViewInit {
           this.toSVG()
             .then((svgString: string) => {
               element.innerHTML = svgString;
-              this.renderer.setAttribute(element, "height", "256");
-              this.renderer.setAttribute(element, "width", "256");
+              this.renderer.setAttribute(element, "height", this.width);
+              this.renderer.setAttribute(element, "width", this.width);
               this.renderElement(element);
             })
             .catch((e) => {

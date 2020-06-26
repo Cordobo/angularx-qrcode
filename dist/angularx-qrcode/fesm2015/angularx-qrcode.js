@@ -1,9 +1,8 @@
-import { __decorate, __param } from 'tslib';
-import { Renderer2, Inject, PLATFORM_ID, Input, ViewChild, Component, ChangeDetectionStrategy, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Renderer2, Inject, PLATFORM_ID, Input, ViewChild, NgModule } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { toDataURL, toCanvas, toString } from 'qrcode';
 
-let QRCodeComponent = class QRCodeComponent {
+class QRCodeComponent {
     constructor(renderer, platformId) {
         this.renderer = renderer;
         this.platformId = platformId;
@@ -202,87 +201,52 @@ let QRCodeComponent = class QRCodeComponent {
             console.error("[angularx-qrcode] Error generating QR Code: ", e.message);
         }
     }
-};
+}
+QRCodeComponent.decorators = [
+    { type: Component, args: [{
+                selector: "qrcode",
+                changeDetection: ChangeDetectionStrategy.OnPush,
+                template: `<div #qrcElement [class]="cssClass"></div>`
+            },] }
+];
 QRCodeComponent.ctorParameters = () => [
     { type: Renderer2 },
     { type: undefined, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] }
 ];
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "colordark", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "colorlight", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "level", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "hidetitle", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "size", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "usesvg", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "allowEmptyString", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "qrdata", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "colorDark", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "colorLight", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "cssClass", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "elementType", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "errorCorrectionLevel", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "margin", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "scale", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "version", void 0);
-__decorate([
-    Input()
-], QRCodeComponent.prototype, "width", void 0);
-__decorate([
-    ViewChild("qrcElement", { static: true })
-], QRCodeComponent.prototype, "qrcElement", void 0);
-QRCodeComponent = __decorate([
-    Component({
-        selector: "qrcode",
-        changeDetection: ChangeDetectionStrategy.OnPush,
-        template: `<div #qrcElement [class]="cssClass"></div>`
-    }),
-    __param(1, Inject(PLATFORM_ID))
-], QRCodeComponent);
-
-let QRCodeModule = class QRCodeModule {
+QRCodeComponent.propDecorators = {
+    colordark: [{ type: Input }],
+    colorlight: [{ type: Input }],
+    level: [{ type: Input }],
+    hidetitle: [{ type: Input }],
+    size: [{ type: Input }],
+    usesvg: [{ type: Input }],
+    allowEmptyString: [{ type: Input }],
+    qrdata: [{ type: Input }],
+    colorDark: [{ type: Input }],
+    colorLight: [{ type: Input }],
+    cssClass: [{ type: Input }],
+    elementType: [{ type: Input }],
+    errorCorrectionLevel: [{ type: Input }],
+    margin: [{ type: Input }],
+    scale: [{ type: Input }],
+    version: [{ type: Input }],
+    width: [{ type: Input }],
+    qrcElement: [{ type: ViewChild, args: ["qrcElement", { static: true },] }]
 };
-QRCodeModule = __decorate([
-    NgModule({
-        providers: [],
-        declarations: [
-            QRCodeComponent,
-        ],
-        exports: [
-            QRCodeComponent,
-        ]
-    })
-], QRCodeModule);
+
+class QRCodeModule {
+}
+QRCodeModule.decorators = [
+    { type: NgModule, args: [{
+                providers: [],
+                declarations: [
+                    QRCodeComponent,
+                ],
+                exports: [
+                    QRCodeComponent,
+                ]
+            },] }
+];
 
 /*
  * Public API Surface of angularx-qrcode

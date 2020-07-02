@@ -1,19 +1,30 @@
 # angularx-qrcode
 
-`angularx-qrcode` is a fast and easy-to-use Ionic 3 and Angular4-9 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8/9 app with support for AOT and the Ivy compiler and runtime. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on node-qrcode.
+`angularx-qrcode` is a fast and easy-to-use Ionic 3 and Angular4-10 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8/9/10 app with support for AOT and the Ivy compiler and runtime. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on node-qrcode.
 
 ## Demo App
 
 An Angular app with a working implementation of angularx-qrcode is available at
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
+## Install angularx-qrcode 10.0.x with Angular 10
+
+Starting with angularx-qrcode 10, major versions of angular and angularx-qrcode are synchronized, so angular 10 requires angularx-qrcode 10, making it easier to use the right version.
+
+```
+# Angular 10 and Ionic
+npm install angularx-qrcode --save
+# Or use yarn
+yarn add angularx-qrcode
+```
+
 ## Install angularx-qrcode 2.3.x with Angular 9
 
 ```
 # Angular 9 and Ionic
-npm install angularx-qrcode --save
+npm install angularx-qrcode@~2.3.4 --save
 # Or use yarn
-yarn add angularx-qrcode
+yarn add angularx-qrcode@~2.3.4
 ```
 
 ## Install angularx-qrcode 2.1.x with Angular 8
@@ -25,19 +36,10 @@ npm install angularx-qrcode@~2.1.2 --save
 yarn add angularx-qrcode@~2.1.2
 ```
 
-## Install angularx-qrcode 2.0.x with Angular 7
-
-```
-# Angular 7
-npm install angularx-qrcode@~2.0.0 --save
-# Or use yarn
-yarn add angularx-qrcode@~2.0.0
-```
-
 ## Older Angular Versions
 
 ```
-# Angular 5/6
+# Angular 5/6/7
 npm install angularx-qrcode@1.6.4 --save
 # Angular 4
 npm install angularx-qrcode@1.0.3 --save
@@ -47,13 +49,13 @@ npm install angularx-qrcode@1.0.3 --save
 
 - Ivy Compiler and Runtime Support
 - angularx-qrcode is now based on node-qrcode and ships a couple of new features (keeping all the known features)
-- Append a CSS class with `cssClass`
+- New: append CSS classes with `cssClass`
 - New `elementType` field: `url`, `img`, `canvas` and `svg`
 - New `margin` field. Define how wide the quiet zone should be.
 - New `scale`, scale factor. A value of 1 means 1px per module (black dot).
 - New `version` field. QR Code version. If not specified the most suitable value will be calculated.
 
-## Upgrade from 1.x to 2.x
+## Upgrade from 1.x to 2.x or 10.x
 
 Upgrading should be simple. If any deprecated field is used, angularx-qrcode logs a warning to your browser console with the field name which should be renamed.
 
@@ -61,7 +63,7 @@ Upgrading should be simple. If any deprecated field is used, angularx-qrcode log
 # Old code in 1.x
 <qrcode [qrdata]="'Your data'" [size]="256" [level]="'M'" usesvg="true"></qrcode>
 
-# New code in 2.x
+# New code in 2.x or 10.x
 <qrcode [qrdata]="'Your data'" [width]="256" [errorCorrectionLevel]="'M'" [elementType]="'svg'"></qrcode>
 ```
 

@@ -24,28 +24,28 @@ import {
 })
 export class QRCodeComponent implements OnChanges {
   // Deprecated
-  @Input() public colordark: string = '';
-  @Input() public colorlight: string = '';
-  @Input() public level: string = '';
-  @Input() public hidetitle: boolean = false;
-  @Input() public size: number = 0;
-  @Input() public usesvg: boolean = false;
+  @Input() public colordark = '';
+  @Input() public colorlight = '';
+  @Input() public level = '';
+  @Input() public hidetitle = false;
+  @Input() public size = 0;
+  @Input() public usesvg = false;
 
   // Valid for 1.x and 2.x
-  @Input() public allowEmptyString: boolean = false;
-  @Input() public qrdata: string = '';
+  @Input() public allowEmptyString = false;
+  @Input() public qrdata = '';
 
   // New fields introduced in 2.0.0
-  @Input() public colorDark: string = '#000000ff';
-  @Input() public colorLight: string = '#ffffffff';
-  @Input() public cssClass: string = 'qrcode';
+  @Input() public colorDark = '#000000ff';
+  @Input() public colorLight = '#ffffffff';
+  @Input() public cssClass = 'qrcode';
   @Input() public elementType: keyof typeof QRCodeElementType = 'canvas';
   @Input()
   public errorCorrectionLevel: keyof typeof QRCodeErrorCorrectionLevel = 'M';
-  @Input() public margin: number = 4;
-  @Input() public scale: number = 4;
+  @Input() public margin = 4;
+  @Input() public scale = 4;
   @Input() public version: QRCodeVersion;
-  @Input() public width: number = 10;
+  @Input() public width = 10;
 
   @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
 
@@ -94,11 +94,11 @@ export class QRCodeComponent implements OnChanges {
   //   this.createQRCode();
   // }
 
-  public ngOnChanges() {
+  public ngOnChanges(): void {
     this.createQRCode();
   }
 
-  protected isValidQrCodeText = (data: string | null): boolean => {
+  protected isValidQrCodeText(data: string | null): boolean {
     if (this.allowEmptyString === false) {
       return !(
         typeof data === 'undefined' ||
@@ -108,9 +108,9 @@ export class QRCodeComponent implements OnChanges {
       );
     }
     return !(typeof data === 'undefined');
-  };
+  }
 
-  private toDataURL() {
+  private toDataURL(): Promise<any> {
     return new Promise(
       (resolve: (arg: any) => any, reject: (arg: any) => any) => {
         QRCode.toDataURL(
@@ -138,7 +138,7 @@ export class QRCodeComponent implements OnChanges {
     );
   }
 
-  private toCanvas(canvas: Element) {
+  private toCanvas(canvas: Element): Promise<any> {
     return new Promise(
       (resolve: (arg: any) => any, reject: (arg: any) => any) => {
         QRCode.toCanvas(
@@ -167,7 +167,7 @@ export class QRCodeComponent implements OnChanges {
     );
   }
 
-  private toSVG() {
+  private toSVG(): Promise<any> {
     return new Promise(
       (resolve: (arg: any) => any, reject: (arg: any) => any) => {
         QRCode.toString(
@@ -196,14 +196,14 @@ export class QRCodeComponent implements OnChanges {
     );
   }
 
-  private renderElement(element: Element) {
+  private renderElement(element: Element): void {
     for (const node of this.qrcElement.nativeElement.childNodes) {
       this.renderer.removeChild(this.qrcElement.nativeElement, node);
     }
     this.renderer.appendChild(this.qrcElement.nativeElement, element);
   }
 
-  private createQRCode() {
+  private createQRCode(): void {
     // Set sensitive defaults
     if (this.version && this.version > 40) {
       console.warn('[angularx-qrcode] max value for `version` is 40');

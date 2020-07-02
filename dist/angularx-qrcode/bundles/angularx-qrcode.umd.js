@@ -307,7 +307,6 @@
 
     var QRCodeComponent = /** @class */ (function () {
         function QRCodeComponent(renderer, platformId) {
-            var _this = this;
             this.renderer = renderer;
             this.platformId = platformId;
             // Deprecated
@@ -330,15 +329,6 @@
             this.scale = 4;
             this.width = 10;
             this.qrcode = null;
-            this.isValidQrCodeText = function (data) {
-                if (_this.allowEmptyString === false) {
-                    return !(typeof data === 'undefined' ||
-                        data === '' ||
-                        data === 'null' ||
-                        data === null);
-                }
-                return !(typeof data === 'undefined');
-            };
             // Deprectation warnings
             if (this.colordark !== '') {
                 console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
@@ -370,6 +360,15 @@
         // }
         QRCodeComponent.prototype.ngOnChanges = function () {
             this.createQRCode();
+        };
+        QRCodeComponent.prototype.isValidQrCodeText = function (data) {
+            if (this.allowEmptyString === false) {
+                return !(typeof data === 'undefined' ||
+                    data === '' ||
+                    data === 'null' ||
+                    data === null);
+            }
+            return !(typeof data === 'undefined');
         };
         QRCodeComponent.prototype.toDataURL = function () {
             var _this = this;
@@ -562,12 +561,8 @@
     QRCodeModule.decorators = [
         { type: core.NgModule, args: [{
                     providers: [],
-                    declarations: [
-                        QRCodeComponent,
-                    ],
-                    exports: [
-                        QRCodeComponent,
-                    ]
+                    declarations: [QRCodeComponent],
+                    exports: [QRCodeComponent],
                 },] }
     ];
 

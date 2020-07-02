@@ -36,19 +36,10 @@ npm install angularx-qrcode@~2.1.2 --save
 yarn add angularx-qrcode@~2.1.2
 ```
 
-## Install angularx-qrcode 2.0.x with Angular 7
-
-```
-# Angular 7
-npm install angularx-qrcode@~2.0.0 --save
-# Or use yarn
-yarn add angularx-qrcode@~2.0.0
-```
-
 ## Older Angular Versions
 
 ```
-# Angular 5/6
+# Angular 5/6/7
 npm install angularx-qrcode@1.6.4 --save
 # Angular 4
 npm install angularx-qrcode@1.0.3 --save

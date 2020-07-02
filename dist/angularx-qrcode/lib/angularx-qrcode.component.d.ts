@@ -24,7 +24,7 @@ export declare class QRCodeComponent implements OnChanges {
     qrcode: any;
     constructor(renderer: Renderer2, platformId: any);
     ngOnChanges(): void;
-    protected isValidQrCodeText: (data: string | null) => boolean;
+    protected isValidQrCodeText(data: string | null): boolean;
     private toDataURL;
     private toCanvas;
     private toSVG;

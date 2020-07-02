@@ -25,15 +25,6 @@ class QRCodeComponent {
         this.scale = 4;
         this.width = 10;
         this.qrcode = null;
-        this.isValidQrCodeText = (data) => {
-            if (this.allowEmptyString === false) {
-                return !(typeof data === 'undefined' ||
-                    data === '' ||
-                    data === 'null' ||
-                    data === null);
-            }
-            return !(typeof data === 'undefined');
-        };
         // Deprectation warnings
         if (this.colordark !== '') {
             console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
@@ -65,6 +56,15 @@ class QRCodeComponent {
     // }
     ngOnChanges() {
         this.createQRCode();
+    }
+    isValidQrCodeText(data) {
+        if (this.allowEmptyString === false) {
+            return !(typeof data === 'undefined' ||
+                data === '' ||
+                data === 'null' ||
+                data === null);
+        }
+        return !(typeof data === 'undefined');
     }
     toDataURL() {
         return new Promise((resolve, reject) => {
@@ -238,12 +238,8 @@ class QRCodeModule {
 QRCodeModule.decorators = [
     { type: NgModule, args: [{
                 providers: [],
-                declarations: [
-                    QRCodeComponent,
-                ],
-                exports: [
-                    QRCodeComponent,
-                ]
+                declarations: [QRCodeComponent],
+                exports: [QRCodeComponent],
             },] }
 ];
 

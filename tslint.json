@@ -1,64 +1,140 @@
 {
-  "extends": [
-    "tslint:recommended"
-  ],
+  "extends": "tslint:recommended",
   "rulesDirectory": [
     "codelyzer"
   ],
   "rules": {
-    "component-class-suffix": true,
-    "directive-class-suffix": true,
-    "indent": [
+    "align": {
+      "options": [
+        "parameters",
+        "statements"
+      ]
+    },
+    "array-type": false,
+    "arrow-return-shorthand": true,
+    "curly": true,
+    "deprecation": {
+      "severity": "warning"
+    },
+    "eofline": true,
+    "import-blacklist": [
       true,
-      "spaces",
-      2
+      "rxjs/Rx"
     ],
-    "interface-name": false,
+    "import-spacing": true,
+    "indent": {
+      "options": [
+        "spaces"
+      ]
+    },
+    "max-classes-per-file": false,
     "max-line-length": [
       true,
-      250
+      140
     ],
-    "no-access-missing-member": false,
-    "no-attribute-decorator": true,
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "static-field",
+          "instance-field",
+          "static-method",
+          "instance-method"
+        ]
+      }
+    ],
     "no-console": [
       true,
+      "debug",
+      "info",
       "time",
       "timeEnd",
       "trace"
     ],
-    "no-forward-ref": true,
-    "no-input-rename": true,
-    "no-output-rename": true,
-    "no-reference": false,
-    "no-string-literal": false,
-    "object-literal-sort-keys": false,
-    "ordered-imports": false,
-    "pipe-naming": [
-      "camelCase",
-      "my"
+    "no-empty": false,
+    "no-inferrable-types": [
+      true,
+      "ignore-params"
+    ],
+    "no-non-null-assertion": true,
+    "no-redundant-jsdoc": true,
+    "no-switch-case-fall-through": true,
+    "no-var-requires": false,
+    "object-literal-key-quotes": [
+      true,
+      "as-needed"
     ],
     "quotemark": [
       true,
-      "single",
-      "avoid-escape"
+      "single"
     ],
-    "trailing-comma": [
-      false,
-      {
-        "multiline": "always",
-        "singleline": "never"
+    "semicolon": {
+      "options": [
+        "always"
+      ]
+    },
+    "space-before-function-paren": {
+      "options": {
+        "anonymous": "never",
+        "asyncArrow": "always",
+        "constructor": "never",
+        "method": "never",
+        "named": "never"
       }
-    ],
-    "no-host-metadata-property": true,
-    "no-inputs-metadata-property": true,
-    "no-outputs-metadata-property": true,
-    "use-pipe-transform-interface": true,
-    "variable-name": [
+    },
+    "typedef": [
       true,
-      "allow-leading-underscore",
-      "ban-keywords",
-      "check-format",
-      "allow-pascal-case"
-    ]
+      "call-signature"
+    ],
+    "typedef-whitespace": {
+      "options": [
+        {
+          "call-signature": "nospace",
+          "index-signature": "nospace",
+          "parameter": "nospace",
+          "property-declaration": "nospace",
+          "variable-declaration": "nospace"
+        },
+        {
+          "call-signature": "onespace",
+          "index-signature": "onespace",
+          "parameter": "onespace",
+          "property-declaration": "onespace",
+          "variable-declaration": "onespace"
+        }
+      ]
+    },
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-pascal-case"
+      ]
+    },
+    "whitespace": {
+      "options": [
+        "check-branch",
+        "check-decl",
+        "check-operator",
+        "check-separator",
+        "check-type",
+        "check-typecast"
+      ]
+    },
+    "component-class-suffix": true,
+    "contextual-lifecycle": true,
+    "directive-class-suffix": true,
+    "no-conflicting-lifecycle": true,
+    "no-host-metadata-property": true,
+    "no-input-rename": true,
+    "no-inputs-metadata-property": true,
+    "no-output-native": true,
+    "no-output-on-prefix": true,
+    "no-output-rename": true,
+    "no-outputs-metadata-property": true,
+    "template-banana-in-box": true,
+    "template-no-negated-async": true,
+    "use-lifecycle-interface": true,
+    "use-pipe-transform-interface": true
   }
 }

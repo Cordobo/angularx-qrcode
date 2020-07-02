@@ -1,6 +1,6 @@
-import { AfterViewInit, ElementRef, OnChanges, Renderer2 } from "@angular/core";
-import { QRCodeErrorCorrectionLevel, QRCodeVersion, QRCodeElementType } from "./types";
-export declare class QRCodeComponent implements OnChanges, AfterViewInit {
+import { ElementRef, OnChanges, Renderer2 } from '@angular/core';
+import { QRCodeErrorCorrectionLevel, QRCodeVersion, QRCodeElementType } from './types';
+export declare class QRCodeComponent implements OnChanges {
     private renderer;
     private readonly platformId;
     colordark: string;
@@ -23,9 +23,8 @@ export declare class QRCodeComponent implements OnChanges, AfterViewInit {
     qrcElement: ElementRef;
     qrcode: any;
     constructor(renderer: Renderer2, platformId: any);
-    ngAfterViewInit(): void;
     ngOnChanges(): void;
-    protected isValidQrCodeText: (data: string) => boolean;
+    protected isValidQrCodeText: (data: string | null) => boolean;
     private toDataURL;
     private toCanvas;
     private toSVG;

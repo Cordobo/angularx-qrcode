@@ -165,7 +165,7 @@ As of version 1.6.0, SSR support is fully implemented, the following workaround 
 ## Contribution
 
 - Please open your PR against the development branch.
-- Make sure your editor uses the packages .editorconfig file to minimioze commited code changes.
+- Make sure your editor uses the packages .editorconfig file to minimize commited code changes.
 - Use `npm run lint` before you commit
 
 ## License

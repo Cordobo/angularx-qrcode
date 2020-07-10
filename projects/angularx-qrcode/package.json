@@ -12,5 +12,13 @@
   },
   "dependencies": {
     "qrcode": "1.4.4"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cordobo/angularx-qrcode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cordobo/angularx-qrcode/issues"
+  },
+  "homepage": "https://github.com/cordobo/angularx-qrcode#readme"
 }

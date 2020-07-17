@@ -22,18 +22,18 @@ yarn add angularx-qrcode
 
 ```
 # Angular 9 and Ionic
-npm install angularx-qrcode@~2.3.4 --save
+npm install angularx-qrcode@~2.3.5 --save
 # Or use yarn
-yarn add angularx-qrcode@~2.3.4
+yarn add angularx-qrcode@~2.3.5
 ```
 
 ## Install angularx-qrcode 2.1.x with Angular 8
 
 ```
 # Angular 8 and Ionic
-npm install angularx-qrcode@~2.1.3 --save
+npm install angularx-qrcode@~2.1.4 --save
 # Or use yarn
-yarn add angularx-qrcode@~2.1.3
+yarn add angularx-qrcode@~2.1.4
 ```
 
 ## Older Angular Versions

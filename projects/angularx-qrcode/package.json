@@ -1,6 +1,6 @@
 {
   "name": "angularx-qrcode",
-  "version": "10.0.5",
+  "version": "10.0.6",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -11,7 +11,7 @@
     "@angular/core": "^10.0.2"
   },
   "dependencies": {
-    "qrcode": "1.4.4"
+    "qrcode": "1.4.2"
   },
   "repository": {
     "type": "git",

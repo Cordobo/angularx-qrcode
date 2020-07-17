@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "10.0.5",
+  "version": "10.0.6",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -19,7 +19,7 @@
     "release": "npm run reinstall && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../"
   },
   "dependencies": {
-    "qrcode": "1.4.4"
+    "qrcode": "1.4.2"
   },
   "peerDependencies": {
     "@angular/core": ">= 10.0.0 < 11.0.0"

@@ -49,13 +49,11 @@ export class QRCodeComponent implements OnChanges {
 
   @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
 
-  public qrcode: any = null;
-
   constructor(
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private readonly platformId: any
   ) {
-    // Deprectation warnings
+    // Deprecation warnings
     if (this.colordark !== '') {
       console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
     }
@@ -79,7 +77,7 @@ export class QRCodeComponent implements OnChanges {
     }
     if (this.usesvg !== false) {
       console.warn(
-        `[angularx-qrcode] usesvg is deprecated, use [elementType]="'img'".`
+        `[angularx-qrcode] usesvg is deprecated, use [elementType]="'svg'".`
       );
     }
   }
@@ -213,14 +211,16 @@ export class QRCodeComponent implements OnChanges {
       this.version = 1;
     } else if (this.version !== undefined && isNaN(this.version)) {
       console.warn(
-        '[angularx-qrcode] version should be a number, defaulting to auto'
+        '[angularx-qrcode] version should be a number, defaulting to auto.'
       );
       this.version = undefined;
     }
 
     try {
       if (!this.isValidQrCodeText(this.qrdata)) {
-        throw new Error('[angularx-qrcode] Field `qrdata` is empty');
+        throw new Error(
+          '[angularx-qrcode] Field `qrdata` is empty, set`allowEmptyString="true"` to overwrite this behaviour.'
+        );
       }
 
       let element: Element;

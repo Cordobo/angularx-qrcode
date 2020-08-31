@@ -55,7 +55,7 @@ export class QRCodeComponent implements OnChanges {
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private readonly platformId: any
   ) {
-    // Deprectation warnings
+    // Deprecation warnings
     if (this.colordark !== '') {
       console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
     }

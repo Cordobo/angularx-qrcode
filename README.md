@@ -133,7 +133,7 @@ export class QRCodeComponent {
 
 | Attribute            | Type    | Default     | Description                                                    |
 | -------------------- | ------- | ----------- | -------------------------------------------------------------- |
-| allowEmptyString     | Boolean | false       | Allow empty string                                             |
+| allowEmptyString     | Boolean | false       | Allow qrdata to be an empty string                             |
 | colorDark            | String  | '#000000ff' | RGBA color, color of dark module                               |
 | colorLight           | String  | '#ffffffff' | RGBA color, color of light module                              |
 | cssClass             | String  | 'qrcode'    | CSS Class                                                      |

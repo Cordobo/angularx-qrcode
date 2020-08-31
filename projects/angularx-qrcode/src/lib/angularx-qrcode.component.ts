@@ -77,7 +77,7 @@ export class QRCodeComponent implements OnChanges {
     }
     if (this.usesvg !== false) {
       console.warn(
-        `[angularx-qrcode] usesvg is deprecated, use [elementType]="'img'".`
+        `[angularx-qrcode] usesvg is deprecated, use [elementType]="'svg'".`
       );
     }
   }

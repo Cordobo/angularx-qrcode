@@ -49,8 +49,6 @@ export class QRCodeComponent implements OnChanges {
 
   @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
 
-  public qrcode: any = null;
-
   constructor(
     private renderer: Renderer2,
     @Inject(PLATFORM_ID) private readonly platformId: any

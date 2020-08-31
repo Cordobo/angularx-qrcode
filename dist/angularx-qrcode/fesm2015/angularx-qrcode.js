@@ -24,8 +24,7 @@ class QRCodeComponent {
         this.margin = 4;
         this.scale = 4;
         this.width = 10;
-        this.qrcode = null;
-        // Deprectation warnings
+        // Deprecation warnings
         if (this.colordark !== '') {
             console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
         }
@@ -42,7 +41,7 @@ class QRCodeComponent {
             console.warn('[angularx-qrcode] size is deprecated, use `width`. Defaults to 10.');
         }
         if (this.usesvg !== false) {
-            console.warn(`[angularx-qrcode] usesvg is deprecated, use [elementType]="'img'".`);
+            console.warn(`[angularx-qrcode] usesvg is deprecated, use [elementType]="'svg'".`);
         }
     }
     // public ngAfterViewInit() {
@@ -150,12 +149,12 @@ class QRCodeComponent {
             this.version = 1;
         }
         else if (this.version !== undefined && isNaN(this.version)) {
-            console.warn('[angularx-qrcode] version should be a number, defaulting to auto');
+            console.warn('[angularx-qrcode] version should be a number, defaulting to auto.');
             this.version = undefined;
         }
         try {
             if (!this.isValidQrCodeText(this.qrdata)) {
-                throw new Error('[angularx-qrcode] Field `qrdata` is empty');
+                throw new Error('[angularx-qrcode] Field `qrdata` is empty, set`allowEmptyString="true"` to overwrite this behaviour.');
             }
             let element;
             switch (this.elementType) {

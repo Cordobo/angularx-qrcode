@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "10.0.10",
+  "version": "10.0.11",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -47,7 +47,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "ng-packagr": "^10.0.0",
+    "ng-packagr": "^10.1.2",
     "protractor": "~7.0.0",
     "rimraf": "3.0.2",
     "rxjs": "~6.5.5",

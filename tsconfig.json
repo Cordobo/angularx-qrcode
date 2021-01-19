@@ -12,6 +12,15 @@
     },
     {
       "path": "./projects/angularx-qrcode/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/exampleApp/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/exampleApp/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/exampleApp/e2e/tsconfig.json"
     }
   ]
 }

@@ -1,0 +1,86 @@
+<div class="wrapper">
+  <h1>angularx-qrcode demo implementation</h1>
+
+  <div class="flexContainer">
+    <div class="result">
+      <div class="meta">
+        <div>qrdata: {{ qrdata }}</div>
+        <div>elementType: {{ elementType }}</div>
+        <div>level: {{ level }}</div>
+        <div>scale: {{ scale }}</div>
+        <div>width: {{ width }}</div>
+      </div>
+      <div class="qrcodeImage">
+        <qrcode [elementType]="elementType" [level]="level" [qrdata]="qrdata" [scale]="scale" [width]="width"></qrcode>
+      </div>
+    </div>
+
+    <div class="controls">
+      <h3>Change Values</h3>
+
+      <h4>QR-Code Data:</h4>
+      <button (click)="changeQrdata('Bruce')">Set "Bruce"</button>
+      <button (click)="changeQrdata('Peter Parker')">
+        Set "Peter Parker"
+      </button>
+      <button (click)="changeQrdata('42')">Set "42"</button>
+      <br />
+      <br />
+      <label>
+        or type to change: <input [(ngModel)]="qrdata" placeholder="name" />
+      </label>
+
+      <h4>Change Element Type</h4>
+      <button (click)="changeElementType('img')">img</button>
+      <button (click)="changeElementType('url')">url</button>
+      <button (click)="changeElementType('canvas')">canvas</button>
+      <button (click)="changeElementType('svg')">svg</button>
+
+      <h4>Change Level</h4>
+      <button (click)="changeLevel('L')">L</button>
+      <button (click)="changeLevel('M')">M</button>
+      <button (click)="changeLevel('Q')">Q</button>
+      <button (click)="changeLevel('H')">H</button>
+
+      <h4>Change Width</h4>
+      <button (click)="changeWidth(512)">512</button>
+      <button (click)="changeWidth(256)">256</button>
+      <button (click)="changeWidth(128)">128</button>
+      <button (click)="changeWidth(128)">64</button>
+      <button (click)="changeWidth(10)">10</button>
+
+      <h4>Change Scale (size of pixel per module (black dot))</h4>
+      <button (click)="changeScale(8)">32</button>
+      <button (click)="changeScale(8)">8</button>
+      <button (click)="changeScale(4)">4</button>
+      <button (click)="changeScale(1)">1</button>
+    </div>
+  </div>
+
+  <h2>Here are some links to get you started with angularx-qrcode:</h2>
+
+  <ul>
+    <li>
+      <h2>
+        <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode">Github: angularx-qrcode</a>
+      </h2>
+    </li>
+    <li>
+      <h2>
+        <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode-sample-app">Github: this demo
+          app</a>
+      </h2>
+    </li>
+    <li>
+      <h2>
+        <a target="_blank" rel="noopener"
+          href="http://cordobo.com/2444-angular4-qrcode-generator-component/">Tutorial</a>
+      </h2>
+    </li>
+    <li>
+      <h2>
+        <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/angularx-qrcode">NPM</a>
+      </h2>
+    </li>
+  </ul>
+</div>

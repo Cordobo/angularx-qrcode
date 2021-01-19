@@ -1,7 +1,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('qrcode')) :
     typeof define === 'function' && define.amd ? define('angularx-qrcode', ['exports', '@angular/core', 'qrcode'], factory) :
-    (global = global || self, factory(global['angularx-qrcode'] = {}, global.ng.core, global.qrcode));
+    (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global['angularx-qrcode'] = {}, global.ng.core, global.qrcode));
 }(this, (function (exports, core, QRCode) { 'use strict';
 
     /*! *****************************************************************************
@@ -483,6 +483,8 @@
                             .then(function (svgString) {
                             _this.renderer.setProperty(element_1, 'innerHTML', svgString);
                             var innerElement = element_1.firstChild;
+                            _this.renderer.setAttribute(innerElement, 'height', "" + _this.width);
+                            _this.renderer.setAttribute(innerElement, 'width', "" + _this.width);
                             _this.renderElement(innerElement);
                         })
                             .catch(function (e) {

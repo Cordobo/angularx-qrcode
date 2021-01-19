@@ -41,7 +41,7 @@ export class QRCodeComponent implements OnChanges {
   public errorCorrectionLevel: keyof typeof QRCodeErrorCorrectionLevel = 'M';
   @Input() public margin = 4;
   @Input() public scale = 4;
-  @Input() public version: QRCodeVersion;
+  @Input() public version: QRCodeVersion | undefined;
   @Input() public width = 10;
 
   @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
@@ -226,6 +226,17 @@ export class QRCodeComponent implements OnChanges {
             .then((svgString: string) => {
               this.renderer.setProperty(element, 'innerHTML', svgString);
               const innerElement = element.firstChild as Element;
+              this.renderer.setAttribute(
+                innerElement,
+                'height',
+                `${this.width}`
+              );
+              this.renderer.setAttribute(
+                innerElement,
+                'width',
+                `${this.width}`
+              );
+
               this.renderElement(innerElement);
             })
             .catch((e) => {

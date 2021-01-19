@@ -14,13 +14,13 @@
       "path": "./projects/angularx-qrcode/tsconfig.spec.json"
     },
     {
-      "path": "./projects/exampleApp/tsconfig.app.json"
+      "path": "./projects/demo-app/tsconfig.app.json"
     },
     {
-      "path": "./projects/exampleApp/tsconfig.spec.json"
+      "path": "./projects/demo-app/tsconfig.spec.json"
     },
     {
-      "path": "./projects/exampleApp/e2e/tsconfig.json"
+      "path": "./projects/demo-app/e2e/tsconfig.json"
     }
   ]
 }

@@ -17,7 +17,7 @@ export declare class QRCodeComponent implements OnChanges {
     errorCorrectionLevel: keyof typeof QRCodeErrorCorrectionLevel;
     margin: number;
     scale: number;
-    version: QRCodeVersion;
+    version: QRCodeVersion | undefined;
     width: number;
     qrcElement: ElementRef;
     constructor(renderer: Renderer2);

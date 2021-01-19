@@ -164,6 +164,8 @@ class QRCodeComponent {
                         .then((svgString) => {
                         this.renderer.setProperty(element, 'innerHTML', svgString);
                         const innerElement = element.firstChild;
+                        this.renderer.setAttribute(innerElement, 'height', `${this.width}`);
+                        this.renderer.setAttribute(innerElement, 'width', `${this.width}`);
                         this.renderElement(innerElement);
                     })
                         .catch((e) => {

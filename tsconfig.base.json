@@ -11,6 +11,9 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
     "lib": [
       "es2018",
       "dom"
@@ -21,5 +24,10 @@
         "dist/angularx-qrcode"
       ]
     }
-  }
+  },
+    "angularCompilerOptions": {
+      "strictInjectionParameters": true,
+      "strictInputAccessModifiers": true,
+      "strictTemplates": true
+    }
 }

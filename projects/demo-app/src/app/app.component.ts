@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'angularx-qrcode-sample-app';
+  title = 'angularx-qrcode-demo-app';
 
   public qrdata: string = null;
   public elementType: 'img' | 'url' | 'canvas' | 'svg' = null;

@@ -1,12 +1,9 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Inject,
   Input,
   OnChanges,
-  PLATFORM_ID,
   Renderer2,
   ViewChild,
 } from '@angular/core';
@@ -49,10 +46,7 @@ export class QRCodeComponent implements OnChanges {
 
   @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
 
-  constructor(
-    private renderer: Renderer2,
-    @Inject(PLATFORM_ID) private readonly platformId: any
-  ) {
+  constructor(private renderer: Renderer2) {
     // Deprecation warnings
     if (this.colordark !== '') {
       console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
@@ -81,16 +75,6 @@ export class QRCodeComponent implements OnChanges {
       );
     }
   }
-
-  // public ngAfterViewInit() {
-  //   if (isPlatformServer(this.platformId)) {
-  //     return;
-  //   }
-  //   // if (!QRCode) {
-  //   //   QRCode = require('qrcode');
-  //   // }
-  //   this.createQRCode();
-  // }
 
   public ngOnChanges(): void {
     this.createQRCode();
@@ -237,13 +221,12 @@ export class QRCodeComponent implements OnChanges {
             });
           break;
         case 'svg':
-          element = this.renderer.createElement('svg', 'svg');
+          element = this.renderer.createElement('div');
           this.toSVG()
             .then((svgString: string) => {
-              element.innerHTML = svgString;
-              this.renderer.setAttribute(element, 'height', `${this.width}`);
-              this.renderer.setAttribute(element, 'width', `${this.width}`);
-              this.renderElement(element);
+              this.renderer.setProperty(element, 'innerHTML', svgString);
+              const innerElement = element.firstChild as Element;
+              this.renderElement(innerElement);
             })
             .catch((e) => {
               console.error('[angularx-qrcode] svg error: ', e);

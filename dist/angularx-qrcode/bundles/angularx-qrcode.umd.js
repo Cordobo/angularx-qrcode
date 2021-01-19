@@ -306,9 +306,8 @@
     }
 
     var QRCodeComponent = /** @class */ (function () {
-        function QRCodeComponent(renderer, platformId) {
+        function QRCodeComponent(renderer) {
             this.renderer = renderer;
-            this.platformId = platformId;
             // Deprecated
             this.colordark = '';
             this.colorlight = '';
@@ -348,15 +347,6 @@
                 console.warn("[angularx-qrcode] usesvg is deprecated, use [elementType]=\"'svg'\".");
             }
         }
-        // public ngAfterViewInit() {
-        //   if (isPlatformServer(this.platformId)) {
-        //     return;
-        //   }
-        //   // if (!QRCode) {
-        //   //   QRCode = require('qrcode');
-        //   // }
-        //   this.createQRCode();
-        // }
         QRCodeComponent.prototype.ngOnChanges = function () {
             this.createQRCode();
         };
@@ -488,13 +478,12 @@
                         });
                         break;
                     case 'svg':
-                        element_1 = this.renderer.createElement('svg', 'svg');
+                        element_1 = this.renderer.createElement('div');
                         this.toSVG()
                             .then(function (svgString) {
-                            element_1.innerHTML = svgString;
-                            _this.renderer.setAttribute(element_1, 'height', "" + _this.width);
-                            _this.renderer.setAttribute(element_1, 'width', "" + _this.width);
-                            _this.renderElement(element_1);
+                            _this.renderer.setProperty(element_1, 'innerHTML', svgString);
+                            var innerElement = element_1.firstChild;
+                            _this.renderElement(innerElement);
                         })
                             .catch(function (e) {
                             console.error('[angularx-qrcode] svg error: ', e);
@@ -528,8 +517,7 @@
                 },] }
     ];
     QRCodeComponent.ctorParameters = function () { return [
-        { type: core.Renderer2 },
-        { type: undefined, decorators: [{ type: core.Inject, args: [core.PLATFORM_ID,] }] }
+        { type: core.Renderer2 }
     ]; };
     QRCodeComponent.propDecorators = {
         colordark: [{ type: core.Input }],

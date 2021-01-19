@@ -1,10 +1,9 @@
-import { Component, ChangeDetectionStrategy, Renderer2, Inject, PLATFORM_ID, Input, ViewChild, NgModule } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Renderer2, Input, ViewChild, NgModule } from '@angular/core';
 import { toDataURL, toCanvas, toString } from 'qrcode';
 
 class QRCodeComponent {
-    constructor(renderer, platformId) {
+    constructor(renderer) {
         this.renderer = renderer;
-        this.platformId = platformId;
         // Deprecated
         this.colordark = '';
         this.colorlight = '';
@@ -44,15 +43,6 @@ class QRCodeComponent {
             console.warn(`[angularx-qrcode] usesvg is deprecated, use [elementType]="'svg'".`);
         }
     }
-    // public ngAfterViewInit() {
-    //   if (isPlatformServer(this.platformId)) {
-    //     return;
-    //   }
-    //   // if (!QRCode) {
-    //   //   QRCode = require('qrcode');
-    //   // }
-    //   this.createQRCode();
-    // }
     ngOnChanges() {
         this.createQRCode();
     }
@@ -169,13 +159,12 @@ class QRCodeComponent {
                     });
                     break;
                 case 'svg':
-                    element = this.renderer.createElement('svg', 'svg');
+                    element = this.renderer.createElement('div');
                     this.toSVG()
                         .then((svgString) => {
-                        element.innerHTML = svgString;
-                        this.renderer.setAttribute(element, 'height', `${this.width}`);
-                        this.renderer.setAttribute(element, 'width', `${this.width}`);
-                        this.renderElement(element);
+                        this.renderer.setProperty(element, 'innerHTML', svgString);
+                        const innerElement = element.firstChild;
+                        this.renderElement(innerElement);
                     })
                         .catch((e) => {
                         console.error('[angularx-qrcode] svg error: ', e);
@@ -208,8 +197,7 @@ QRCodeComponent.decorators = [
             },] }
 ];
 QRCodeComponent.ctorParameters = () => [
-    { type: Renderer2 },
-    { type: undefined, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] }
+    { type: Renderer2 }
 ];
 QRCodeComponent.propDecorators = {
     colordark: [{ type: Input }],

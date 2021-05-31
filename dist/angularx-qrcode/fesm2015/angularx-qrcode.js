@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Renderer2, Input, ViewChild, NgModule } from '@angular/core';
-import { toDataURL, toCanvas, toString } from 'qrcode';
+import * as QRCode from 'qrcode';
 
 class QRCodeComponent {
     constructor(renderer) {
@@ -57,7 +57,7 @@ class QRCodeComponent {
     }
     toDataURL() {
         return new Promise((resolve, reject) => {
-            toDataURL(this.qrdata, {
+            QRCode.toDataURL(this.qrdata, {
                 color: {
                     dark: this.colorDark,
                     light: this.colorLight,
@@ -79,7 +79,7 @@ class QRCodeComponent {
     }
     toCanvas(canvas) {
         return new Promise((resolve, reject) => {
-            toCanvas(canvas, this.qrdata, {
+            QRCode.toCanvas(canvas, this.qrdata, {
                 color: {
                     dark: this.colorDark,
                     light: this.colorLight,
@@ -101,7 +101,7 @@ class QRCodeComponent {
     }
     toSVG() {
         return new Promise((resolve, reject) => {
-            toString(this.qrdata, {
+            QRCode.toString(this.qrdata, {
                 color: {
                     dark: this.colorDark,
                     light: this.colorLight,

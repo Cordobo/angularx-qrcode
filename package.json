@@ -1,9 +1,9 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
-  "name": "angularx-qrcode",
+  "name": "@ubirch/angularx-qrcode",
   "version": "12.0.0",
   "author": {
-    "name": "Beate Fiss <beate.fiss@ubirch.com>",
+    "name": "Beate Fiss <beate.fiss@ubirch.com> - based on angularx-qrcode from Andreas Jacob <andreas@cordobo.de (http://cordobo.com/)",
     "url": "https://ubirch.com"
   },
   "description": "Simple QRCode module generator for Angular12 and Ionic 4/5 using node-qrcode - based on the great work on angularx-qrcode package of Andreas Jacob <andreas@cordobo.de (http://cordobo.com/)",
@@ -16,14 +16,14 @@
     "lint": "ng lint",
     "prebuild": "rimraf dist tmp",
     "reinstall": "rm -rf node_modules && npm install",
-    "release": "npm run reinstall && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../",
+    "release": "npm run reinstall && npm run build && cd dist/angularx-qrcode && npm publish --access public && cd ../../",
     "start:demo": "ng serve demo-app --open",
     "dev:demo": "lite-server --baseDir=\"dist/demo-app\"",
     "build:demo": "npm run build && ng build demo-app",
     "build:demo:prod": "npm run build && ng build demo-app --configuration production"
   },
   "dependencies": {
-    "qrcode": "1.4.2"
+    "qrcode": "^1.4.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.13",

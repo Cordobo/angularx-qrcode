@@ -1,4 +1,5 @@
 {
+  "$schema": "../../node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
   "version": "12.0.0",
   "author": {
@@ -7,10 +8,17 @@
   },
   "description": "Simple QRCode module generator for Angular12 and Ionic 4/5 using node-qrcode - based on the great work on angularx-qrcode package of Andreas Jacob <andreas@cordobo.de (http://cordobo.com/)",
   "license": "MIT",
-  "peerDependencies": {
-    "@angular/core": "~12.2.13"
+  "ngPackage": {
+    "dest": "../../dist/angularx-qrcode",
+    "lib": {
+      "entryFile": "src/public-api.ts"
+    }
   },
-  "dependencies": {
+  "scripts": {
+    "build": "ng-packagr -p package.json"
+  },
+  "peerDependencies": {
+    "@angular/core": "~12.2.13",
     "qrcode": "1.4.2"
   },
   "repository": {

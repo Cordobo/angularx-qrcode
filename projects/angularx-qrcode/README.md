@@ -1,8 +1,9 @@
-# angularx-qrcode
+# @ubirch/angularx-qrcode
 
-`angularx-qrcode` is a fast and easy-to-use Ionic 4/5 and Angular12 QR Code component/module library to generate QR Codes (Quick Response)
+`@ubirch/angularx-qrcode` is a fast and easy-to-use Ionic 4/5 and Angular 12 QR Code component/module library to generate QR Codes (Quick Response)
 in your Ionic and Angular 12 app with support for AOT and the Ivy compiler and runtime.
-It is a drop-in replacement for the no-longer-maintained `angularx-qrcode`, which was a replacement for angular2 component `ng2-qrcode` and based on node-qrcode.
+It is a drop-in replacement for the no-longer-maintained `angularx-qrcode` package of Andreas Jacob <andreas@cordobo.de (http://cordobo.com/)
+which was a replacement for angular2 component `ng2-qrcode` and based on node-qrcode.
 
 ## Demo App
 
@@ -106,20 +107,10 @@ Depending on the amount of data of the _qrdata_ to encode, a minimum _width_ is 
 
 `angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler
 
-## SSR - Server Side Rendering
-
-As of version 1.6.0, SSR support is fully implemented, the following workaround is no longer needed. [HowTo use Angular QRCode with SSR](https://github.com/Cordobo/angularx-qrcode/issues/5)
-
 ## Available commands
 
     # Build
     npm run build
-
-## Contribution
-
-- Please open your PR against the development branch.
-- Make sure your editor uses the packages .editorconfig file to minimize commited code changes.
-- Use `npm run lint` before you commit
 
 ## License
 

@@ -1,0 +1,1 @@
+{"version":3,"file":"angularx-qrcode.module.d.ts","sources":["angularx-qrcode.module.d.ts"],"names":[],"mappings":";;;;;;AACA;AADA","sourcesContent":["export declare class QRCodeModule {\r\n}\r\n"]}

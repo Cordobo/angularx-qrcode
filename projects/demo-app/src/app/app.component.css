@@ -29,3 +29,32 @@
   display: block;
   flex: 0;
 }
+
+.left {
+  display: flex;
+  flex: 1;
+  justify-content: left;
+}
+
+.center {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.right {
+  display: flex;
+  flex: 1;
+  justify-content: right;
+}
+
+.demoBorder {
+  border: 10px solid red;
+}
+
+.demoBorderRadius {
+  border: dashed;
+  border-width: 2px 4px;
+  border-radius: 40px;
+  overflow: hidden;
+}

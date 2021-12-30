@@ -1,17 +1,17 @@
 {
   "name": "angularx-qrcode",
-  "version": "11.0.0",
+  "version": "12.0.0",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
   },
-  "description": "Simple QRCode module generator for Angular4/5/6/7/8/9/10/11+ and Ionic 3/4/5 using node-qrcode",
+  "description": "Simple QRCode module generator for Angular4/5/6/7/8/9/10/11/12+ and Ionic 3/4/5 using node-qrcode",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "^11.0.6"
+    "@angular/core": "^12.0.0"
   },
   "dependencies": {
-    "qrcode": "1.4.2",
+    "qrcode": "1.5.0",
     "tslib": "^2.1.0"
   },
   "repository": {
@@ -23,11 +23,23 @@
   },
   "homepage": "https://github.com/cordobo/angularx-qrcode#readme",
   "main": "bundles/angularx-qrcode.umd.js",
+  "module_ivy_ngcc": "__ivy_ngcc__/fesm2015/angularx-qrcode.js",
   "module": "fesm2015/angularx-qrcode.js",
+  "es2015_ivy_ngcc": "__ivy_ngcc__/fesm2015/angularx-qrcode.js",
   "es2015": "fesm2015/angularx-qrcode.js",
   "esm2015": "esm2015/angularx-qrcode.js",
+  "fesm2015_ivy_ngcc": "__ivy_ngcc__/fesm2015/angularx-qrcode.js",
   "fesm2015": "fesm2015/angularx-qrcode.js",
   "typings": "angularx-qrcode.d.ts",
   "metadata": "angularx-qrcode.metadata.json",
-  "sideEffects": false
+  "sideEffects": false,
+  "__processed_by_ivy_ngcc__": {
+    "es2015": "12.0.5",
+    "fesm2015": "12.0.5",
+    "module": "12.0.5",
+    "typings": "12.0.5"
+  },
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by NGCC. This is not allowed.\\nPlease delete and rebuild the package, without compiling with NGCC, before attempting to publish.\\nNote that NGCC may have been run by importing this package into another project that is being built with Ivy enabled.\\n')\" && exit 1"
+  }
 }

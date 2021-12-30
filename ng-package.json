@@ -7,7 +7,7 @@
       "qrcode": "qrcode"
     }
   },
-  "whitelistedNonPeerDependencies": [
+  "allowedNonPeerDependencies": [
     "@angular/common",
     "qrcode"
   ]

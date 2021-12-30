@@ -12,7 +12,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build angularx-qrcode --prod",
+    "build": "ng build angularx-qrcode --configuration production",
     "test": "ng test",
     "lint": "ng lint",
     "prebuild": "rimraf dist tmp",
@@ -24,7 +24,7 @@
     "build:demo:prod": "npm run build && ng build demo-app --configuration production"
   },
   "dependencies": {
-    "qrcode": "^1.5.0"
+    "qrcode": "1.5.0"
   },
   "peerDependencies": {
     "@angular/core": ">= 12.0.0 < 13.0.0"

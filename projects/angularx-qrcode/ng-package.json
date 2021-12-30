@@ -7,5 +7,5 @@
       "qrcode": "qrcode"
     }
   },
-  "whitelistedNonPeerDependencies": ["qrcode"]
+  "allowedNonPeerDependencies": ["qrcode"]
 }

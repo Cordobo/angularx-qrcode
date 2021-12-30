@@ -1,12 +1,13 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "11.0.0",
+  "version": "12.0.0",
+  "main": "dist/angularx-qrcode/bundles/angularx-qrcode.umd.js",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
   },
-  "description": "Simple QRCode module generator for Angular4/5/6/7/8/9/10/11+ and Ionic 3/4/5 using node-qrcode",
+  "description": "Simple QRCode module generator for Angular4/5/6/7/8/9/10/11/12+ and Ionic 3/4/5 using node-qrcode",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -20,46 +21,46 @@
     "start:demo": "ng serve demo-app --open",
     "dev:demo": "lite-server --baseDir=\"dist/demo-app\"",
     "build:demo": "npm run build && ng build demo-app",
-    "build:demo:prod": "npm run build && ng build demo-app --prod"
+    "build:demo:prod": "npm run build && ng build demo-app --configuration production"
   },
   "dependencies": {
-    "qrcode": "1.4.2"
+    "qrcode": "^1.5.0"
   },
   "peerDependencies": {
-    "@angular/core": ">= 11.0.0 < 12.0.0"
+    "@angular/core": ">= 12.0.0 < 13.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1100.6",
+    "@angular-devkit/build-angular": "~12.0.2",
     "@angular-devkit/build-ng-packagr": "~0.1002.0",
-    "@angular/cli": "~11.0.6",
-    "@angular/common": "~11.0.6",
-    "@angular/compiler": "~11.0.6",
-    "@angular/compiler-cli": "~11.0.6",
-    "@angular/core": "~11.0.6",
-    "@angular/forms": "~11.0.6",
-    "@angular/platform-browser": "~11.0.6",
-    "@angular/platform-browser-dynamic": "~11.0.6",
+    "@angular/cli": "~12.0.2",
+    "@angular/common": "~12.0.2",
+    "@angular/compiler": "~12.0.2",
+    "@angular/compiler-cli": "~12.0.2",
+    "@angular/core": "~12.0.2",
+    "@angular/forms": "~12.0.2",
+    "@angular/platform-browser": "~12.0.2",
+    "@angular/platform-browser-dynamic": "~12.0.2",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
     "@types/qrcode": "1.3.5",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~5.1.0",
+    "karma": "~6.3.2",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "lite-server": "^2.6.1",
-    "ng-packagr": "^11.0.3",
+    "ng-packagr": "^12.0.2",
     "protractor": "~7.0.0",
     "rimraf": "3.0.2",
     "rxjs": "~6.6.0",
     "ts-node": "~8.3.0",
-    "tslib": "^2.0.0",
+    "tslib": "^2.2.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2",
-    "zone.js": "~0.10.2"
+    "typescript": "~4.2.4",
+    "zone.js": "~0.11.4"
   },
   "keywords": [
     "angularx-qrcode",
@@ -75,6 +76,7 @@
     "angular9",
     "angular10",
     "angular11",
+    "angular12",
     "ionic",
     "ionic3",
     "ionic4",

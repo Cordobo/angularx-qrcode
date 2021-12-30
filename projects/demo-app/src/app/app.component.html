@@ -6,25 +6,25 @@
       <div class="meta">
         <div>qrdata: {{ qrdata }}</div>
         <div>elementType: {{ elementType }}</div>
-        <div>level: {{ level }}</div>
+        <div>errorCorrectionLevel: {{ errorCorrectionLevel }}</div>
         <div>scale: {{ scale }}</div>
         <div>width: {{ width }}</div>
       </div>
       <div class="qrcodeImage">
-        <qrcode [elementType]="elementType" [level]="level" [qrdata]="qrdata" [scale]="scale" [width]="width" [allowEmptyString]="true"></qrcode>
+        <qrcode [elementType]="elementType" [errorCorrectionLevel]="errorCorrectionLevel" [qrdata]="qrdata" [scale]="scale" [width]="width" [allowEmptyString]="true"></qrcode>
       </div>
     </div>
 
     <div class="controls">
       <h3>Change Values</h3>
 
-      <h4>QR-Code Data:</h4>
+      <h4>Set QR-Code Data:</h4>
       <button (click)="changeQrdata('Bruce')">Set "Bruce"</button>
       <button (click)="changeQrdata('Peter Parker')">
-        Set "Peter Parker"
+        "Peter Parker"
       </button>
-      <button (click)="changeQrdata('42')">Set "42"</button>
-      <button (click)="changeQrdata('')">Set "" (allowEmptyString)</button>
+      <button (click)="changeQrdata('42')">"42"</button>
+      <button (click)="changeQrdata('')">"" (empty string)</button>
       <br />
       <br />
       <label>
@@ -38,10 +38,10 @@
       <button (click)="changeElementType('svg')">svg</button>
 
       <h4>Change Level</h4>
-      <button (click)="changeLevel('L')">L</button>
-      <button (click)="changeLevel('M')">M</button>
-      <button (click)="changeLevel('Q')">Q</button>
-      <button (click)="changeLevel('H')">H</button>
+      <button (click)="changeErrorCorrectionLevel('L')">L</button>
+      <button (click)="changeErrorCorrectionLevel('M')">M</button>
+      <button (click)="changeErrorCorrectionLevel('Q')">Q</button>
+      <button (click)="changeErrorCorrectionLevel('H')">H</button>
 
       <h4>Change Width</h4>
       <button (click)="changeWidth(512)">512</button>

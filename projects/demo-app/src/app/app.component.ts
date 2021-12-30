@@ -10,13 +10,13 @@ export class AppComponent {
 
   public qrdata: string = null;
   public elementType: 'img' | 'url' | 'canvas' | 'svg' = null;
-  public level: 'L' | 'M' | 'Q' | 'H';
+  public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H';
   public scale: number;
   public width: number;
 
   constructor() {
     this.elementType = 'img';
-    this.level = 'M';
+    this.errorCorrectionLevel = 'M';
     this.qrdata = 'Initial QR code data string';
     this.scale = 1;
     this.width = 256;
@@ -26,8 +26,8 @@ export class AppComponent {
     this.elementType = newValue;
   }
 
-  changeLevel(newValue: 'L' | 'M' | 'Q' | 'H'): void {
-    this.level = newValue;
+  changeErrorCorrectionLevel(newValue: 'L' | 'M' | 'Q' | 'H'): void {
+    this.errorCorrectionLevel = newValue;
   }
 
   changeQrdata(newValue: string): void {

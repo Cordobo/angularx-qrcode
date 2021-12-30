@@ -15,7 +15,7 @@
     "build": "ng build angularx-qrcode --configuration production",
     "test": "ng test",
     "lint": "ng lint",
-    "prebuild": "rimraf dist tmp",
+    "prebuild": "rimraf dist tmp && cp README.md projects/angularx-qrcode/",
     "reinstall": "rm -rf node_modules && npm install",
     "release": "npm run reinstall && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../",
     "start:demo": "ng serve demo-app --open",

@@ -2,7 +2,7 @@
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/core'), require('qrcode')) :
     typeof define === 'function' && define.amd ? define('angularx-qrcode', ['exports', '@angular/core', 'qrcode'], factory) :
     (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global["angularx-qrcode"] = {}, global.ng.core, global.qrcode));
-})(this, (function (exports, core, QRCode) { 'use strict';
+})(this, (function (exports, i0, QRCode) { 'use strict';
 
     function _interopNamespace(e) {
         if (e && e.__esModule) return e;
@@ -22,6 +22,7 @@
         return Object.freeze(n);
     }
 
+    var i0__namespace = /*#__PURE__*/_interopNamespace(i0);
     var QRCode__namespace = /*#__PURE__*/_interopNamespace(QRCode);
 
     /*! *****************************************************************************
@@ -342,47 +343,20 @@
         return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
     }
 
+    var _c0 = ["qrcElement"];
     var QRCodeComponent = /** @class */ (function () {
         function QRCodeComponent(renderer) {
             this.renderer = renderer;
-            // Deprecated
-            this.colordark = '';
-            this.colorlight = '';
-            this.level = '';
-            this.hidetitle = false;
-            this.size = 0;
-            this.usesvg = false;
-            // Valid for 1.x and 2.x
             this.allowEmptyString = false;
-            this.qrdata = '';
-            // New fields introduced in 2.0.0
             this.colorDark = '#000000ff';
             this.colorLight = '#ffffffff';
             this.cssClass = 'qrcode';
             this.elementType = 'canvas';
             this.errorCorrectionLevel = 'M';
             this.margin = 4;
+            this.qrdata = '';
             this.scale = 4;
             this.width = 10;
-            // Deprecation warnings
-            if (this.colordark !== '') {
-                console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
-            }
-            if (this.colorlight !== '') {
-                console.warn('[angularx-qrcode] colorlight is deprecated, use colorLight.');
-            }
-            if (this.level !== '') {
-                console.warn('[angularx-qrcode] level is deprecated, use errorCorrectionLevel.');
-            }
-            if (this.hidetitle !== false) {
-                console.warn('[angularx-qrcode] hidetitle is deprecated.');
-            }
-            if (this.size !== 0) {
-                console.warn('[angularx-qrcode] size is deprecated, use `width`. Defaults to 10.');
-            }
-            if (this.usesvg !== false) {
-                console.warn("[angularx-qrcode] usesvg is deprecated, use [elementType]=\"'svg'\".");
-            }
         }
         QRCodeComponent.prototype.ngOnChanges = function () {
             this.createQRCode();
@@ -552,49 +526,97 @@
         };
         return QRCodeComponent;
     }());
-    QRCodeComponent.decorators = [
-        { type: core.Component, args: [{
-                    selector: 'qrcode',
-                    changeDetection: core.ChangeDetectionStrategy.OnPush,
-                    template: "<div #qrcElement [class]=\"cssClass\"></div>"
-                },] }
-    ];
-    QRCodeComponent.ctorParameters = function () { return [
-        { type: core.Renderer2 }
-    ]; };
-    QRCodeComponent.propDecorators = {
-        colordark: [{ type: core.Input }],
-        colorlight: [{ type: core.Input }],
-        level: [{ type: core.Input }],
-        hidetitle: [{ type: core.Input }],
-        size: [{ type: core.Input }],
-        usesvg: [{ type: core.Input }],
-        allowEmptyString: [{ type: core.Input }],
-        qrdata: [{ type: core.Input }],
-        colorDark: [{ type: core.Input }],
-        colorLight: [{ type: core.Input }],
-        cssClass: [{ type: core.Input }],
-        elementType: [{ type: core.Input }],
-        errorCorrectionLevel: [{ type: core.Input }],
-        margin: [{ type: core.Input }],
-        scale: [{ type: core.Input }],
-        version: [{ type: core.Input }],
-        width: [{ type: core.Input }],
-        qrcElement: [{ type: core.ViewChild, args: ['qrcElement', { static: true },] }]
-    };
+    QRCodeComponent.ɵfac = function QRCodeComponent_Factory(t) { return new (t || QRCodeComponent)(i0__namespace.ɵɵdirectiveInject(i0__namespace.Renderer2)); };
+    QRCodeComponent.ɵcmp = /*@__PURE__*/ i0__namespace.ɵɵdefineComponent({ type: QRCodeComponent, selectors: [["qrcode"]], viewQuery: function QRCodeComponent_Query(rf, ctx) {
+            if (rf & 1) {
+                i0__namespace.ɵɵviewQuery(_c0, 7);
+            }
+            if (rf & 2) {
+                var _t = void 0;
+                i0__namespace.ɵɵqueryRefresh(_t = i0__namespace.ɵɵloadQuery()) && (ctx.qrcElement = _t.first);
+            }
+        }, inputs: { allowEmptyString: "allowEmptyString", colorDark: "colorDark", colorLight: "colorLight", cssClass: "cssClass", elementType: "elementType", errorCorrectionLevel: "errorCorrectionLevel", margin: "margin", qrdata: "qrdata", scale: "scale", version: "version", width: "width" }, features: [i0__namespace.ɵɵNgOnChangesFeature], decls: 2, vars: 2, consts: [["qrcElement", ""]], template: function QRCodeComponent_Template(rf, ctx) {
+            if (rf & 1) {
+                i0__namespace.ɵɵelement(0, "div", null, 0);
+            }
+            if (rf & 2) {
+                i0__namespace.ɵɵclassMap(ctx.cssClass);
+            }
+        }, encapsulation: 2, changeDetection: 0 });
+    (function () {
+        (typeof ngDevMode === "undefined" || ngDevMode) && i0__namespace.ɵsetClassMetadata(QRCodeComponent, [{
+                type: i0.Component,
+                args: [{
+                        selector: 'qrcode',
+                        changeDetection: i0.ChangeDetectionStrategy.OnPush,
+                        template: "<div #qrcElement [class]=\"cssClass\"></div>",
+                    }]
+            }], function () { return [{ type: i0__namespace.Renderer2 }]; }, { allowEmptyString: [{
+                    type: i0.Input
+                }], colorDark: [{
+                    type: i0.Input
+                }], colorLight: [{
+                    type: i0.Input
+                }], cssClass: [{
+                    type: i0.Input
+                }], elementType: [{
+                    type: i0.Input
+                }], errorCorrectionLevel: [{
+                    type: i0.Input
+                }], margin: [{
+                    type: i0.Input
+                }], qrdata: [{
+                    type: i0.Input
+                }], scale: [{
+                    type: i0.Input
+                }], version: [{
+                    type: i0.Input
+                }], width: [{
+                    type: i0.Input
+                }], qrcElement: [{
+                    type: i0.ViewChild,
+                    args: ['qrcElement', { static: true }]
+                }] });
+    })();
 
     var QRCodeModule = /** @class */ (function () {
         function QRCodeModule() {
         }
         return QRCodeModule;
     }());
-    QRCodeModule.decorators = [
-        { type: core.NgModule, args: [{
-                    providers: [],
-                    declarations: [QRCodeComponent],
-                    exports: [QRCodeComponent],
-                },] }
-    ];
+    QRCodeModule.ɵfac = function QRCodeModule_Factory(t) { return new (t || QRCodeModule)(); };
+    QRCodeModule.ɵmod = /*@__PURE__*/ i0__namespace.ɵɵdefineNgModule({ type: QRCodeModule });
+    QRCodeModule.ɵinj = /*@__PURE__*/ i0__namespace.ɵɵdefineInjector({ providers: [] });
+    (function () {
+        (typeof ngDevMode === "undefined" || ngDevMode) && i0__namespace.ɵsetClassMetadata(QRCodeModule, [{
+                type: i0.NgModule,
+                args: [{
+                        providers: [],
+                        declarations: [QRCodeComponent],
+                        exports: [QRCodeComponent],
+                    }]
+            }], null, null);
+    })();
+    (function () { (typeof ngJitMode === "undefined" || ngJitMode) && i0__namespace.ɵɵsetNgModuleScope(QRCodeModule, { declarations: [QRCodeComponent], exports: [QRCodeComponent] }); })();
+
+    exports.QRCodeErrorCorrectionLevel = void 0;
+    (function (QRCodeErrorCorrectionLevel) {
+        QRCodeErrorCorrectionLevel["low"] = "low";
+        QRCodeErrorCorrectionLevel["medium"] = "medium";
+        QRCodeErrorCorrectionLevel["quartile"] = "quartile";
+        QRCodeErrorCorrectionLevel["high"] = "high";
+        QRCodeErrorCorrectionLevel["L"] = "L";
+        QRCodeErrorCorrectionLevel["M"] = "M";
+        QRCodeErrorCorrectionLevel["Q"] = "Q";
+        QRCodeErrorCorrectionLevel["H"] = "H";
+    })(exports.QRCodeErrorCorrectionLevel || (exports.QRCodeErrorCorrectionLevel = {}));
+    exports.QRCodeElementType = void 0;
+    (function (QRCodeElementType) {
+        QRCodeElementType["url"] = "url";
+        QRCodeElementType["img"] = "img";
+        QRCodeElementType["canvas"] = "canvas";
+        QRCodeElementType["svg"] = "svg";
+    })(exports.QRCodeElementType || (exports.QRCodeElementType = {}));
 
     /*
      * Public API Surface of angularx-qrcode

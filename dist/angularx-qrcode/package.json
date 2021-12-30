@@ -28,6 +28,8 @@
   "esm2015": "esm2015/angularx-qrcode.js",
   "fesm2015": "fesm2015/angularx-qrcode.js",
   "typings": "angularx-qrcode.d.ts",
-  "metadata": "angularx-qrcode.metadata.json",
-  "sideEffects": false
+  "sideEffects": false,
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy in full compilation mode. This is not allowed.\\nPlease delete and rebuild the package with Ivy partial compilation mode, before attempting to publish.\\n')\" && exit 1"
+  }
 }

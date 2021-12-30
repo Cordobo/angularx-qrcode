@@ -20,19 +20,7 @@ import {
   template: `<div #qrcElement [class]="cssClass"></div>`,
 })
 export class QRCodeComponent implements OnChanges {
-  // Deprecated
-  @Input() public colordark = '';
-  @Input() public colorlight = '';
-  @Input() public level = '';
-  @Input() public hidetitle = false;
-  @Input() public size = 0;
-  @Input() public usesvg = false;
-
-  // Valid for 1.x and 2.x
   @Input() public allowEmptyString = false;
-  @Input() public qrdata = '';
-
-  // New fields introduced in 2.0.0
   @Input() public colorDark = '#000000ff';
   @Input() public colorLight = '#ffffffff';
   @Input() public cssClass = 'qrcode';
@@ -40,41 +28,14 @@ export class QRCodeComponent implements OnChanges {
   @Input()
   public errorCorrectionLevel: keyof typeof QRCodeErrorCorrectionLevel = 'M';
   @Input() public margin = 4;
+  @Input() public qrdata = '';
   @Input() public scale = 4;
   @Input() public version: QRCodeVersion | undefined;
   @Input() public width = 10;
 
   @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
 
-  constructor(private renderer: Renderer2) {
-    // Deprecation warnings
-    if (this.colordark !== '') {
-      console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
-    }
-    if (this.colorlight !== '') {
-      console.warn(
-        '[angularx-qrcode] colorlight is deprecated, use colorLight.'
-      );
-    }
-    if (this.level !== '') {
-      console.warn(
-        '[angularx-qrcode] level is deprecated, use errorCorrectionLevel.'
-      );
-    }
-    if (this.hidetitle !== false) {
-      console.warn('[angularx-qrcode] hidetitle is deprecated.');
-    }
-    if (this.size !== 0) {
-      console.warn(
-        '[angularx-qrcode] size is deprecated, use `width`. Defaults to 10.'
-      );
-    }
-    if (this.usesvg !== false) {
-      console.warn(
-        `[angularx-qrcode] usesvg is deprecated, use [elementType]="'svg'".`
-      );
-    }
-  }
+  constructor(private renderer: Renderer2) {}
 
   public ngOnChanges(): void {
     this.createQRCode();

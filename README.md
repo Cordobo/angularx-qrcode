@@ -7,7 +7,7 @@
 An Angular app with a working implementation of angularx-qrcode is available as a project in this repository. Run the command
 
 ```
-ng serve demo-app
+ng serve demo-app --open
 ```
 
 and open the url `http://localhost:4200/` in your browser

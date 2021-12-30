@@ -203,8 +203,13 @@ export class QRCodeComponent implements OnChanges {
     try {
       if (!this.isValidQrCodeText(this.qrdata)) {
         throw new Error(
-          '[angularx-qrcode] Field `qrdata` is empty, set`allowEmptyString="true"` to overwrite this behaviour.'
+          '[angularx-qrcode] Field `qrdata` is empty, set `allowEmptyString="true"` to overwrite this behaviour.'
         );
+      }
+
+      // This is a fix to allow an empty string as qrdata
+      if (this.isValidQrCodeText(this.qrdata) && this.qrdata === '') {
+        this.qrdata = ' ';
       }
 
       let element: Element;
@@ -217,7 +222,7 @@ export class QRCodeComponent implements OnChanges {
               this.renderElement(element);
             })
             .catch((e) => {
-              console.error('[angularx-qrcode] canvas error: ', e);
+              console.error('[angularx-qrcode] canvas error:', e);
             });
           break;
         case 'svg':
@@ -240,7 +245,7 @@ export class QRCodeComponent implements OnChanges {
               this.renderElement(innerElement);
             })
             .catch((e) => {
-              console.error('[angularx-qrcode] svg error: ', e);
+              console.error('[angularx-qrcode] svg error:', e);
             });
           break;
         case 'url':
@@ -253,11 +258,11 @@ export class QRCodeComponent implements OnChanges {
               this.renderElement(element);
             })
             .catch((e) => {
-              console.error('[angularx-qrcode] img/url error: ', e);
+              console.error('[angularx-qrcode] img/url error:', e);
             });
       }
     } catch (e) {
-      console.error('[angularx-qrcode] Error generating QR Code: ', e.message);
+      console.error('[angularx-qrcode] Error generating QR Code:', e.message);
     }
   }
 }

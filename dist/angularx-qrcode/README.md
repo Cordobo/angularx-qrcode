@@ -1,13 +1,13 @@
 # angularx-qrcode
 
-`angularx-qrcode` is a fast and easy-to-use Ionic 3/4/5 and Angular4-11 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8/9/10/11 app with support for AOT and the Ivy compiler and runtime. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on node-qrcode.
+`angularx-qrcode` is a fast and easy-to-use Ionic 3/4/5 and Angular4-12 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8/9/10/11/12 app with support for AOT and the Ivy compiler and runtime. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on node-qrcode.
 
 ## Demo App
 
 An Angular app with a working implementation of angularx-qrcode is available as a project in this repository. Run the command
 
 ```
-ng serve demo-app
+ng serve demo-app --open
 ```
 
 and open the url `http://localhost:4200/` in your browser
@@ -15,15 +15,26 @@ and open the url `http://localhost:4200/` in your browser
 For versions prior to 11, a working app is available at
 [github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
+## Install angularx-qrcode 12.0.x with Angular 12
+
+Angular 12 requires angularx-qrcode 12:
+
+```
+# Angular 12 and Ionic
+npm install angularx-qrcode --save
+# Or use yarn
+yarn add angularx-qrcode
+```
+
 ## Install angularx-qrcode 11.0.x with Angular 11
 
 Angular 11 requires angularx-qrcode 11:
 
 ```
 # Angular 11 and Ionic
-npm install angularx-qrcode --save
+npm install angularx-qrcode@11.0.0 --save
 # Or use yarn
-yarn add angularx-qrcode
+yarn add angularx-qrcode@11.0.0
 ```
 
 ## Install angularx-qrcode 10.0.x with Angular 10

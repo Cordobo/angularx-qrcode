@@ -11,7 +11,7 @@
         <div>width: {{ width }}</div>
       </div>
       <div class="qrcodeImage">
-        <qrcode [elementType]="elementType" [level]="level" [qrdata]="qrdata" [scale]="scale" [width]="width"></qrcode>
+        <qrcode [elementType]="elementType" [level]="level" [qrdata]="qrdata" [scale]="scale" [width]="width" [allowEmptyString]="true"></qrcode>
       </div>
     </div>
 
@@ -24,6 +24,7 @@
         Set "Peter Parker"
       </button>
       <button (click)="changeQrdata('42')">Set "42"</button>
+      <button (click)="changeQrdata('')">Set "" (allowEmptyString)</button>
       <br />
       <br />
       <label>

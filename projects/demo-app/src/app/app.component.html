@@ -11,7 +11,7 @@
         <div>width: {{ width }}</div>
       </div>
       <div class="qrcodeImage">
-        <qrcode [elementType]="elementType" [errorCorrectionLevel]="errorCorrectionLevel" [qrdata]="qrdata" [scale]="scale" [width]="width" [allowEmptyString]="true" [className]="cssClass"></qrcode>
+        <qrcode [elementType]="elementType" [errorCorrectionLevel]="errorCorrectionLevel" [qrdata]="qrdata" [scale]="scale" [width]="width" [allowEmptyString]="true" [className]="cssClass" [margin]="margin"></qrcode>
       </div>
       <div class="controls">
         <h4>Align QR-Code:</h4>
@@ -51,6 +51,11 @@
       <button (click)="changeErrorCorrectionLevel('M')">M</button>
       <button (click)="changeErrorCorrectionLevel('Q')">Q</button>
       <button (click)="changeErrorCorrectionLevel('H')">H</button>
+
+      <h4>Change Margin</h4>
+      <button (click)="changeMargin(4)">4 (default)</button>
+      <button (click)="changeMargin(0)">0</button>
+      <button (click)="changeMargin(10)">10</button>
 
       <h4>Change Width</h4>
       <button (click)="changeWidth(512)">512</button>

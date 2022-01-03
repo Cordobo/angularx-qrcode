@@ -33,7 +33,7 @@ export class QRCodeComponent implements OnChanges {
   @Input() public version: QRCodeVersion | undefined;
   @Input() public width = 10;
 
-  @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
+  @ViewChild('qrcElement', { static: true }) public qrcElement!: ElementRef;
 
   constructor(private renderer: Renderer2) {}
 
@@ -222,7 +222,7 @@ export class QRCodeComponent implements OnChanges {
               console.error('[angularx-qrcode] img/url error:', e);
             });
       }
-    } catch (e) {
+    } catch (e: any) {
       console.error('[angularx-qrcode] Error generating QR Code:', e.message);
     }
   }

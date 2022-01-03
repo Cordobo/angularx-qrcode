@@ -9,9 +9,10 @@ export class AppComponent {
   title = 'angularx-qrcode-demo-app';
 
   public cssClass: string = 'left';
-  public qrdata: string = null;
-  public elementType: 'img' | 'url' | 'canvas' | 'svg' = null;
+  public qrdata: string;
+  public elementType: 'img' | 'url' | 'canvas' | 'svg';
   public errorCorrectionLevel: 'L' | 'M' | 'Q' | 'H';
+  public margin: number;
   public scale: number;
   public width: number;
 
@@ -19,6 +20,7 @@ export class AppComponent {
     this.cssClass = 'left';
     this.elementType = 'img';
     this.errorCorrectionLevel = 'M';
+    this.margin = 4;
     this.qrdata = 'Initial QR code data string';
     this.scale = 1;
     this.width = 256;
@@ -36,6 +38,10 @@ export class AppComponent {
 
   changeErrorCorrectionLevel(newValue: 'L' | 'M' | 'Q' | 'H'): void {
     this.errorCorrectionLevel = newValue;
+  }
+
+  changeMargin(newValue: number): void {
+    this.margin = newValue;
   }
 
   changeQrdata(newValue: string): void {

@@ -18,9 +18,6 @@
     },
     {
       "path": "./projects/demo-app/tsconfig.spec.json"
-    },
-    {
-      "path": "./projects/demo-app/e2e/tsconfig.json"
     }
   ]
 }

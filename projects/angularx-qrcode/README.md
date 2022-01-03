@@ -1,6 +1,15 @@
 # angularx-qrcode
 
-`angularx-qrcode` is a fast and easy-to-use Ionic 3/4/5 and Angular4-13 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8/9/10/11/12/13 app with support for AOT and the Ivy compiler and runtime. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on node-qrcode.
+**The most popular QR Code library for angular 13 and Ionic.**
+
+## Why angularx-qrcode?
+
+- Supports angular 13 (+ all angular versions before) and Ionic
+- Ivy compiler support
+- Under active development
+- Trusted and used by thousands of developers like you
+
+`angularx-qrcode` is a fast and easy-to-use Ionic 3/4/5 and Angular4-13 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8/9/10/11/12/13 app with support for AOT and the Ivy compiler/runtime. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on node-qrcode.
 
 ## Demo App
 
@@ -11,9 +20,6 @@ ng serve demo-app --open
 ```
 
 and open the url `http://localhost:4200/` in your browser
-
-For versions prior to 11, a working app is available at
-[github.com/Cordobo/angularx-qrcode-sample-app](https://github.com/Cordobo/angularx-qrcode-sample-app).
 
 ## Install angularx-qrcode 13.0.x with Angular 13
 
@@ -48,9 +54,7 @@ npm install angularx-qrcode@11.0.0 --save
 yarn add angularx-qrcode@11.0.0
 ```
 
-## Install angularx-qrcode 10.0.x with Angular 10
-
-Starting with angularx-qrcode 10, major versions of angular and angularx-qrcode are synchronized, so angular 10 requires angularx-qrcode 10, making it easier to use the right version.
+## Older Angular Versions
 
 ```
 # Angular 10 and Ionic
@@ -59,8 +63,6 @@ npm install angularx-qrcode@10.0.12 --save
 yarn add angularx-qrcode@10.0.12
 ```
 
-## Install angularx-qrcode 2.3.x with Angular 9
-
 ```
 # Angular 9 and Ionic
 npm install angularx-qrcode@~2.3.5 --save
@@ -68,16 +70,12 @@ npm install angularx-qrcode@~2.3.5 --save
 yarn add angularx-qrcode@~2.3.5
 ```
 
-## Install angularx-qrcode 2.1.x with Angular 8
-
 ```
 # Angular 8 and Ionic
 npm install angularx-qrcode@~2.1.4 --save
 # Or use yarn
 yarn add angularx-qrcode@~2.1.4
 ```
-
-## Older Angular Versions
 
 ```
 # Angular 5/6/7
@@ -92,7 +90,7 @@ npm install angularx-qrcode@1.0.3 --save
 
 ```
 // File: app.module.ts
-// all your imports
+// all your other imports...
 import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({

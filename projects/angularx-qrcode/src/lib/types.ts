@@ -1,20 +1,14 @@
-export enum QRCodeErrorCorrectionLevel {
-  low = 'low',
-  medium = 'medium',
-  quartile = 'quartile',
-  high = 'high',
-  L = 'L',
-  M = 'M',
-  Q = 'Q',
-  H = 'H',
-}
+export type QRCodeErrorCorrectionLevel =
+  | "low"
+  | "medium"
+  | "quartile"
+  | "high"
+  | "L"
+  | "M"
+  | "Q"
+  | "H"
 
-export enum QRCodeElementType {
-  url = 'url',
-  img = 'img',
-  canvas = 'canvas',
-  svg = 'svg',
-}
+export type QRCodeElementType = "url" | "img" | "canvas" | "svg"
 
 export type QRCodeVersion =
   | 0
@@ -57,4 +51,6 @@ export type QRCodeVersion =
   | 37
   | 38
   | 39
-  | 40;
+  | 40
+
+export type RGBAColor = `#${string}`

@@ -1,90 +1,57 @@
-# angularx-qrcode
+# angularx-qrcode - Angular QR Code Generator
 
-**The most popular QR Code library for angular 13 and Ionic.**
+`angularx-qrcode` is a fast and easy-to-use Ivy compatible Ionic and angular QR Code Generator library
 
 ## Why angularx-qrcode?
 
-- Supports angular 13 (+ all angular versions before) and Ionic
-- Ivy compiler support
+- Compatible with **angular 13** and Ionic
+- Ivy compiler support, AOT, SSR (Server Side Rendering)
 - Under active development
 - Trusted and used by thousands of developers like you
 
-`angularx-qrcode` is a fast and easy-to-use Ionic 3/4/5 and Angular4-13 QR Code component/module library to generate QR Codes (Quick Response) in your Ionic and Angular 4/5/6/7/8/9/10/11/12/13 app with support for AOT and the Ivy compiler/runtime. It is a drop-in replacement for the no-longer-maintained angular2 component `ng2-qrcode` and based on node-qrcode.
+`angularx-qrcode` is compatible with Ionic 3/4/5 and Angular 4/5/6/7/8/9/10/11/12/13 with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular2 component ng2-qrcode and based on node-qrcode.
 
-## Demo App
+## Installation
 
-An Angular app with a working implementation of angularx-qrcode is available as a project in this repository. Run the command
-
-```
-ng serve demo-app --open
-```
-
-and open the url `http://localhost:4200/` in your browser
-
-## Install angularx-qrcode 13.0.x with Angular 13
-
-Angular 13 requires angularx-qrcode 13:
+Angular 13 and Ionic require angularx-qrcode 13:
 
 ```
-# Angular 13 and Ionic
 npm install angularx-qrcode --save
-# Or use yarn
+
+# Or with yarn
 yarn add angularx-qrcode
 ```
 
-## Install angularx-qrcode 12.0.x with Angular 12
-
-Angular 12 requires angularx-qrcode 12:
-
 ```
-# Angular 12 and Ionic
+# angular 12 and Ionic
 npm install angularx-qrcode@12.0.3 --save
-# Or use yarn
+# Or with yarn
 yarn add angularx-qrcode@12.0.3
 ```
 
-## Install angularx-qrcode 11.0.x with Angular 11
-
-Angular 11 requires angularx-qrcode 11:
-
 ```
-# Angular 11 and Ionic
+# angular 11 and Ionic
 npm install angularx-qrcode@11.0.0 --save
-# Or use yarn
+# Or with yarn
 yarn add angularx-qrcode@11.0.0
 ```
 
-## Older Angular Versions
+**Older supported angular versions**
 
 ```
-# Angular 10 and Ionic
+# angular 10 and Ionic
 npm install angularx-qrcode@10.0.12 --save
-# Or use yarn
-yarn add angularx-qrcode@10.0.12
-```
-
-```
-# Angular 9 and Ionic
+# angular 9 and Ionic
 npm install angularx-qrcode@~2.3.5 --save
-# Or use yarn
-yarn add angularx-qrcode@~2.3.5
-```
-
-```
-# Angular 8 and Ionic
+# angular 8 and Ionic
 npm install angularx-qrcode@~2.1.4 --save
-# Or use yarn
-yarn add angularx-qrcode@~2.1.4
-```
-
-```
-# Angular 5/6/7
+# angular 5/6/7
 npm install angularx-qrcode@1.6.4 --save
 # Angular 4
 npm install angularx-qrcode@1.0.3 --save
 ```
 
-## Basic Usage
+# Usage
 
 ### Import the module and add it to your imports section in your main AppModule:
 
@@ -108,9 +75,11 @@ export class AppModule { }
 
 ## Examples: How to implement angularx-qrcode
 
+The source for a detailed demo app is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository.
+
 ### Generate a QR Code from a string (directive only)
 
-Now that Angular/Ionic knows about the new QR Code module,
+Now that angular/Ionic know about the new QR Code module,
 let's invoke it from our template with a directive.
 If we use a simple text-string, we need no additional
 code in our controller.
@@ -138,13 +107,13 @@ export class QRCodeComponent {
 <qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
 ```
 
-## Parameters
+## Available Parameters
 
 | Attribute            | Type    | Default     | Description                                                    |
 | -------------------- | ------- | ----------- | -------------------------------------------------------------- |
 | allowEmptyString     | Boolean | false       | Allow qrdata to be an empty string                             |
-| colorDark            | String  | '#000000ff' | RGBA color, color of dark module                               |
-| colorLight           | String  | '#ffffffff' | RGBA color, color of light module                              |
+| colorDark            | String  | '#000000ff' | RGBA color, color of dark module (foreground)                  |
+| colorLight           | String  | '#ffffffff' | RGBA color, color of light module (background)                 |
 | cssClass             | String  | 'qrcode'    | CSS Class                                                      |
 | elementType          | String  | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                |
 | errorCorrectionLevel | String  | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                       |
@@ -156,7 +125,19 @@ export class QRCodeComponent {
 
 ## Note
 
-Depending on the amount of data of the _qrdata_ to encode, a minimum _width_ is required.
+Depending on the amount of data of the **qrdata** to encode, a minimum **width** is required.
+
+# Demo
+
+**[See working demo here](https://cordobo.github.io/angularx-qrcode/)**
+
+The source for the angular app is available under [`projects/demo-app`](projects/demo-app). Run the command
+
+```
+ng serve demo-app --open
+```
+
+and open the url `http://localhost:4200/` in your browser
 
 ## AOT - Ahead Of Time Compilation
 
@@ -171,10 +152,10 @@ As of version 1.6.0, SSR support is fully implemented, the following workaround 
     # Build
     npm run build
 
-## Contribution
+## Contribute
 
 - Please open your PR against the development branch.
-- Make sure your editor uses the packages .editorconfig file to minimize commited code changes.
+- Make sure your editor uses **prettier** to minimize commited code changes.
 
 ## License
 

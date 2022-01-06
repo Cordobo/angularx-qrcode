@@ -6,51 +6,51 @@ import {
   OnChanges,
   Renderer2,
   ViewChild,
-} from '@angular/core';
-import * as QRCode from 'qrcode';
+} from "@angular/core"
+import * as QRCode from "qrcode"
 import {
   QRCodeErrorCorrectionLevel,
   QRCodeVersion,
   QRCodeElementType,
-} from './types';
+} from "./types"
 
 @Component({
-  selector: 'qrcode',
+  selector: "qrcode",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div #qrcElement [class]="cssClass"></div>`,
 })
 export class QRCodeComponent implements OnChanges {
-  @Input() public allowEmptyString = false;
-  @Input() public colorDark = '#000000ff';
-  @Input() public colorLight = '#ffffffff';
-  @Input() public cssClass = 'qrcode';
-  @Input() public elementType: keyof typeof QRCodeElementType = 'canvas';
+  @Input() public allowEmptyString = false
+  @Input() public colorDark = "#000000ff"
+  @Input() public colorLight = "#ffffffff"
+  @Input() public cssClass = "qrcode"
+  @Input() public elementType: QRCodeElementType = "canvas"
   @Input()
-  public errorCorrectionLevel: keyof typeof QRCodeErrorCorrectionLevel = 'M';
-  @Input() public margin = 4;
-  @Input() public qrdata = '';
-  @Input() public scale = 4;
-  @Input() public version: QRCodeVersion | undefined;
-  @Input() public width = 10;
+  public errorCorrectionLevel: QRCodeErrorCorrectionLevel = "M"
+  @Input() public margin = 4
+  @Input() public qrdata = ""
+  @Input() public scale = 4
+  @Input() public version: QRCodeVersion | undefined
+  @Input() public width = 10
 
-  @ViewChild('qrcElement', { static: true }) public qrcElement!: ElementRef;
+  @ViewChild("qrcElement", { static: true }) public qrcElement!: ElementRef
 
   constructor(private renderer: Renderer2) {}
 
   public ngOnChanges(): void {
-    this.createQRCode();
+    this.createQRCode()
   }
 
   protected isValidQrCodeText(data: string | null): boolean {
     if (this.allowEmptyString === false) {
       return !(
-        typeof data === 'undefined' ||
-        data === '' ||
-        data === 'null' ||
+        typeof data === "undefined" ||
+        data === "" ||
+        data === "null" ||
         data === null
-      );
+      )
     }
-    return !(typeof data === 'undefined');
+    return !(typeof data === "undefined")
   }
 
   private toDataURL(): Promise<any> {
@@ -71,14 +71,14 @@ export class QRCodeComponent implements OnChanges {
           },
           (err, url) => {
             if (err) {
-              reject(err);
+              reject(err)
             } else {
-              resolve(url);
+              resolve(url)
             }
           }
-        );
+        )
       }
-    );
+    )
   }
 
   private toCanvas(canvas: Element): Promise<any> {
@@ -100,14 +100,14 @@ export class QRCodeComponent implements OnChanges {
           },
           (error) => {
             if (error) {
-              reject(error);
+              reject(error)
             } else {
-              resolve('success');
+              resolve("success")
             }
           }
-        );
+        )
       }
-    );
+    )
   }
 
   private toSVG(): Promise<any> {
@@ -123,107 +123,103 @@ export class QRCodeComponent implements OnChanges {
             errorCorrectionLevel: this.errorCorrectionLevel,
             margin: this.margin,
             scale: this.scale,
-            type: 'svg',
+            type: "svg",
             version: this.version,
             width: this.width,
           },
           (err, url) => {
             if (err) {
-              reject(err);
+              reject(err)
             } else {
-              resolve(url);
+              resolve(url)
             }
           }
-        );
+        )
       }
-    );
+    )
   }
 
   private renderElement(element: Element): void {
     for (const node of this.qrcElement.nativeElement.childNodes) {
-      this.renderer.removeChild(this.qrcElement.nativeElement, node);
+      this.renderer.removeChild(this.qrcElement.nativeElement, node)
     }
-    this.renderer.appendChild(this.qrcElement.nativeElement, element);
+    this.renderer.appendChild(this.qrcElement.nativeElement, element)
   }
 
   private createQRCode(): void {
     // Set sensitive defaults
     if (this.version && this.version > 40) {
-      console.warn('[angularx-qrcode] max value for `version` is 40');
-      this.version = 40;
+      console.warn("[angularx-qrcode] max value for `version` is 40")
+      this.version = 40
     } else if (this.version && this.version < 1) {
-      console.warn('[angularx-qrcode]`min value for `version` is 1');
-      this.version = 1;
+      console.warn("[angularx-qrcode]`min value for `version` is 1")
+      this.version = 1
     } else if (this.version !== undefined && isNaN(this.version)) {
       console.warn(
-        '[angularx-qrcode] version should be a number, defaulting to auto.'
-      );
-      this.version = undefined;
+        "[angularx-qrcode] version should be a number, defaulting to auto."
+      )
+      this.version = undefined
     }
 
     try {
       if (!this.isValidQrCodeText(this.qrdata)) {
         throw new Error(
-          '[angularx-qrcode] Field `qrdata` is empty, set `allowEmptyString="true"` to overwrite this behaviour.'
-        );
+          "[angularx-qrcode] Field `qrdata` is empty, set 'allowEmptyString=\"true\"' to overwrite this behaviour."
+        )
       }
 
       // This is a fix to allow an empty string as qrdata
-      if (this.isValidQrCodeText(this.qrdata) && this.qrdata === '') {
-        this.qrdata = ' ';
+      if (this.isValidQrCodeText(this.qrdata) && this.qrdata === "") {
+        this.qrdata = " "
       }
 
-      let element: Element;
+      let element: Element
 
       switch (this.elementType) {
-        case 'canvas':
-          element = this.renderer.createElement('canvas');
+        case "canvas":
+          element = this.renderer.createElement("canvas")
           this.toCanvas(element)
             .then(() => {
-              this.renderElement(element);
+              this.renderElement(element)
             })
             .catch((e) => {
-              console.error('[angularx-qrcode] canvas error:', e);
-            });
-          break;
-        case 'svg':
-          element = this.renderer.createElement('div');
+              console.error("[angularx-qrcode] canvas error:", e)
+            })
+          break
+        case "svg":
+          element = this.renderer.createElement("div")
           this.toSVG()
             .then((svgString: string) => {
-              this.renderer.setProperty(element, 'innerHTML', svgString);
-              const innerElement = element.firstChild as Element;
+              this.renderer.setProperty(element, "innerHTML", svgString)
+              const innerElement = element.firstChild as Element
               this.renderer.setAttribute(
                 innerElement,
-                'height',
+                "height",
                 `${this.width}`
-              );
-              this.renderer.setAttribute(
-                innerElement,
-                'width',
-                `${this.width}`
-              );
+              )
+              this.renderer.setAttribute(innerElement, "width", `${this.width}`)
 
-              this.renderElement(innerElement);
+              this.renderElement(innerElement)
             })
             .catch((e) => {
-              console.error('[angularx-qrcode] svg error:', e);
-            });
-          break;
-        case 'url':
-        case 'img':
+              console.error("[angularx-qrcode] svg error:", e)
+            })
+          break
+        case "url":
+        case "img":
         default:
-          element = this.renderer.createElement('img');
+          element = this.renderer.createElement("img")
           this.toDataURL()
             .then((dataUrl: string) => {
-              element.setAttribute('src', dataUrl);
-              this.renderElement(element);
+              element.setAttribute("src", dataUrl)
+              this.renderElement(element)
             })
             .catch((e) => {
-              console.error('[angularx-qrcode] img/url error:', e);
-            });
+              console.error("[angularx-qrcode] img/url error:", e)
+            })
       }
     } catch (e: any) {
-      console.error('[angularx-qrcode] Error generating QR Code:', e.message);
+      console.error("[angularx-qrcode] Error generating QR Code:", e.message)
     }
   }
 }

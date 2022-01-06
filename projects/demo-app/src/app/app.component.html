@@ -1,5 +1,5 @@
 <div class="wrapper">
-  <h1>angularX qrcode demo app implementation</h1>
+  <h1>angularx-qrcode demo app</h1>
 
   <div class="flexContainer">
     <div class="result">
@@ -9,9 +9,22 @@
         <div>errorCorrectionLevel: {{ errorCorrectionLevel }}</div>
         <div>scale: {{ scale }}</div>
         <div>width: {{ width }}</div>
+        <div>margin: {{ margin }}</div>
+        <div>colorDark: {{ colorDark }}, colorLight: {{ colorLight }}</div>
       </div>
       <div class="qrcodeImage">
-        <qrcode [elementType]="elementType" [errorCorrectionLevel]="errorCorrectionLevel" [qrdata]="qrdata" [scale]="scale" [width]="width" [allowEmptyString]="true" [className]="cssClass" [margin]="margin"></qrcode>
+        <qrcode
+          [elementType]="elementType"
+          [errorCorrectionLevel]="errorCorrectionLevel"
+          [qrdata]="qrdata"
+          [scale]="scale"
+          [width]="width"
+          [allowEmptyString]="true"
+          [className]="cssClass"
+          [colorDark]="colorDark"
+          [colorLight]="colorLight"
+          [margin]="margin"
+        ></qrcode>
       </div>
       <div class="controls">
         <h4>Align QR-Code:</h4>
@@ -20,7 +33,7 @@
         <button (click)="changeCssClass('right')">Right</button>
         <button (click)="changeCssClass('demoBorder')">Border</button>
         <button (click)="changeCssClass('demoBorderRadius')">BorderRadius</button>
-        
+        <button (click)="setBorderRadiusWithZeroMargin()">BorderRadius without margin</button>
       </div>
     </div>
 
@@ -40,62 +53,73 @@
         or type to change: <input [(ngModel)]="qrdata" placeholder="name" />
       </label>
 
-      <h4>Change Element Type</h4>
+      <h4>ElementType</h4>
       <button (click)="changeElementType('img')">img</button>
       <button (click)="changeElementType('url')">url</button>
       <button (click)="changeElementType('canvas')">canvas</button>
       <button (click)="changeElementType('svg')">svg</button>
 
-      <h4>Change Level</h4>
+      <h4>ErrorCorrectionLevel</h4>
       <button (click)="changeErrorCorrectionLevel('L')">L</button>
       <button (click)="changeErrorCorrectionLevel('M')">M</button>
       <button (click)="changeErrorCorrectionLevel('Q')">Q</button>
       <button (click)="changeErrorCorrectionLevel('H')">H</button>
 
-      <h4>Change Margin</h4>
+      <h4>Margin</h4>
       <button (click)="changeMargin(4)">4 (default)</button>
       <button (click)="changeMargin(0)">0</button>
       <button (click)="changeMargin(10)">10</button>
 
-      <h4>Change Width</h4>
+      <h4>Width</h4>
       <button (click)="changeWidth(512)">512</button>
       <button (click)="changeWidth(256)">256</button>
       <button (click)="changeWidth(128)">128</button>
       <button (click)="changeWidth(64)">64</button>
       <button (click)="changeWidth(10)">10</button>
 
-      <h4>Change Scale (size of pixel per module (black dot))</h4>
+      <h4>Scale (size of pixel per module (black dot))</h4>
       <button (click)="changeScale(32)">32</button>
       <button (click)="changeScale(8)">8</button>
       <button (click)="changeScale(4)">4</button>
       <button (click)="changeScale(1)">1</button>
+
+      <h4>Colors</h4>
+      <button (click)="setColorDark('#ff0000ff')">colorDark to red</button>
+      <button (click)="setColorLight('#999999ff')">colorLight to light-grey</button>
+      <button (click)="setColorDark('#000000ff')">Reset colorDark</button>
+      <button (click)="setColorLight('#ffffffff')">Reset colorLight</button>
     </div>
   </div>
 
-  <h2>Here are some links to get you started with angularx-qrcode:</h2>
+
+  <h2>Installation</h2>
+
+  <pre>npm install angularx-qrcode --save</pre>
+
+  <h2>Get started with angularx-qrcode:</h2>
 
   <ul>
     <li>
-      <h2>
-        <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode">Github: angularx-qrcode</a>
-      </h2>
+      <h3>
+        <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode">angularx-qrcode source (github)</a>
+      </h3>
     </li>
     <li>
-      <h2>
-        <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode">Github: this demo
-          app</a>
-      </h2>
+      <h3>
+        <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode/tree/main/projects/demo-app">angularx-qrcode demo
+          app source code (this app)</a>
+      </h3>
     </li>
     <li>
-      <h2>
+      <h3>
         <a target="_blank" rel="noopener"
           href="http://cordobo.com/2444-angular4-qrcode-generator-component/">Tutorial</a>
-      </h2>
+      </h3>
     </li>
     <li>
-      <h2>
-        <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/angularx-qrcode">NPM</a>
-      </h2>
+      <h3>
+        <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/angularx-qrcode">angularx-qrcode npm.js</a>
+      </h3>
     </li>
   </ul>
 </div>

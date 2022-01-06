@@ -1,5 +1,5 @@
-import { ElementRef, OnChanges, Renderer2 } from '@angular/core';
-import { QRCodeErrorCorrectionLevel, QRCodeVersion, QRCodeElementType } from './types';
+import { ElementRef, OnChanges, Renderer2 } from "@angular/core";
+import { QRCodeErrorCorrectionLevel, QRCodeVersion, QRCodeElementType } from "./types";
 import * as i0 from "@angular/core";
 export declare class QRCodeComponent implements OnChanges {
     private renderer;
@@ -7,8 +7,8 @@ export declare class QRCodeComponent implements OnChanges {
     colorDark: string;
     colorLight: string;
     cssClass: string;
-    elementType: keyof typeof QRCodeElementType;
-    errorCorrectionLevel: keyof typeof QRCodeErrorCorrectionLevel;
+    elementType: QRCodeElementType;
+    errorCorrectionLevel: QRCodeErrorCorrectionLevel;
     margin: number;
     qrdata: string;
     scale: number;

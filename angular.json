@@ -31,6 +31,15 @@
             "tsConfig": "projects/angularx-qrcode/tsconfig.spec.json",
             "karmaConfig": "projects/angularx-qrcode/karma.conf.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/angularx-qrcode/**/*.ts",
+              "projects/angularx-qrcode/**/*.html"
+            ]
+          }
         }
       }
     },
@@ -49,7 +58,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies": [
-                "qrcode"
+              "qrcode"
             ],
             "outputPath": "dist/demo-app",
             "index": "projects/demo-app/src/index.html",
@@ -131,6 +140,15 @@
               "projects/demo-app/src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/demo-app/**/*.ts",
+              "projects/demo-app/**/*.html"
+            ]
           }
         }
       }

@@ -6,13 +6,13 @@ class QRCodeComponent {
     constructor(renderer) {
         this.renderer = renderer;
         this.allowEmptyString = false;
-        this.colorDark = '#000000ff';
-        this.colorLight = '#ffffffff';
-        this.cssClass = 'qrcode';
-        this.elementType = 'canvas';
-        this.errorCorrectionLevel = 'M';
+        this.colorDark = "#000000ff";
+        this.colorLight = "#ffffffff";
+        this.cssClass = "qrcode";
+        this.elementType = "canvas";
+        this.errorCorrectionLevel = "M";
         this.margin = 4;
-        this.qrdata = '';
+        this.qrdata = "";
         this.scale = 4;
         this.width = 10;
     }
@@ -21,12 +21,12 @@ class QRCodeComponent {
     }
     isValidQrCodeText(data) {
         if (this.allowEmptyString === false) {
-            return !(typeof data === 'undefined' ||
-                data === '' ||
-                data === 'null' ||
+            return !(typeof data === "undefined" ||
+                data === "" ||
+                data === "null" ||
                 data === null);
         }
-        return !(typeof data === 'undefined');
+        return !(typeof data === "undefined");
     }
     toDataURL() {
         return new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ class QRCodeComponent {
                     reject(error);
                 }
                 else {
-                    resolve('success');
+                    resolve("success");
                 }
             });
         });
@@ -82,7 +82,7 @@ class QRCodeComponent {
                 errorCorrectionLevel: this.errorCorrectionLevel,
                 margin: this.margin,
                 scale: this.scale,
-                type: 'svg',
+                type: "svg",
                 version: this.version,
                 width: this.width,
             }, (err, url) => {
@@ -104,67 +104,67 @@ class QRCodeComponent {
     createQRCode() {
         // Set sensitive defaults
         if (this.version && this.version > 40) {
-            console.warn('[angularx-qrcode] max value for `version` is 40');
+            console.warn("[angularx-qrcode] max value for `version` is 40");
             this.version = 40;
         }
         else if (this.version && this.version < 1) {
-            console.warn('[angularx-qrcode]`min value for `version` is 1');
+            console.warn("[angularx-qrcode]`min value for `version` is 1");
             this.version = 1;
         }
         else if (this.version !== undefined && isNaN(this.version)) {
-            console.warn('[angularx-qrcode] version should be a number, defaulting to auto.');
+            console.warn("[angularx-qrcode] version should be a number, defaulting to auto.");
             this.version = undefined;
         }
         try {
             if (!this.isValidQrCodeText(this.qrdata)) {
-                throw new Error('[angularx-qrcode] Field `qrdata` is empty, set `allowEmptyString="true"` to overwrite this behaviour.');
+                throw new Error("[angularx-qrcode] Field `qrdata` is empty, set 'allowEmptyString=\"true\"' to overwrite this behaviour.");
             }
             // This is a fix to allow an empty string as qrdata
-            if (this.isValidQrCodeText(this.qrdata) && this.qrdata === '') {
-                this.qrdata = ' ';
+            if (this.isValidQrCodeText(this.qrdata) && this.qrdata === "") {
+                this.qrdata = " ";
             }
             let element;
             switch (this.elementType) {
-                case 'canvas':
-                    element = this.renderer.createElement('canvas');
+                case "canvas":
+                    element = this.renderer.createElement("canvas");
                     this.toCanvas(element)
                         .then(() => {
                         this.renderElement(element);
                     })
                         .catch((e) => {
-                        console.error('[angularx-qrcode] canvas error:', e);
+                        console.error("[angularx-qrcode] canvas error:", e);
                     });
                     break;
-                case 'svg':
-                    element = this.renderer.createElement('div');
+                case "svg":
+                    element = this.renderer.createElement("div");
                     this.toSVG()
                         .then((svgString) => {
-                        this.renderer.setProperty(element, 'innerHTML', svgString);
+                        this.renderer.setProperty(element, "innerHTML", svgString);
                         const innerElement = element.firstChild;
-                        this.renderer.setAttribute(innerElement, 'height', `${this.width}`);
-                        this.renderer.setAttribute(innerElement, 'width', `${this.width}`);
+                        this.renderer.setAttribute(innerElement, "height", `${this.width}`);
+                        this.renderer.setAttribute(innerElement, "width", `${this.width}`);
                         this.renderElement(innerElement);
                     })
                         .catch((e) => {
-                        console.error('[angularx-qrcode] svg error:', e);
+                        console.error("[angularx-qrcode] svg error:", e);
                     });
                     break;
-                case 'url':
-                case 'img':
+                case "url":
+                case "img":
                 default:
-                    element = this.renderer.createElement('img');
+                    element = this.renderer.createElement("img");
                     this.toDataURL()
                         .then((dataUrl) => {
-                        element.setAttribute('src', dataUrl);
+                        element.setAttribute("src", dataUrl);
                         this.renderElement(element);
                     })
                         .catch((e) => {
-                        console.error('[angularx-qrcode] img/url error:', e);
+                        console.error("[angularx-qrcode] img/url error:", e);
                     });
             }
         }
         catch (e) {
-            console.error('[angularx-qrcode] Error generating QR Code:', e.message);
+            console.error("[angularx-qrcode] Error generating QR Code:", e.message);
         }
     }
 }
@@ -173,7 +173,7 @@ QRCodeComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "12.0.0", versio
 i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.1.1", ngImport: i0, type: QRCodeComponent, decorators: [{
             type: Component,
             args: [{
-                    selector: 'qrcode',
+                    selector: "qrcode",
                     changeDetection: ChangeDetectionStrategy.OnPush,
                     template: `<div #qrcElement [class]="cssClass"></div>`,
                 }]
@@ -201,7 +201,7 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.1.1", ngImpor
                 type: Input
             }], qrcElement: [{
                 type: ViewChild,
-                args: ['qrcElement', { static: true }]
+                args: ["qrcElement", { static: true }]
             }] } });
 
 class QRCodeModule {
@@ -218,25 +218,6 @@ i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "13.1.1", ngImpor
                 }]
         }] });
 
-var QRCodeErrorCorrectionLevel;
-(function (QRCodeErrorCorrectionLevel) {
-    QRCodeErrorCorrectionLevel["low"] = "low";
-    QRCodeErrorCorrectionLevel["medium"] = "medium";
-    QRCodeErrorCorrectionLevel["quartile"] = "quartile";
-    QRCodeErrorCorrectionLevel["high"] = "high";
-    QRCodeErrorCorrectionLevel["L"] = "L";
-    QRCodeErrorCorrectionLevel["M"] = "M";
-    QRCodeErrorCorrectionLevel["Q"] = "Q";
-    QRCodeErrorCorrectionLevel["H"] = "H";
-})(QRCodeErrorCorrectionLevel || (QRCodeErrorCorrectionLevel = {}));
-var QRCodeElementType;
-(function (QRCodeElementType) {
-    QRCodeElementType["url"] = "url";
-    QRCodeElementType["img"] = "img";
-    QRCodeElementType["canvas"] = "canvas";
-    QRCodeElementType["svg"] = "svg";
-})(QRCodeElementType || (QRCodeElementType = {}));
-
 /*
  * Public API Surface of angularx-qrcode
  */
@@ -245,5 +226,5 @@ var QRCodeElementType;
  * Generated bundle index. Do not edit.
  */
 
-export { QRCodeComponent, QRCodeElementType, QRCodeErrorCorrectionLevel, QRCodeModule };
+export { QRCodeComponent, QRCodeModule };
 //# sourceMappingURL=angularx-qrcode.mjs.map

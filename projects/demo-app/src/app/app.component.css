@@ -1,3 +1,10 @@
+pre {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border: 1px solid #e3e3e3;
+  border-radius: 3px;
+}
+
 .wrapper {
   font-family: "system", "Arial", "sans-serif";
 }
@@ -13,6 +20,10 @@
   display: flex;
   flex: 1 1 200px;
   flex-direction: column;
+}
+
+.meta {
+  font-size: "85%";
 }
 
 .qrcodeImage {

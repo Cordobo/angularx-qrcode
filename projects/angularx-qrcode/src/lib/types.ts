@@ -1,12 +1,12 @@
 export type QRCodeErrorCorrectionLevel =
-  | "low"
-  | "medium"
-  | "quartile"
-  | "high"
   | "L"
   | "M"
   | "Q"
   | "H"
+  | "low"
+  | "medium"
+  | "quartile"
+  | "high"
 
 export type QRCodeElementType = "url" | "img" | "canvas" | "svg"
 
@@ -53,4 +53,6 @@ export type QRCodeVersion =
   | 39
   | 40
 
+// TODO A little-bit-of-a-better solution
+// https://stackoverflow.com/a/67511209
 export type RGBAColor = `#${string}`

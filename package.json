@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "13.0.1",
+  "version": "13.0.2",
   "main": "dist/angularx-qrcode/bundles/angularx-qrcode.umd.js",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
@@ -10,22 +10,22 @@
   "description": "Simple QRCode generator library for Angular4/5/6/7/8/9/10/11/12/13+ and Ionic 3/4/5 using node-qrcode",
   "license": "MIT",
   "scripts": {
+    "lint": "ng lint",
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build angularx-qrcode --configuration production",
-    "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "prebuild": "rimraf dist tmp && cp README.md projects/angularx-qrcode/",
-    "reinstall": "rm -rf node_modules && npm install",
-    "release": "npm run reinstall && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../",
-    "start:demo": "ng serve demo-app --open",
-    "dev:demo": "lite-server --baseDir=\"dist/demo-app\"",
-    "build:demo": "npm run build && ng build demo-app",
-    "build:demo:prod": "npm run build && ng build demo-app --configuration production",
+    "watch": "ng build --watch --configuration development",
+    "start": "ng serve demo-app --open",
+    "start:dev": "npm run build && npm run build:demo && npm run start:server",
+    "start:prod": "npm run build && npm run build:demo:prod && npm run start:server",
+    "start:server": "lite-server --baseDir=\"dist/demo-app\"",
+    "prepare:build": "rimraf dist tmp && cp README.md projects/angularx-qrcode/",
+    "build": "npm run prepare:build && ng build --project angularx-qrcode --configuration production",
+    "build:demo": "ng build --project demo-app",
+    "build:demo:prod": "ng build --project demo-app --configuration production",
+    "publish": "rm -rf node_modules && npm install && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../",
     "ci:build": "ng build --project angularx-qrcode --configuration production && ng build --project demo-app --configuration production",
-    "ci:test": "ng test --codeCoverage=true",
     "ci:lint": "ng lint",
-    "lint": "ng lint"
+    "ci:test": "ng test --codeCoverage=true"
   },
   "dependencies": {
     "qrcode": "1.5.0"
@@ -34,6 +34,7 @@
     "@angular/core": ">= 13.0.0 < 14.0.0"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "0.1301.2",
     "@angular-devkit/build-angular": "~13.1.2",
     "@angular-eslint/builder": "13.0.1",
     "@angular-eslint/eslint-plugin": "13.0.1",
@@ -55,10 +56,10 @@
     "@types/qrcode": "1.4.2",
     "@typescript-eslint/eslint-plugin": "5.3.0",
     "@typescript-eslint/parser": "5.3.0",
-    "angular-cli-ghpages": "^1.0.0",
-    "eslint": "^8.2.0",
+    "angular-cli-ghpages": "1.0.0",
+    "eslint": "8.6.0",
     "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-jsdoc": "37.0.3",
+    "eslint-plugin-jsdoc": "37.5.1",
     "eslint-plugin-prefer-arrow": "latest",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",
@@ -66,12 +67,11 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "lite-server": "^2.6.1",
+    "lite-server": "2.6.1",
     "ng-packagr": "^13.0.0",
     "prettier": "2.5.1",
     "rimraf": "3.0.2",
     "rxjs": "~7.4.0",
-    "ts-node": "~8.3.0",
     "tslib": "^2.3.0",
     "typescript": "~4.5.2",
     "zone.js": "~0.11.4"
@@ -101,7 +101,13 @@
     "aot-compilation",
     "library",
     "ng",
-    "typescript"
+    "ng2",
+    "ngx",
+    "ivy",
+    "qr",
+    "code",
+    "qrcode",
+    "qr-code"
   ],
   "repository": {
     "type": "git",

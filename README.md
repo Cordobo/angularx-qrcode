@@ -14,12 +14,12 @@
 
 ## Highlights
 
-- Compatible with **Angular 13** and Ionic
+- Compatible with **Angular** and Ionic
 - Ivy compiler support, AOT, SSR (Server Side Rendering)
 - Under active development
 - Trusted and used by thousands of developers like you
 
-`angularx-qrcode` is compatible with Ionic 3/4/5 and Angular 4/5/6/7/8/9/10/11/12/13 with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular2 component ng2-qrcode and based on node-qrcode.
+`angularx-qrcode` is compatible with Ionic 3/4/5 and Angular 4/5/6/7/8/9/10/11/12/13+ with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
 
 ## Installation
 

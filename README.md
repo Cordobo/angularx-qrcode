@@ -1,10 +1,20 @@
 # angularx-qrcode - Angular QR Code Generator
 
-`angularx-qrcode` is a fast and easy-to-use Ivy compatible Ionic and angular QR Code Generator library
+`angularx-qrcode` - a fast and easy-to-use Ivy compatible Ionic and Angular QR Code Generator library
 
-## Why angularx-qrcode?
+- [Highlights](#highlights)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Example Implementations](#examples)
+- [Available Parameters](#available-parameters)
+- [Demo](#demo)
+- [QR Code capacity](#qr-code-capacity)
+- [Contribute](#contribute)
+- [License](#license)
 
-- Compatible with **angular 13** and Ionic
+## Highlights
+
+- Compatible with **Angular 13** and Ionic
 - Ivy compiler support, AOT, SSR (Server Side Rendering)
 - Under active development
 - Trusted and used by thousands of developers like you
@@ -13,24 +23,25 @@
 
 ## Installation
 
-Angular 13 and Ionic require angularx-qrcode 13:
+**Angular 13 and Ionic with angularx-qrcode 13**
 
 ```
 npm install angularx-qrcode --save
-
 # Or with yarn
 yarn add angularx-qrcode
 ```
 
+**Angular 12 and Ionic**
+
 ```
-# angular 12 and Ionic
 npm install angularx-qrcode@12.0.3 --save
 # Or with yarn
 yarn add angularx-qrcode@12.0.3
 ```
 
+**Angular 11 and Ionic**
+
 ```
-# angular 11 and Ionic
 npm install angularx-qrcode@11.0.0 --save
 # Or with yarn
 yarn add angularx-qrcode@11.0.0
@@ -73,9 +84,9 @@ bootstrap: [AppComponent]
 export class AppModule { }
 ```
 
-## Examples: How to implement angularx-qrcode
+## Examples
 
-The source for a detailed demo app is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository.
+The source for a detailed demo app and more examples how to implement angularx-qrcode is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository.
 
 ### Generate a QR Code from a string (directive only)
 
@@ -123,7 +134,7 @@ export class QRCodeComponent {
 | version              | Number  | (auto)      | 1-40                                                           |
 | width                | Number  | 10          | Height/Width (any value)                                       |
 
-## Note
+## QR Code capacity
 
 Depending on the amount of data of the **qrdata** to encode, a minimum **width** is required.
 
@@ -146,11 +157,6 @@ and open the url `http://localhost:4200/` in your browser
 ## SSR - Server Side Rendering
 
 As of version 1.6.0, SSR support is fully implemented, the following workaround is no longer needed. [HowTo use Angular QRCode with SSR](https://github.com/Cordobo/angularx-qrcode/issues/5)
-
-## Available commands
-
-    # Build
-    npm run build
 
 ## Contribute
 

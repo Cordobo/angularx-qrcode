@@ -8,7 +8,6 @@
 - [Example Implementations](#examples)
 - [Available Parameters](#available-parameters)
 - [Demo](#demo)
-- [QR Code capacity](#qr-code-capacity)
 - [Contribute](#contribute)
 - [License](#license)
 

@@ -2,7 +2,7 @@
 
 `angularx-qrcode` - a fast and easy-to-use Ivy compatible Ionic and Angular QR Code Generator library
 
-- [Highlights](#highlights)
+- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Example Implementations](#examples)
@@ -12,7 +12,7 @@
 - [Contribute](#contribute)
 - [License](#license)
 
-## Highlights
+## Features
 
 - Compatible with **Angular** and Ionic
 - Ivy compiler support, AOT, SSR (Server Side Rendering)

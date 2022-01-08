@@ -26,7 +26,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
-    - run: npm run ci:build
-    - run: npm run ci:test
+    - run: npm ci
     - run: npm run ci:lint
+    # - run: npm run ci:test
+    - name: Build
+      run: |
+        npm run ci:build:lib
+        npm run ci:build:app
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@4.2.0
+      with:
+        branch: gh-pages
+        folder: dist/demo-app

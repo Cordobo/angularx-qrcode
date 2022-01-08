@@ -85,7 +85,7 @@ export class AppModule { }
 
 ## Examples
 
-The source for a detailed demo app and more examples how to implement angularx-qrcode is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository.
+The source for a detailed angular demo app and more examples how to implement angularx-qrcode is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository. **[Live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)**
 
 ### Generate a QR Code from a string (directive only)
 

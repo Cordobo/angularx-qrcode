@@ -1,1 +1,166 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100vh;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+#toolbar-header {
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.toolbar-header-spacer {
+  flex: 1 1 auto;
+}
+
+.page-header {
+  background: #3f51b5;
+  padding-left: 20px;
+  margin-top: 64px;
+  overflow-y: auto;
+}
+
+.page-header h1 {
+  color: #ffffff;
+  font-weight: 300;
+  margin: 0;
+  padding: 20px 8px;
+  font-size: 20px;
+}
+
+#npmInstall {
+  color: #000000de;
+  font-weight: 400;
+  margin: 20px 28px 0;
+}
+
+#wrapper {
+  color: #000000de;
+  font-weight: 400;
+  padding: 20px 16px;
+  margin: 0 0 56px;
+}
+
+#flexContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+#result-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 0 12px;
+}
+
+#options-container {
+  flex: 1;
+  flex-direction: column;
+  padding: 0 12px;
+}
+
+#footer {
+  background: #3f51b5;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  font-size: 12px;
+  padding: 20px 24px;
+  position: fixed;
+  width: 100%;
+  z-index: 2;
+}
+
+/* TYPO */
+
+#footer a {
+  color: #fff;
+  margin-left: 4px;
+}
+
+h4 {
+  color: #000000de;
+  /* color: #3f51b5; */
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.radio-vertical {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.mat-radio-label {
+  margin: 0 0 5px;
+}
+
+/* CARDS */
+
+.card-full-width {
+  margin: 0 -16px;
+}
+
+/* FORMS */
+.form-full-width {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+section {
+  display: table;
+}
+
+.button-label {
+  display: table-cell;
+  font-size: 14px;
+  min-width: 50px;
+  padding-left: 8px;
+  padding-right: 12px;
+}
+
+.button-row {
+  display: table-cell;
+  padding-bottom: 10px;
+  width: 490px;
+}
+
+.button-row .mat-button-base {
+  margin: 8px 8px 8px 0;
+}
+
+.mat-button-toggle-label-content {
+  line-height: 32px !important;
+}
+
+/* TABS */
+
+.mat-tab-body {
+  padding: 16px 0;
+}
+
+/* RESET BUTTON */
+
+#button-reset {
+  position: fixed;
+  bottom: 70px;
+  right: 40px;
+}

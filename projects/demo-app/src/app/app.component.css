@@ -1,44 +1,17 @@
 pre {
   background-color: #f1f1f1;
-  padding: 10px;
-  border: 1px solid #e3e3e3;
+  border: 1px solid #d3d3d3;
   border-radius: 3px;
-}
-
-.wrapper {
-  font-family: "system", "Arial", "sans-serif";
-}
-
-.flexContainer {
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-.result {
-  display: flex;
-  flex: 1 1 200px;
-  flex-direction: column;
-}
-
-.meta {
-  font-size: "85%";
+  font-size: 0.85em;
+  margin: 0;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: keep-all;
 }
 
 .qrcodeImage {
   display: flex;
   flex: 1;
-}
-
-.controls {
-  flex: 1;
-  /* flex-direction: column; */
-}
-
-.controls > div {
-  display: block;
-  flex: 0;
 }
 
 .left {

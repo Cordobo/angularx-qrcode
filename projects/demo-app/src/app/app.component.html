@@ -1,125 +1,258 @@
-<div class="wrapper">
-  <h1>angularx-qrcode Angular QR Code Generator</h1>
+<mat-toolbar color="primary" id="toolbar-header">
+    <a mat-button href="https://cordobo.github.io/angularx-qrcode/" aria-label="Example icon-button with menu icon">
+      <mat-icon>qr_code_2</mat-icon>
+      angularx-qrcode
+    </a>
+  <span class="toolbar-header-spacer"></span>
+  <a mat-button href="https://github.com/cordobo/angularx-qrcode" aria-label="Example icon-button with heart icon">
+    <mat-icon>code</mat-icon>
+    Github
+  </a>
+  <a mat-button href="https://www.npmjs.com/package/angularx-qrcode" aria-label="Example icon-button with heart icon">
+    <mat-icon>file_download</mat-icon> 
+    npm 13.0.2
+  </a>
+</mat-toolbar>
 
-  <div class="flexContainer">
-    <div class="result">
-      <div class="meta">
-        <div>qrdata: {{ qrdata }}</div>
-        <div>elementType: {{ elementType }}</div>
-        <div>errorCorrectionLevel: {{ errorCorrectionLevel }}</div>
-        <div>scale: {{ scale }}</div>
-        <div>width: {{ width }}</div>
-        <div>margin: {{ margin }}</div>
-        <div>colorDark: {{ colorDark }}, colorLight: {{ colorLight }}</div>
-      </div>
-      <div class="qrcodeImage">
-        <qrcode
-          [elementType]="elementType"
-          [errorCorrectionLevel]="errorCorrectionLevel"
-          [qrdata]="qrdata"
-          [scale]="scale"
-          [width]="width"
-          [allowEmptyString]="true"
-          [className]="cssClass"
-          [colorDark]="colorDark"
-          [colorLight]="colorLight"
-          [margin]="margin"
-        ></qrcode>
-      </div>
-      <div class="controls">
-        <h4>Align QR-Code:</h4>
-        <button (click)="changeCssClass('left')">Left</button>
-        <button (click)="changeCssClass('center')">Center</button>
-        <button (click)="changeCssClass('right')">Right</button>
-        <button (click)="changeCssClass('demoBorder')">Border</button>
-        <button (click)="changeCssClass('demoBorderRadius')">BorderRadius</button>
-        <button (click)="setBorderRadiusWithZeroMargin()">BorderRadius without margin</button>
-      </div>
-    </div>
-
-    <div class="controls">
-      <h3>Change Values</h3>
-
-      <h4>Set QR-Code Data:</h4>
-      <button (click)="changeQrdata('Bruce')">Set "Bruce"</button>
-      <button (click)="changeQrdata('Peter Parker')">
-        "Peter Parker"
-      </button>
-      <button (click)="changeQrdata('42')">"42"</button>
-      <button (click)="changeQrdata('')">"" (empty string)</button>
-      <br />
-      <br />
-      <label>
-        or type to change: <input [(ngModel)]="qrdata" placeholder="name" />
-      </label>
-
-      <h4>ElementType</h4>
-      <button (click)="changeElementType('img')">img</button>
-      <button (click)="changeElementType('url')">url</button>
-      <button (click)="changeElementType('canvas')">canvas</button>
-      <button (click)="changeElementType('svg')">svg</button>
-
-      <h4>ErrorCorrectionLevel</h4>
-      <button (click)="changeErrorCorrectionLevel('L')">L</button>
-      <button (click)="changeErrorCorrectionLevel('M')">M</button>
-      <button (click)="changeErrorCorrectionLevel('Q')">Q</button>
-      <button (click)="changeErrorCorrectionLevel('H')">H</button>
-
-      <h4>Margin</h4>
-      <button (click)="changeMargin(4)">4 (default)</button>
-      <button (click)="changeMargin(0)">0</button>
-      <button (click)="changeMargin(10)">10</button>
-
-      <h4>Width</h4>
-      <button (click)="changeWidth(512)">512</button>
-      <button (click)="changeWidth(256)">256</button>
-      <button (click)="changeWidth(128)">128</button>
-      <button (click)="changeWidth(64)">64</button>
-      <button (click)="changeWidth(10)">10</button>
-
-      <h4>Scale (size of pixel per module (black dot))</h4>
-      <button (click)="changeScale(32)">32</button>
-      <button (click)="changeScale(8)">8</button>
-      <button (click)="changeScale(4)">4</button>
-      <button (click)="changeScale(1)">1</button>
-
-      <h4>Colors</h4>
-      <button (click)="setColorDark('#ff0000ff')">colorDark to red</button>
-      <button (click)="setColorLight('#999999ff')">colorLight to light-grey</button>
-      <button (click)="setColorDark('#000000ff')">Reset colorDark</button>
-      <button (click)="setColorLight('#ffffffff')">Reset colorLight</button>
-    </div>
-  </div>
+<div class="page-header">
+  <h1>Angular QR Code Generator</h1>
+</div>
 
 
-  <h2>Installation</h2>
-
+<div id="npmInstall">
+  <h4>Installation</h4>
   <pre>npm install angularx-qrcode --save</pre>
+</div>
 
+
+<div id="wrapper">
+
+  <div id="flexContainer">
+
+  <div id="result-container">
+    <mat-card>
+      <mat-card-title>QR Code Preview</mat-card-title>
+      <mat-card-content>
+        <div class="qrcodeImage">
+          <qrcode [elementType]="elementType" errorCorrectionLevel="M" [qrdata]="qrdata"
+            [scale]="scale" [width]="width" [allowEmptyString]="true" [className]="cssClass"
+            [colorDark]="colorDark"
+            [colorLight]="colorLight" [margin]="margin"></qrcode>
+        </div>
+      </mat-card-content>
+
+      <mat-card-content>
+        <mat-tab-group animationDuration="0ms">
+          <mat-tab label="HTML">
+            <h4>Copy & Paste this code</h4>
+            <pre [innerText]="renderSampleCode"></pre>
+          </mat-tab>
+          <mat-tab label="TypeScript"> TypeScript </mat-tab>
+          <!-- <mat-tab label="CSS"> CSS </mat-tab> -->
+          <mat-tab label="Installation">
+            <h4>Installation</h4>
+            <pre>npm install angularx-qrcode --save
+# Or with yarn
+yarn add angularx-qrcode</pre>
+
+            <h4>Usage</h4>
+<pre>
+// File: app.module.ts
+// all your other imports...
+import {{ '{' }} QRCodeModule } from 'angularx-qrcode';
+
+@NgModule({{ '{' }}
+declarations: [
+AppComponent
+],
+imports: [
+QRCodeModule
+],
+providers: [],
+bootstrap: [AppComponent]
+})
+export class AppModule {{ '{' }} }</pre>
+
+          </mat-tab>
+<mat-tab label="Get started">
   <h2>Get started with angularx-qrcode:</h2>
-
+  
   <ul>
     <li>
       <h3>
-        <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode">angularx-qrcode source (github)</a>
-      </h3>
-    </li>
-    <li>
-      <h3>
-        <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode/tree/main/projects/demo-app">angularx-qrcode demo
-          app source code (this app)</a>
+        <a target="_blank" rel="noopener" href="http://cordobo.com/2444-angular4-qrcode-generator-component/">Tutorial</a>
       </h3>
     </li>
     <li>
       <h3>
         <a target="_blank" rel="noopener"
-          href="http://cordobo.com/2444-angular4-qrcode-generator-component/">Tutorial</a>
+          href="https://github.com/Cordobo/angularx-qrcode/tree/main/projects/demo-app">angularx-qrcode demo
+          app source code (this app)</a>
       </h3>
     </li>
-    <li>
-      <h3>
-        <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/angularx-qrcode">angularx-qrcode npm.js</a>
-      </h3>
-    </li>
+  
   </ul>
+  </mat-tab>
+
+
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <div  id="options-container">
+    <mat-card>
+      <mat-card-title>Options</mat-card-title>
+      
+      <mat-card-content>
+
+      <form class="form-full-width">
+        <mat-form-field class="input-full-width" appearance="fill">
+          <mat-label>QR Code (qrdata)</mat-label>
+          <input matInput name="qrdata" placeholder="qrdata" [(ngModel)]="qrdata" />
+        </mat-form-field>
+      
+        <section>
+          <div class="button-label">Or set:</div>
+          <div class="button-row">
+                  <mat-button-toggle-group name="qrdata" aria-label="qrdata" [(ngModel)]="qrdata" selected="qrdata">
+                    <mat-button-toggle value="https://github.com/Cordobo/angularx-qrcode">URL</mat-button-toggle>
+                    <mat-button-toggle value="Peter Parker">Peter Parker</mat-button-toggle>
+                    <mat-button-toggle value="42">42</mat-button-toggle>
+                    <mat-button-toggle value="">"" (empty string)</mat-button-toggle>
+                  </mat-button-toggle-group>
+          </div>
+        </section>
+      
+      </form>
+
+      <br />
+
+      <mat-divider></mat-divider>
+
+      <h4>Format (elementType)</h4>
+      
+      <mat-button-toggle-group name="elementType" aria-label="Format (elementType)" [(ngModel)]="elementType"
+        selected="elementType">
+        <mat-button-toggle value="canvas">canvas (Default)</mat-button-toggle>
+        <mat-button-toggle value="img">img</mat-button-toggle>
+        <mat-button-toggle value="url">url</mat-button-toggle>
+        <mat-button-toggle value="svg">svg</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <br/>
+      <br/>
+
+      <mat-divider></mat-divider>
+
+      <h4>ErrorCorrectionLevel</h4>
+
+      <mat-button-toggle-group name="errorCorrectionLevel" aria-label="ErrorCorrectionLevel" [(ngModel)]="errorCorrectionLevel"
+        selected="errorCorrectionLevel">
+        <mat-button-toggle value="L">L</mat-button-toggle>
+        <mat-button-toggle value="M">M (Default)</mat-button-toggle>
+        <mat-button-toggle value="Q">Q</mat-button-toggle>
+        <mat-button-toggle value="H">H</mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <br />
+      <br />
+    
+      <mat-divider></mat-divider>
+
+      <h4>Size </h4>
+
+      <section>
+        <div class="button-label">Width:</div>
+        <div class="button-row">
+          <mat-button-toggle-group name="width" aria-label="Width" [(ngModel)]="width" selected="width">
+            <mat-button-toggle *ngFor="let o of widthList" [value]="o.val">{{ o.title }}</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </section>
+
+      <section>
+        <div class="button-label">Margin:</div>
+        <div class="button-row">
+          <mat-button-toggle-group name="margin" aria-label="Margin" [(ngModel)]="margin" selected="margin">
+            <mat-button-toggle *ngFor="let o of marginList" [value]="o.val">{{ o.title }}</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </section>
+
+      <section>
+        <div class="button-label">Scale:</div>
+        <div class="button-row">
+          <mat-button-toggle-group name="scale" aria-label="Scale" [(ngModel)]="scale" selected="scale">
+            <mat-button-toggle *ngFor="let o of scaleList" [value]="o.val">{{ o.title }}</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </section>
+      <p>Scale (size of pixel per module (black dot))</p>
+
+      <br />
+      <br />
+      
+      <mat-divider></mat-divider>
+
+      <h4>Colors</h4>
+      
+      <section>
+        <div class="button-label">Dark color:</div>
+        <div class="button-row">
+          <mat-button-toggle-group name="colorDark" aria-label="ColorDark" [(ngModel)]="colorDark" selected="colorDark">
+            <mat-button-toggle value="#3f51b5ff">Indigo</mat-button-toggle>
+                              <mat-button-toggle value="#ff0000ff">Red</mat-button-toggle>
+                              <mat-button-toggle value="#000000ff">Black</mat-button-toggle>
+                              <mat-button-toggle value="#000000ff">Default colorDark (#000000ff)</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </section>
+
+      <section>
+        <div class="button-label">Light color:</div>
+        <div class="button-row">
+
+          <mat-button-toggle-group name="colorLight" aria-label="ColorLight" [(ngModel)]="colorLight" selected="colorLight">
+            <mat-button-toggle value="#ff4081ff">Pink</mat-button-toggle>
+            <mat-button-toggle value="#ff0000ff">Red</mat-button-toggle>
+            <mat-button-toggle value="#000000ff">Black</mat-button-toggle>
+            <mat-button-toggle value="#ffffffff">Default colorLight (#ffffffff)</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </section>
+
+      <br />
+      <br />
+      
+      <mat-divider></mat-divider>
+      
+      <h4>CSS Styling</h4>
+      <p>These are sample styles how you can align the qrcode directive or add some styling.</p>
+      
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="cssClass" class="radio-vertical">
+        <mat-radio-button value="left">Left</mat-radio-button>
+        <mat-radio-button value="center">Center</mat-radio-button>
+        <mat-radio-button value="right">Right</mat-radio-button>
+        <mat-radio-button value="demoBorder">Border</mat-radio-button>
+        <mat-radio-button value="demoBorderRadius">BorderRadius</mat-radio-button>
+        <mat-radio-button value="demoBorderRadius" (click)="changeMargin(0)">BorderRadius without margin</mat-radio-button>
+      </mat-radio-group>
+
+      </mat-card-content>
+    </mat-card>
 </div>
+
+  </div>
+
+</div>
+
+<footer id="footer">
+    <span>MIT License | Copyright © 2018 - present</span>
+    <a href="https://cordobo.com">Andreas Jacob (Cordobo.com)</a>
+</footer>
+
+<button mat-fab id="button-reset" color="accent" aria-label="Reset all changes"  (click)="reset()">
+  <mat-icon>restart_alt</mat-icon>
+</button>

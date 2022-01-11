@@ -28,6 +28,10 @@
     "ci:test": "ng test --codeCoverage=true"
   },
   "dependencies": {
+    "@angular/animations": "^13.0.0 || ^14.0.0-0",
+    "@angular/cdk": "~13.1.1",
+    "@angular/forms": "^13.0.0 || ^14.0.0-0",
+    "@angular/material": "~13.1.1",
     "qrcode": "1.5.0"
   },
   "peerDependencies": {

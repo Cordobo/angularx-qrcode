@@ -139,7 +139,7 @@ Depending on the amount of data of the **qrdata** to encode, a minimum **width**
 
 # Demo
 
-**[See working demo here](https://cordobo.github.io/angularx-qrcode/)**
+**[Working demo of Angular QR Code Generator](https://cordobo.github.io/angularx-qrcode/)**
 
 The source for the angular app is available under [`projects/demo-app`](projects/demo-app). Run the command
 

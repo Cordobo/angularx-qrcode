@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "13.0.2",
+  "version": "13.0.3",
   "main": "dist/angularx-qrcode/bundles/angularx-qrcode.umd.js",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
@@ -15,7 +15,7 @@
     "test": "ng test",
     "watch": "ng build --watch --configuration development",
     "start": "ng serve demo-app --open",
-    "start:dev": "npm run build && npm run build:demo && npm run start:server",
+    "start:dev": "npm run build && npm run build:demo -- --configuration development && npm run start:server",
     "start:prod": "npm run build && npm run build:demo -- --configuration production && npm run start:server",
     "start:server": "lite-server --baseDir=\"dist/demo-app\"",
     "prepare:build": "rimraf .angular dist tmp && cp ./README.md ./LICENSE projects/angularx-qrcode/",
@@ -28,16 +28,13 @@
     "ci:test": "ng test --codeCoverage=true"
   },
   "dependencies": {
-    "@angular/animations": "^13.0.0 || ^14.0.0-0",
-    "@angular/cdk": "~13.1.1",
-    "@angular/forms": "^13.0.0 || ^14.0.0-0",
-    "@angular/material": "~13.1.1",
-    "qrcode": "1.5.0"
+    "@cordobo/qrcode": "1.5.0"
   },
   "peerDependencies": {
     "@angular/core": ">= 13.0.0 < 14.0.0"
   },
   "devDependencies": {
+    "@angular/cdk": "~13.1.1",
     "@angular-devkit/architect": "0.1301.2",
     "@angular-devkit/build-angular": "~13.1.2",
     "@angular-eslint/builder": "13.0.1",
@@ -52,6 +49,7 @@
     "@angular/compiler-cli": "~13.1.0",
     "@angular/core": "~13.1.0",
     "@angular/forms": "~13.1.0",
+    "@angular/material": "~13.1.1",
     "@angular/platform-browser": "~13.1.0",
     "@angular/platform-browser-dynamic": "~13.1.0",
     "@angular/router": "~13.1.0",
@@ -66,18 +64,18 @@
     "eslint-plugin-jsdoc": "37.5.1",
     "eslint-plugin-prefer-arrow": "latest",
     "jasmine-core": "~3.10.0",
-    "karma": "~6.3.0",
+    "karma": "~6.3.10",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "lite-server": "2.6.1",
-    "ng-packagr": "^13.0.0",
+    "ng-packagr": "13.1.2",
     "prettier": "2.5.1",
     "rimraf": "3.0.2",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
-    "typescript": "~4.5.2",
+    "typescript": "~4.5.2", 
     "zone.js": "~0.11.4"
   },
   "keywords": [

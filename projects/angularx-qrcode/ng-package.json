@@ -6,6 +6,6 @@
   },
   "allowedNonPeerDependencies": [
     "@angular/common",
-    "qrcode"
+    "@cordobo/qrcode"
   ]
 }

@@ -7,7 +7,9 @@ import {
   Renderer2,
   ViewChild,
 } from "@angular/core"
-import * as QRCode from "qrcode"
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+import * as QRCode from "@cordobo/qrcode"
 import {
   QRCodeErrorCorrectionLevel,
   QRCodeVersion,
@@ -69,7 +71,7 @@ export class QRCodeComponent implements OnChanges {
             version: this.version,
             width: this.width,
           },
-          (err, url) => {
+          (err: Error, url: string) => {
             if (err) {
               reject(err)
             } else {
@@ -98,7 +100,7 @@ export class QRCodeComponent implements OnChanges {
             version: this.version,
             width: this.width,
           },
-          (error) => {
+          (error: Error) => {
             if (error) {
               reject(error)
             } else {
@@ -127,7 +129,7 @@ export class QRCodeComponent implements OnChanges {
             version: this.version,
             width: this.width,
           },
-          (err, url) => {
+          (err: Error, url: string) => {
             if (err) {
               reject(err)
             } else {

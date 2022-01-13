@@ -8,7 +8,7 @@
   "description": "Simple QRCode module generator for Angular4/5/6/7/8/9/10/11+ and Ionic 3/4/5 using node-qrcode",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "^11.0.6"
+    "@angular/core": "~12.2.15"
   },
   "dependencies": {
     "qrcode": "1.4.2"

@@ -1,14 +1,3 @@
-pre {
-  background-color: #f1f1f1;
-  border: 1px solid #d3d3d3;
-  border-radius: 3px;
-  font-size: 0.85em;
-  margin: 0;
-  padding: 12px;
-  white-space: pre-wrap;
-  word-break: keep-all;
-}
-
 .qrcodeImage {
   display: flex;
   flex: 1;

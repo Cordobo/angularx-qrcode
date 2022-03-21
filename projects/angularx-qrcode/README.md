@@ -122,6 +122,7 @@ export class QRCodeComponent {
 | Attribute            | Type    | Default     | Description                                                    |
 | -------------------- | ------- | ----------- | -------------------------------------------------------------- |
 | allowEmptyString     | Boolean | false       | Allow qrdata to be an empty string                             |
+| alt                  | String  | null        | HTML alt attribute (supported by img, url)                     |
 | colorDark            | String  | '#000000ff' | RGBA color, color of dark module (foreground)                  |
 | colorLight           | String  | '#ffffffff' | RGBA color, color of light module (background)                 |
 | cssClass             | String  | 'qrcode'    | CSS Class                                                      |
@@ -130,6 +131,7 @@ export class QRCodeComponent {
 | margin               | Number  | 4           | Define how much wide the quiet zone should be.                 |
 | qrdata               | String  | ''          | String to encode                                               |
 | scale                | Number  | 4           | Scale factor. A value of 1 means 1px per modules (black dots). |
+| title                | String  | null        | HTML title attribute (supported by canvas, img, url)           |
 | version              | Number  | (auto)      | 1-40                                                           |
 | width                | Number  | 10          | Height/Width (any value)                                       |
 
@@ -139,9 +141,9 @@ Depending on the amount of data of the **qrdata** to encode, a minimum **width**
 
 # Demo
 
-**[See working demo here](https://cordobo.github.io/angularx-qrcode/)**
+**[Working online demo of Angular QR Code Generator](https://cordobo.github.io/angularx-qrcode/)**
 
-The source for the angular app is available under [`projects/demo-app`](projects/demo-app). Run the command
+The source for the angular app is available in [`projects/demo-app`](projects/demo-app). Run the command
 
 ```
 ng serve demo-app --open

@@ -35,6 +35,10 @@ export class QRCodeComponent implements OnChanges {
   @Input() public version: QRCodeVersion | undefined
   @Input() public width = 10
 
+  // Introduced in 13.0.4
+  @Input() public alt: string | null = null
+  @Input() public title: string | null = null
+
   @ViewChild("qrcElement", { static: true }) public qrcElement!: ElementRef
 
   constructor(private renderer: Renderer2) {}
@@ -182,6 +186,9 @@ export class QRCodeComponent implements OnChanges {
           element = this.renderer.createElement("canvas")
           this.toCanvas(element)
             .then(() => {
+              if (this.title) {
+                this.renderer.setAttribute(element, "title", `${this.title}`)
+              }
               this.renderElement(element)
             })
             .catch((e) => {
@@ -200,7 +207,6 @@ export class QRCodeComponent implements OnChanges {
                 `${this.width}`
               )
               this.renderer.setAttribute(innerElement, "width", `${this.width}`)
-
               this.renderElement(innerElement)
             })
             .catch((e) => {
@@ -213,7 +219,13 @@ export class QRCodeComponent implements OnChanges {
           element = this.renderer.createElement("img")
           this.toDataURL()
             .then((dataUrl: string) => {
+              if (this.alt) {
+                element.setAttribute("alt", this.alt)
+              }
               element.setAttribute("src", dataUrl)
+              if (this.title) {
+                element.setAttribute("title", this.title)
+              }
               this.renderElement(element)
             })
             .catch((e) => {

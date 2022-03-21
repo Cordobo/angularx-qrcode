@@ -10,7 +10,7 @@
   </a>
   <a mat-button href="https://www.npmjs.com/package/angularx-qrcode" aria-label="Example icon-button with heart icon">
     <mat-icon>file_download</mat-icon>
-    npm 13.0.3
+    npm 13.0.4
   </a>
 
   <iframe src="https://ghbtns.com/github-btn.html?user=cordobo&repo=angularx-qrcode&type=star&count=true"
@@ -40,18 +40,28 @@
           <div class="qrcodeImage">
             <qrcode [elementType]="elementType" errorCorrectionLevel="M" [qrdata]="qrdata" [scale]="scale"
               [width]="width" [allowEmptyString]="true" [className]="cssClass" [colorDark]="colorDark"
-              [colorLight]="colorLight" [margin]="margin"></qrcode>
+              [colorLight]="colorLight" [margin]="margin" [alt]="alt" [title]="title"></qrcode>
           </div>
         </mat-card-content>
 
         <mat-card-content>
-          <mat-tab-group animationDuration="0ms">
+          <mat-tab-group animationDuration="0ms" [(selectedIndex)]="selectedIndex">
             <mat-tab label="HTML">
               <h4>Copy & Paste this code</h4>
-              <pre [innerText]="renderSampleCode"></pre>
+              <p>Note: The surrounding <code>&#60;div class="qrcodeImage"&#62;</code>-tag is optional, but should
+                be included
+                when
+                using the <a href="" (click)="setTabIndex(1)">generated CSS</a></p>
+              <pre [innerText]="renderSampleHtmlCode"></pre>
             </mat-tab>
             <!-- <mat-tab label="TypeScript"> TypeScript </mat-tab> -->
-            <!-- <mat-tab label="CSS"> CSS </mat-tab> -->
+            <mat-tab label="CSS">
+              <h4>Copy & Paste this code (optional)</h4>
+              <p>Note: The surrounding <code>&#60;div class="qrcodeImage"&#62;</code>-tag is optional, but should
+                be included when
+                using the generated CSS</p>
+              <pre [innerText]="renderSampleCssCode"></pre>
+            </mat-tab>
             <mat-tab label="Installation">
               <h4>Installation</h4>
               <pre>npm install angularx-qrcode --save
@@ -94,7 +104,6 @@ export class AppModule {{ '{' }} }</pre>
               </ul>
             </mat-tab>
 
-
           </mat-tab-group>
         </mat-card-content>
       </mat-card>
@@ -127,8 +136,6 @@ export class AppModule {{ '{' }} }</pre>
 
           </form>
 
-          <br />
-
           <mat-divider></mat-divider>
 
           <h4>Format</h4>
@@ -144,10 +151,6 @@ export class AppModule {{ '{' }} }</pre>
               </mat-button-toggle-group>
             </div>
           </section>
-
-          <br />
-          <br />
-
           <mat-divider></mat-divider>
 
           <h4>ErrorCorrectionLevel</h4>
@@ -196,11 +199,10 @@ export class AppModule {{ '{' }} }</pre>
           <p>Scale (size of pixel per module (black dot))</p>
 
           <br />
-          <br />
 
           <mat-divider></mat-divider>
 
-          <h4>Colors</h4>
+          <h4>Colors (optional)</h4>
 
           <section>
             <div class="button-label">Foreground:</div>
@@ -229,12 +231,9 @@ export class AppModule {{ '{' }} }</pre>
             </div>
           </section>
 
-          <br />
-          <br />
-
           <mat-divider></mat-divider>
 
-          <h4>CSS Styling</h4>
+          <h4>CSS Styling (optional)</h4>
           <p>These are sample styles how you can align the qrcode directive or add some styling.</p>
 
           <mat-radio-group aria-label="Select an option" [(ngModel)]="cssClass" class="radio-vertical">
@@ -246,6 +245,27 @@ export class AppModule {{ '{' }} }</pre>
             <mat-radio-button value="demoBorderRadius" (click)="changeMargin(0)">BorderRadius without margin
             </mat-radio-button>
           </mat-radio-group>
+
+          <br />
+
+          <mat-divider></mat-divider>
+
+          <h4>a11y (optional)</h4>
+
+          <form class="form-full-width">
+            <mat-form-field class="input-full-width" appearance="fill">
+              <mat-label>alt Attribute</mat-label>
+              <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" />
+            </mat-form-field>
+
+            <mat-form-field class="input-full-width" appearance="fill">
+              <mat-label>title Attribute</mat-label>
+              <input matInput name="title" placeholder="title" [(ngModel)]="title" />
+            </mat-form-field>
+
+          </form>
+
+          <br />
 
         </mat-card-content>
       </mat-card>

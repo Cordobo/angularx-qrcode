@@ -14,6 +14,7 @@ type ListType = { title: string; val: number }[]
 export class AppComponent {
   public initial_state = {
     allowEmptyString: true,
+    alt: "An alt attribute",
     colorDark: "#000000ff",
     colorLight: "#ffffffff",
     cssClass: "center",
@@ -23,6 +24,7 @@ export class AppComponent {
     qrdata: "https://github.com/Cordobo/angularx-qrcode",
     scale: 1,
     version: undefined,
+    title: "A title attribute",
     width: 300,
   }
 
@@ -31,6 +33,7 @@ export class AppComponent {
   }
 
   public allowEmptyString: boolean
+  public alt: string
   public colorDark: string
   public colorLight: string
   public cssClass: string
@@ -39,7 +42,10 @@ export class AppComponent {
   public errorCorrectionLevel: QRCodeErrorCorrectionLevel
   public margin: number
   public scale: number
+  public title: string
   public width: number
+
+  public selectedIndex: number
 
   public marginList: ListType
   public scaleList: ListType
@@ -47,6 +53,7 @@ export class AppComponent {
 
   constructor() {
     this.allowEmptyString = this.data_model.allowEmptyString
+    this.alt = this.data_model.alt
     this.colorDark = this.data_model.colorDark
     this.colorLight = this.data_model.colorLight
     this.cssClass = this.data_model.cssClass
@@ -55,7 +62,10 @@ export class AppComponent {
     this.margin = this.data_model.margin
     this.qrdata = this.data_model.qrdata
     this.scale = this.data_model.scale
+    this.title = this.data_model.title
     this.width = this.data_model.width
+
+    this.selectedIndex = 0
 
     this.marginList = [
       { title: "4 (Default)", val: 4 },
@@ -90,6 +100,7 @@ export class AppComponent {
 
   reset(): void {
     this.allowEmptyString = this.data_model.allowEmptyString
+    this.alt = this.data_model.alt
     this.colorDark = this.data_model.colorDark
     this.colorLight = this.data_model.colorLight
     this.cssClass = this.data_model.cssClass
@@ -98,23 +109,98 @@ export class AppComponent {
     this.margin = this.data_model.margin
     this.qrdata = this.data_model.qrdata
     this.scale = this.data_model.scale
+    this.title = this.data_model.title
     this.width = this.data_model.width
   }
 
-  get renderSampleCode() {
-    return `<qrcode
-  [qrdata]="'${this.qrdata}'"
-  ${
-    this.allowEmptyString ? `[allowEmptyString]="${this.allowEmptyString}"` : ""
+  setTabIndex(idx: number): boolean {
+    this.selectedIndex = idx
+    return false
   }
-  ${this.cssClass ? `[cssClass]="'${this.cssClass}'"` : ""}
-  ${this.colorDark ? `[colorDark]="'${this.colorDark}'"` : ""}
-  ${this.colorLight ? `[colorLight]="'${this.colorLight}'"` : ""}
-  [elementType]="'${this.elementType}'"
-  [errorCorrectionLevel]="'${this.errorCorrectionLevel}'"
-  [margin]="${this.margin}"
-  [scale]="${this.scale}"
-  [width]="${this.width}"
-></qrcode>`
+
+  hasCondition(
+    condition: string | boolean,
+    returnValue: string
+  ): string | undefined {
+    if (condition) {
+      return returnValue
+    }
+    return ""
+  }
+
+  get renderSampleHtmlCode() {
+    return `<div class="qrcodeImage">
+  <qrcode
+    [qrdata]="'${this.qrdata}'"
+    ${
+      this.allowEmptyString
+        ? `[allowEmptyString]="${this.allowEmptyString}"`
+        : ""
+    }
+    ${
+      (this.elementType === "img" || this.elementType === "url") && this.alt
+        ? `[alt]="${this.alt}"`
+        : `/* alt attribute is only available for elementTypes "img" and "url" */`
+    }
+    ${this.cssClass ? `[cssClass]="'${this.cssClass}'"` : ""}
+    ${this.colorDark ? `[colorDark]="'${this.colorDark}'"` : ""}
+    ${this.colorLight ? `[colorLight]="'${this.colorLight}'"` : ""}
+    [elementType]="'${this.elementType}'"
+    [errorCorrectionLevel]="'${this.errorCorrectionLevel}'"
+    [margin]="${this.margin}"
+    [scale]="${this.scale}"
+    ${this.title ? `[title]="${this.title}"` : ``}
+    [width]="${this.width}"
+  ></qrcode>
+</div>`
+  }
+
+  cssCode(): string {
+    switch (this.cssClass) {
+      case "center":
+        return `.center {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}`
+      case "right":
+        return `.right {
+  display: flex;
+  flex: 1;
+  justify-content: right;
+}`
+      case "demoBorder":
+        return `.demoBorder {
+  border: 10px solid red;
+}`
+      case "demoBorderRadius":
+        return `.demoBorderRadius {
+  border: dashed;
+  border-width: 2px 4px;
+  border-radius: 40px;
+  overflow: hidden;
+}`
+      case "left":
+      default:
+        return `.left {
+  display: flex;
+  flex: 1;
+  justify-content: left;
+}`
+    }
+  }
+
+  get renderSampleCssCode() {
+    return `/* Put this code in your CSS file */
+
+/* The div container */
+.qrcodeImage {
+  display: flex;
+  flex: 1;
+}
+
+/* Add custom styles here */
+${this.cssCode()}
+`
   }
 }

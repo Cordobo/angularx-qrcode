@@ -14,7 +14,8 @@ type ListType = { title: string; val: number }[]
 export class AppComponent {
   public initial_state = {
     allowEmptyString: true,
-    alt: "An alt attribute",
+    alt: "A custom alt attribute",
+    ariaLabel: `QR Code image with the following content...`,
     colorDark: "#000000ff",
     colorLight: "#ffffffff",
     cssClass: "center",
@@ -24,7 +25,7 @@ export class AppComponent {
     qrdata: "https://github.com/Cordobo/angularx-qrcode",
     scale: 1,
     version: undefined,
-    title: "A title attribute",
+    title: "A custom title attribute",
     width: 300,
   }
 
@@ -34,6 +35,7 @@ export class AppComponent {
 
   public allowEmptyString: boolean
   public alt: string
+  public ariaLabel: string
   public colorDark: string
   public colorLight: string
   public cssClass: string
@@ -54,6 +56,7 @@ export class AppComponent {
   constructor() {
     this.allowEmptyString = this.data_model.allowEmptyString
     this.alt = this.data_model.alt
+    this.ariaLabel = this.data_model.ariaLabel
     this.colorDark = this.data_model.colorDark
     this.colorLight = this.data_model.colorLight
     this.cssClass = this.data_model.cssClass
@@ -101,6 +104,7 @@ export class AppComponent {
   reset(): void {
     this.allowEmptyString = this.data_model.allowEmptyString
     this.alt = this.data_model.alt
+    this.ariaLabel = this.data_model.ariaLabel
     this.colorDark = this.data_model.colorDark
     this.colorLight = this.data_model.colorLight
     this.cssClass = this.data_model.cssClass
@@ -118,44 +122,73 @@ export class AppComponent {
     return false
   }
 
-  hasCondition(
-    condition: string | boolean,
-    returnValue: string
-  ): string | undefined {
-    if (condition) {
-      return returnValue
+  strBuilder(): string {
+    // featureList
+    const f: string[] = []
+
+    if (this.qrdata) {
+      f.push(`[qrdata]="'${this.qrdata}'"`)
     }
-    return ""
+    if (this.allowEmptyString) {
+      f.push(`[allowEmptyString]="'${this.allowEmptyString}'"`)
+    }
+    if (this.alt) {
+      if (this.elementType === "img" || this.elementType === "url") {
+        f.push(`[alt]="'${this.alt}'"`)
+      } else {
+        f.push(
+          `/* alt attribute is only available for elementTypes "img" and "url" */`
+        )
+      }
+    }
+    if (this.ariaLabel) {
+      if (
+        this.elementType === "canvas" ||
+        this.elementType === "img" ||
+        this.elementType === "url"
+      ) {
+        f.push(`[ariaLabel]="'${this.ariaLabel}'"`)
+      } else {
+        f.push(
+          `/* aria-label attribute is only available for elementTypes "canvas", "img" and "url" */`
+        )
+      }
+    }
+
+    if (this.cssClass) {
+      f.push(`[cssClass]="'${this.cssClass}'"`)
+    }
+    if (this.colorDark) {
+      f.push(`[colorDark]="'${this.colorDark}'"`)
+    }
+    if (this.colorLight) {
+      f.push(`[colorLight]="'${this.colorLight}'"`)
+    }
+    f.push(`[elementType]="'${this.elementType}'"`)
+    f.push(`[errorCorrectionLevel]="'${this.errorCorrectionLevel}'"`)
+    if (this.margin) {
+      f.push(`[margin]="'${this.margin}'"`)
+    }
+    if (this.scale) {
+      f.push(`[scale]="'${this.scale}'"`)
+    }
+    if (this.title) {
+      f.push(`[title]="'${this.title}'"`)
+    }
+    f.push(`[width]="'${this.width}'"`)
+
+    return f.join("\n    ")
   }
 
   get renderSampleHtmlCode() {
     return `<div class="qrcodeImage">
   <qrcode
-    [qrdata]="'${this.qrdata}'"
-    ${
-      this.allowEmptyString
-        ? `[allowEmptyString]="${this.allowEmptyString}"`
-        : ""
-    }
-    ${
-      (this.elementType === "img" || this.elementType === "url") && this.alt
-        ? `[alt]="'${this.alt}'"`
-        : `/* alt attribute is only available for elementTypes "img" and "url" */`
-    }
-    ${this.cssClass ? `[cssClass]="'${this.cssClass}'"` : ""}
-    ${this.colorDark ? `[colorDark]="'${this.colorDark}'"` : ""}
-    ${this.colorLight ? `[colorLight]="'${this.colorLight}'"` : ""}
-    [elementType]="'${this.elementType}'"
-    [errorCorrectionLevel]="'${this.errorCorrectionLevel}'"
-    [margin]="${this.margin}"
-    [scale]="${this.scale}"
-    ${this.title ? `[title]="'${this.title}'"` : ``}
-    [width]="${this.width}"
+    ${this.strBuilder()}
   ></qrcode>
 </div>`
   }
 
-  cssCode(): string {
+  cssCodeBuilder(): string {
     switch (this.cssClass) {
       case "center":
         return `.center {
@@ -200,7 +233,7 @@ export class AppComponent {
 }
 
 /* Add custom styles here */
-${this.cssCode()}
+${this.cssCodeBuilder()}
 `
   }
 }

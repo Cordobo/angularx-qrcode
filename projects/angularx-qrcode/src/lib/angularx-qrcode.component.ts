@@ -35,8 +35,9 @@ export class QRCodeComponent implements OnChanges {
   @Input() public version: QRCodeVersion | undefined
   @Input() public width = 10
 
-  // Introduced in 13.0.4
+  // Accessibility features introduced in 13.0.4+
   @Input() public alt: string | null = null
+  @Input() public ariaLabel: string | null = null
   @Input() public title: string | null = null
 
   @ViewChild("qrcElement", { static: true }) public qrcElement!: ElementRef
@@ -186,6 +187,13 @@ export class QRCodeComponent implements OnChanges {
           element = this.renderer.createElement("canvas")
           this.toCanvas(element)
             .then(() => {
+              if (this.ariaLabel) {
+                this.renderer.setAttribute(
+                  element,
+                  "aria-label",
+                  `${this.ariaLabel}`
+                )
+              }
               if (this.title) {
                 this.renderer.setAttribute(element, "title", `${this.title}`)
               }
@@ -221,6 +229,9 @@ export class QRCodeComponent implements OnChanges {
             .then((dataUrl: string) => {
               if (this.alt) {
                 element.setAttribute("alt", this.alt)
+              }
+              if (this.ariaLabel) {
+                element.setAttribute("aria-label", this.ariaLabel)
               }
               element.setAttribute("src", dataUrl)
               if (this.title) {

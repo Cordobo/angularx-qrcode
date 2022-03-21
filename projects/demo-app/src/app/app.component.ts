@@ -139,7 +139,7 @@ export class AppComponent {
     }
     ${
       (this.elementType === "img" || this.elementType === "url") && this.alt
-        ? `[alt]="${this.alt}"`
+        ? `[alt]="'${this.alt}'"`
         : `/* alt attribute is only available for elementTypes "img" and "url" */`
     }
     ${this.cssClass ? `[cssClass]="'${this.cssClass}'"` : ""}
@@ -149,7 +149,7 @@ export class AppComponent {
     [errorCorrectionLevel]="'${this.errorCorrectionLevel}'"
     [margin]="${this.margin}"
     [scale]="${this.scale}"
-    ${this.title ? `[title]="${this.title}"` : ``}
+    ${this.title ? `[title]="'${this.title}'"` : ``}
     [width]="${this.width}"
   ></qrcode>
 </div>`

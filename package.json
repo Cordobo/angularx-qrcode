@@ -71,7 +71,7 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "lite-server": "2.6.1",
     "ng-packagr": "13.1.2",
-    "prettier": "2.5.1",
+    "prettier": "2.6.0",
     "rimraf": "3.0.2",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

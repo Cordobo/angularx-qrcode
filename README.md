@@ -53,7 +53,7 @@ yarn add angularx-qrcode@11.0.0
 # angular 10 and Ionic
 npm install angularx-qrcode@10.0.12 --save
 # angular 9 and Ionic
-npm install angularx-qrcode@~2.3.5 --save
+npm install angularx-qrcode@~2.3.6 --save
 # angular 8 and Ionic
 npm install angularx-qrcode@~2.1.4 --save
 # angular 5/6/7

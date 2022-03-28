@@ -1,19 +1,19 @@
 export const enum QRCodeErrorCorrectionLevel {
-  low = "low",
-  medium = "medium",
-  quartile = "quartile",
-  high = "high",
-  L = "L",
-  M = "M",
-  Q = "Q",
-  H = "H",
+  low = 'low',
+  medium = 'medium',
+  quartile = 'quartile',
+  high = 'high',
+  L = 'L',
+  M = 'M',
+  Q = 'Q',
+  H = 'H',
 }
 
 export const enum QRCodeElementType {
-  url = "url",
-  img = "img",
-  canvas = "canvas",
-  svg = "svg",
+  url = 'url',
+  img = 'img',
+  canvas = 'canvas',
+  svg = 'svg',
 }
 
 export type QRCodeVersion =

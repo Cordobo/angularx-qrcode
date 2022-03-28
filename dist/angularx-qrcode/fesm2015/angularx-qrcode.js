@@ -8,49 +8,53 @@ let QRCodeComponent = class QRCodeComponent {
         this.renderer = renderer;
         this.platformId = platformId;
         // Deprecated
-        this.colordark = "";
-        this.colorlight = "";
-        this.level = "";
+        this.colordark = '';
+        this.colorlight = '';
+        this.level = '';
         this.hidetitle = false;
         this.size = 0;
         this.usesvg = false;
         // Valid for 1.x and 2.x
         this.allowEmptyString = false;
-        this.qrdata = "";
+        this.qrdata = '';
         // New fields introduced in 2.0.0
-        this.colorDark = "#000000ff";
-        this.colorLight = "#ffffffff";
-        this.cssClass = "qrcode";
-        this.elementType = "canvas";
-        this.errorCorrectionLevel = "M";
+        this.colorDark = '#000000ff';
+        this.colorLight = '#ffffffff';
+        this.cssClass = 'qrcode';
+        this.elementType = 'canvas';
+        this.errorCorrectionLevel = 'M';
         this.margin = 4;
         this.scale = 4;
         this.width = 10;
+        // Introduced in 13.0.4, backported to 2.3.6
+        this.alt = null;
+        this.ariaLabel = null;
+        this.title = null;
         this.qrcode = null;
         this.isValidQrCodeText = (data) => {
             if (this.allowEmptyString === false) {
-                return !(typeof data === "undefined" ||
-                    data === "" ||
-                    data === "null" ||
+                return !(typeof data === 'undefined' ||
+                    data === '' ||
+                    data === 'null' ||
                     data === null);
             }
-            return !(typeof data === "undefined");
+            return !(typeof data === 'undefined');
         };
         // Deprectation warnings
-        if (this.colordark !== "") {
-            console.warn("[angularx-qrcode] colordark is deprecated, use colorDark.");
+        if (this.colordark !== '') {
+            console.warn('[angularx-qrcode] colordark is deprecated, use colorDark.');
         }
-        if (this.colorlight !== "") {
-            console.warn("[angularx-qrcode] colorlight is deprecated, use colorLight.");
+        if (this.colorlight !== '') {
+            console.warn('[angularx-qrcode] colorlight is deprecated, use colorLight.');
         }
-        if (this.level !== "") {
-            console.warn("[angularx-qrcode] level is deprecated, use errorCorrectionLevel.");
+        if (this.level !== '') {
+            console.warn('[angularx-qrcode] level is deprecated, use errorCorrectionLevel.');
         }
         if (this.hidetitle !== false) {
-            console.warn("[angularx-qrcode] hidetitle is deprecated.");
+            console.warn('[angularx-qrcode] hidetitle is deprecated.');
         }
         if (this.size !== 0) {
-            console.warn("[angularx-qrcode] size is deprecated, use `width`. Defaults to 10.");
+            console.warn('[angularx-qrcode] size is deprecated, use `width`. Defaults to 10.');
         }
         if (this.usesvg !== false) {
             console.warn(`[angularx-qrcode] usesvg is deprecated, use [elementType]="'img'".`);
@@ -107,7 +111,7 @@ let QRCodeComponent = class QRCodeComponent {
                     reject(error);
                 }
                 else {
-                    resolve("success");
+                    resolve('success');
                 }
             });
         });
@@ -122,7 +126,7 @@ let QRCodeComponent = class QRCodeComponent {
                 errorCorrectionLevel: this.errorCorrectionLevel,
                 margin: this.margin,
                 scale: this.scale,
-                type: "svg",
+                type: 'svg',
                 version: this.version,
                 width: this.width,
             }, (err, url) => {
@@ -144,62 +148,77 @@ let QRCodeComponent = class QRCodeComponent {
     createQRCode() {
         // Set sensitive defaults
         if (this.version && this.version > 40) {
-            console.warn("[angularx-qrcode] max value for `version` is 40");
+            console.warn('[angularx-qrcode] max value for `version` is 40');
             this.version = 40;
         }
         else if (this.version && this.version < 1) {
-            console.warn("[angularx-qrcode]`min value for `version` is 1");
+            console.warn('[angularx-qrcode]`min value for `version` is 1');
             this.version = 1;
         }
         else if (this.version !== undefined && isNaN(this.version)) {
-            console.warn("[angularx-qrcode] version should be a number, defaulting to auto");
+            console.warn('[angularx-qrcode] version should be a number, defaulting to auto');
             this.version = undefined;
         }
         try {
             if (!this.isValidQrCodeText(this.qrdata)) {
-                throw new Error("[angularx-qrcode] Field `qrdata` is empty");
+                throw new Error('[angularx-qrcode] Field `qrdata` is empty');
             }
             let element;
             switch (this.elementType) {
-                case "canvas":
-                    element = this.renderer.createElement("canvas");
+                case 'canvas':
+                    element = this.renderer.createElement('canvas');
                     this.toCanvas(element)
                         .then(() => {
+                        if (this.ariaLabel) {
+                            this.renderer.setAttribute(element, 'aria-label', `${this.ariaLabel}`);
+                        }
+                        if (this.title) {
+                            this.renderer.setAttribute(element, 'title', `${this.title}`);
+                        }
                         this.renderElement(element);
                     })
                         .catch((e) => {
-                        console.error("[angularx-qrcode] canvas error: ", e);
+                        console.error('[angularx-qrcode] canvas error: ', e);
                     });
                     break;
-                case "svg":
-                    element = this.renderer.createElement("svg", "svg");
+                case 'svg':
+                    element = this.renderer.createElement('svg', 'svg');
                     this.toSVG()
                         .then((svgString) => {
                         element.innerHTML = svgString;
-                        this.renderer.setAttribute(element, "height", `${this.width}`);
-                        this.renderer.setAttribute(element, "width", `${this.width}`);
+                        this.renderer.setAttribute(element, 'height', `${this.width}`);
+                        this.renderer.setAttribute(element, 'width', `${this.width}`);
                         this.renderElement(element);
                     })
                         .catch((e) => {
-                        console.error("[angularx-qrcode] svg error: ", e);
+                        console.error('[angularx-qrcode] svg error: ', e);
                     });
                     break;
-                case "url":
-                case "img":
+                case 'url':
+                case 'img':
                 default:
-                    element = this.renderer.createElement("img");
+                    element = this.renderer.createElement('img');
                     this.toDataURL()
                         .then((dataUrl) => {
-                        element.setAttribute("src", dataUrl);
+                        if (this.alt) {
+                            element.setAttribute('alt', this.alt);
+                        }
+                        if (this.ariaLabel) {
+                            element.setAttribute('aria-label', this.ariaLabel);
+                        }
+                        element.setAttribute('src', dataUrl);
+                        if (this.title) {
+                            element.setAttribute('title', this.title);
+                        }
                         this.renderElement(element);
                     })
                         .catch((e) => {
-                        console.error("[angularx-qrcode] img/url error: ", e);
+                        console.error('[angularx-qrcode] img/url error: ', e);
                     });
             }
         }
         catch (e) {
-            console.error("[angularx-qrcode] Error generating QR Code: ", e.message);
+            console.error('[angularx-qrcode] Error generating QR Code: ', e.message);
         }
     }
 };
@@ -259,11 +278,20 @@ __decorate([
     Input()
 ], QRCodeComponent.prototype, "width", void 0);
 __decorate([
-    ViewChild("qrcElement", { static: true })
+    Input()
+], QRCodeComponent.prototype, "alt", void 0);
+__decorate([
+    Input()
+], QRCodeComponent.prototype, "ariaLabel", void 0);
+__decorate([
+    Input()
+], QRCodeComponent.prototype, "title", void 0);
+__decorate([
+    ViewChild('qrcElement', { static: true })
 ], QRCodeComponent.prototype, "qrcElement", void 0);
 QRCodeComponent = __decorate([
     Component({
-        selector: "qrcode",
+        selector: 'qrcode',
         changeDetection: ChangeDetectionStrategy.OnPush,
         template: `<div #qrcElement [class]="cssClass"></div>`
     }),

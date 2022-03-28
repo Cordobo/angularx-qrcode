@@ -11,9 +11,9 @@ An Angular app with a working implementation of angularx-qrcode is available at
 
 ```
 # Angular 9 and Ionic
-npm install angularx-qrcode --save
+npm install angularx-qrcode@~2.3.6 --save
 # Or use yarn
-yarn add angularx-qrcode
+yarn add angularx-qrcode@~2.3.6
 ```
 
 ## Install angularx-qrcode 2.1.x with Angular 8
@@ -132,6 +132,8 @@ export class QRCodeComponent {
 | Attribute            | Type    | Default     | Description                                                    |
 | -------------------- | ------- | ----------- | -------------------------------------------------------------- |
 | allowEmptyString     | Boolean | false       | Allow empty string                                             |
+| alt                  | String  | null        | HTML alt attribute (supported by img, url)                     |
+| ariaLabel            | String  | null        | HTML aria-label attribute (supported by canvas, img, url)      |
 | colorDark            | String  | '#000000ff' | RGBA color, color of dark module                               |
 | colorLight           | String  | '#ffffffff' | RGBA color, color of light module                              |
 | cssClass             | String  | 'qrcode'    | CSS Class                                                      |
@@ -140,6 +142,7 @@ export class QRCodeComponent {
 | margin               | Number  | 4           | Define how much wide the quiet zone should be.                 |
 | qrdata               | String  | ''          | String to encode                                               |
 | scale                | Number  | 4           | Scale factor. A value of 1 means 1px per modules (black dots). |
+| title                | String  | null        | HTML title attribute (supported by canvas, img, url)           |
 | version              | Number  | (auto)      | 1-40                                                           |
 | width                | Number  | 10          | Height/Width (any value)                                       |
 

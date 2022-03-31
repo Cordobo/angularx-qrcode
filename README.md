@@ -11,9 +11,9 @@ An Angular app with a working implementation of angularx-qrcode is available at
 
 ```
 # Angular 9 and Ionic
-npm install angularx-qrcode@~2.3.6 --save
+npm install angularx-qrcode@~2.3.7 --save
 # Or use yarn
-yarn add angularx-qrcode@~2.3.6
+yarn add angularx-qrcode@~2.3.7
 ```
 
 ## Install angularx-qrcode 2.1.x with Angular 8

@@ -25,7 +25,7 @@
 
 **Angular 13 and Ionic with angularx-qrcode 13**
 
-```
+```sh
 npm install angularx-qrcode --save
 # Or with yarn
 yarn add angularx-qrcode
@@ -33,7 +33,7 @@ yarn add angularx-qrcode
 
 **Angular 12 and Ionic**
 
-```
+```sh
 npm install angularx-qrcode@12.0.3 --save
 # Or with yarn
 yarn add angularx-qrcode@12.0.3
@@ -41,7 +41,7 @@ yarn add angularx-qrcode@12.0.3
 
 **Angular 11 and Ionic**
 
-```
+```sh
 npm install angularx-qrcode@11.0.0 --save
 # Or with yarn
 yarn add angularx-qrcode@11.0.0
@@ -49,7 +49,7 @@ yarn add angularx-qrcode@11.0.0
 
 **Older supported angular versions**
 
-```
+```sh
 # angular 10 and Ionic
 npm install angularx-qrcode@10.0.12 --save
 # angular 9 and Ionic
@@ -66,7 +66,7 @@ npm install angularx-qrcode@1.0.3 --save
 
 ### Import the module and add it to your imports section in your main AppModule:
 
-```
+```typescript
 // File: app.module.ts
 // all your other imports...
 import { QRCodeModule } from 'angularx-qrcode';
@@ -95,7 +95,7 @@ let's invoke it from our template with a directive.
 If we use a simple text-string, we need no additional
 code in our controller.
 
-```
+```html
 <qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
 ```
 
@@ -104,7 +104,7 @@ code in our controller.
 In addition to our `<qrcode>`-directive in `example.html`,
 lets add two lines of code to our controller `example.ts`.
 
-```
+```typescript
 // File: example.ts
 export class QRCodeComponent {
   public myAngularxQrCode: string = null;
@@ -147,7 +147,7 @@ Depending on the amount of data of the **qrdata** to encode, a minimum **width**
 
 The source for the angular app is available in [`projects/demo-app`](projects/demo-app). Run the command
 
-```
+```sh
 ng serve demo-app --open
 ```
 

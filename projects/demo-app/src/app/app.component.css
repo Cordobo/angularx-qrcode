@@ -3,6 +3,11 @@
   flex: 1;
 }
 
+.downloadButton {
+  display: flex;
+  justify-content: center;
+}
+
 .left {
   display: flex;
   flex: 1;
@@ -30,4 +35,15 @@
   border-width: 2px 4px;
   border-radius: 40px;
   overflow: hidden;
+}
+
+.demoSection {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.demoMargin {
+  margin: 0 10px;
 }

@@ -84,9 +84,16 @@ bootstrap: [AppComponent]
 export class AppModule { }
 ```
 
+```
+// File: app.component.html
+// all your HTML...
+
+<qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+```
+
 ## Examples
 
-The source for a detailed angular demo app and more examples how to implement angularx-qrcode is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository. **[Live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)**
+The source for **[a live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)** and more examples how to implement angularx-qrcode is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository.
 
 ### Generate a QR Code from a string (directive only)
 
@@ -101,11 +108,11 @@ code in our controller.
 
 ### Create a QR Code from a variable in your controller
 
-In addition to our `<qrcode>`-directive in `example.html`,
-lets add two lines of code to our controller `example.ts`.
+In addition to our `<qrcode>`-directive in `app.component.html`,
+lets add two lines of code to our controller `app.component.ts`.
 
 ```
-// File: example.ts
+// File: app.component.ts
 export class QRCodeComponent {
   public myAngularxQrCode: string = null;
   constructor () {
@@ -114,9 +121,13 @@ export class QRCodeComponent {
   }
 }
 
-// File: example.html
+// File: app.component.html
 <qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
 ```
+
+### Download a QR Code
+
+The [online demo](https://cordobo.github.io/angularx-qrcode/) contains a [`working sample`](projects/demo-app) how to download the QR Code with a button.
 
 ## Available Parameters
 

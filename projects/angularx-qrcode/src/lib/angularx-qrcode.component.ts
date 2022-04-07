@@ -51,7 +51,7 @@ export class QRCodeComponent implements OnChanges {
   constructor(private renderer: Renderer2) {}
 
   public async ngOnChanges(): Promise<void> {
-    this.createQRCode()
+    await this.createQRCode()
   }
 
   protected isValidQrCodeText(data: string | null): boolean {

@@ -1,4 +1,4 @@
-export type QRCodeConfigType = {
+export interface QRCodeConfigType {
   color: {
     dark: string
     light: string

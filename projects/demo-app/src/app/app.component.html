@@ -10,7 +10,7 @@
   </a>
   <a mat-button href="https://www.npmjs.com/package/angularx-qrcode" aria-label="Example icon-button with heart icon">
     <mat-icon>file_download</mat-icon>
-    npm 13.0.9
+    npm 13.0.10
   </a>
 
   <iframe src="https://ghbtns.com/github-btn.html?user=cordobo&repo=angularx-qrcode&type=star&count=true"
@@ -40,7 +40,8 @@
           <div class="qrcodeImage">
             <qrcode #parent [elementType]="elementType" errorCorrectionLevel="M" [qrdata]="qrdata" [scale]="scale"
               [width]="width" [allowEmptyString]="true" [className]="cssClass" [colorDark]="colorDark"
-              [colorLight]="colorLight" [margin]="margin" [alt]="alt" [ariaLabel]="ariaLabel" [title]="title"></qrcode>
+              [colorLight]="colorLight" [margin]="margin" [alt]="alt" [ariaLabel]="ariaLabel" [title]="title"
+              [imageSrc]="imageSrc" [imageHeight]="imageHeight" [imageWidth]="imageWidth"></qrcode>
           </div>
           <div class="downloadButton">
             <button mat-raised-button color="primary" (click)="saveAsImage(parent)">Download QR Code Image</button>
@@ -152,7 +153,7 @@ export class AppModule {{ '{' }} }</pre>
             <div class="button-label">elementType:</div>
             <div class="button-row">
               <mat-button-toggle-group name="elementType" aria-label="Format (elementType)" [(ngModel)]="elementType"
-                selected="elementType">
+                selected="elementType" (change)="setImageVisibility(elementType === 'canvas')">
                 <mat-button-toggle value="canvas">canvas (Default)</mat-button-toggle>
                 <mat-button-toggle value="img">img</mat-button-toggle>
                 <mat-button-toggle value="url">url</mat-button-toggle>
@@ -211,6 +212,44 @@ export class AppModule {{ '{' }} }</pre>
 
           <mat-divider></mat-divider>
 
+          <h4>Image/Logo (optional)</h4>
+
+          <mat-slide-toggle [checked]="showImage" (change)="setImageVisibility()">Include image properties for canvas
+          </mat-slide-toggle>
+          <br />
+          <br />
+          <section *ngIf="showImage">
+
+            <div class="example-label-container">
+              <label id="example-name-label" class="example-name-label">Width/Height: </label>
+              <label class="example-value-label">{{imageWidth}}/{{imageHeight}}</label>
+            </div>
+            Width:
+            <mat-slider [thumbLabel]="true" class="example-margin" [max]="width" [min]="10" [step]="'5'"
+              [(ngModel)]="imageWidth" aria-labelledby="image width">
+            </mat-slider>
+            <mat-form-field appearance="fill">
+              <mat-label>Width</mat-label>
+              <input matInput type="number" placeholder="{{width}}" [(ngModel)]="imageWidth" min="10">
+            </mat-form-field>
+
+            <br>
+            Height:
+            <mat-slider [thumbLabel]="true" class="example-margin" [max]="width" [min]="10" [step]="'5'"
+              [(ngModel)]="imageHeight" aria-labelledby="image height">
+            </mat-slider>
+            <mat-form-field appearance="fill">
+              <mat-label>Height</mat-label>
+              <input matInput type="number" placeholder="{{width}}" [(ngModel)]="imageHeight" min="10">
+            </mat-form-field>
+
+            <br />
+            <br />
+          </section>
+
+
+          <mat-divider></mat-divider>
+
           <h4>Colors (optional)</h4>
 
           <section>
@@ -265,7 +304,9 @@ export class AppModule {{ '{' }} }</pre>
             <mat-form-field class="input-full-width" appearance="fill">
               <mat-label>alt Attribute</mat-label>
               <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" />
+              <mat-hint>alt attribute is only available for elementTypes "img" and "url"</mat-hint>
             </mat-form-field>
+            <br /><br />
 
             <mat-form-field class="input-full-width" appearance="fill">
               <mat-label>title Attribute</mat-label>
@@ -275,9 +316,8 @@ export class AppModule {{ '{' }} }</pre>
             <mat-form-field class="input-full-width" appearance="fill">
               <mat-label>aria-label Attribute</mat-label>
               <input matInput name="ariaLabel" placeholder="ariaLabel" [(ngModel)]="ariaLabel" />
+              <mat-hint>aria-label attribute is only available for elementTypes "canvas", "img" and "url"</mat-hint>
             </mat-form-field>
-
-
           </form>
 
           <br />

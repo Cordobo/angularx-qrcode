@@ -11,6 +11,8 @@ import { MatFormFieldModule } from "@angular/material/form-field"
 import { MatIconModule } from "@angular/material/icon"
 import { MatInputModule } from "@angular/material/input"
 import { MatRadioModule } from "@angular/material/radio"
+import { MatSliderModule } from "@angular/material/slider"
+import { MatSlideToggleModule } from "@angular/material/slide-toggle"
 import { MatTabsModule } from "@angular/material/tabs"
 import { MatToolbarModule } from "@angular/material/toolbar"
 import { QRCodeModule } from "dist/angularx-qrcode"
@@ -31,6 +33,8 @@ import { AppComponent } from "./app.component"
     MatIconModule,
     MatInputModule,
     MatRadioModule,
+    MatSlideToggleModule,
+    MatSliderModule,
     MatTabsModule,
     MatToolbarModule,
     QRCodeModule,

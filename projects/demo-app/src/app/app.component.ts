@@ -21,6 +21,9 @@ export class AppComponent {
     cssClass: "center",
     elementType: "canvas" as QRCodeElementType,
     errorCorrectionLevel: "M" as QRCodeErrorCorrectionLevel,
+    imageSrc: "./assets/angular-logo.png",
+    imageHeight: 75,
+    imageWidth: 75,
     margin: 4,
     qrdata: "https://github.com/Cordobo/angularx-qrcode",
     scale: 1,
@@ -39,10 +42,13 @@ export class AppComponent {
   public colorDark: string
   public colorLight: string
   public cssClass: string
-  public qrdata: string
   public elementType: QRCodeElementType
   public errorCorrectionLevel: QRCodeErrorCorrectionLevel
+  public imageSrc?: string
+  public imageHeight?: number
+  public imageWidth?: number
   public margin: number
+  public qrdata: string
   public scale: number
   public title: string
   public width: number
@@ -55,7 +61,13 @@ export class AppComponent {
 
   public toggleCSS: boolean
 
+  public showImage: boolean
+
   constructor() {
+    this.toggleCSS = true
+    this.selectedIndex = 0
+    this.showImage = true
+
     this.allowEmptyString = this.data_model.allowEmptyString
     this.alt = this.data_model.alt
     this.ariaLabel = this.data_model.ariaLabel
@@ -64,13 +76,14 @@ export class AppComponent {
     this.cssClass = this.data_model.cssClass
     this.elementType = this.data_model.elementType
     this.errorCorrectionLevel = this.data_model.errorCorrectionLevel
+    this.imageSrc = this.showImage ? this.data_model.imageSrc : undefined
+    this.imageHeight = this.showImage ? this.data_model.imageHeight : undefined
+    this.imageWidth = this.showImage ? this.data_model.imageWidth : undefined
     this.margin = this.data_model.margin
     this.qrdata = this.data_model.qrdata
     this.scale = this.data_model.scale
     this.title = this.data_model.title
     this.width = this.data_model.width
-
-    this.selectedIndex = 0
 
     this.marginList = [
       { title: "4 (Default)", val: 4 },
@@ -96,8 +109,6 @@ export class AppComponent {
       { title: "50", val: 50 },
       { title: "10 (Default)", val: 10 },
     ]
-
-    this.toggleCSS = true
   }
 
   // Change value programatically
@@ -114,6 +125,9 @@ export class AppComponent {
     this.cssClass = this.data_model.cssClass
     this.elementType = this.data_model.elementType
     this.errorCorrectionLevel = this.data_model.errorCorrectionLevel
+    this.imageSrc = this.data_model.imageSrc
+    this.imageHeight = this.data_model.imageHeight
+    this.imageWidth = this.data_model.imageWidth
     this.margin = this.data_model.margin
     this.qrdata = this.data_model.qrdata
     this.scale = this.data_model.scale
@@ -126,13 +140,39 @@ export class AppComponent {
     return false
   }
 
+  setImageVisibility(enable?: boolean): void {
+    this.showImage =
+      this.elementType === "canvas"
+        ? enable
+          ? enable
+          : !this.showImage
+        : false
+    this.imageSrc = this.showImage ? this.data_model.imageSrc : undefined
+    if (this.showImage) {
+      this.elementType = this.data_model.elementType
+      this.imageHeight = this.data_model.imageHeight
+      this.imageWidth = this.data_model.imageWidth
+    }
+  }
+
   saveAsImage(parent: any) {
-    if (this.elementType === "img" || this.elementType === "url") {
-      // fetches base 64 date from image
+    let parentElement = null
+
+    if (this.elementType === "canvas") {
+      // fetches base 64 data from canvas
+      parentElement = parent.qrcElement.nativeElement
+        .querySelector("canvas")
+        .toDataURL("image/png")
+    } else if (this.elementType === "img" || this.elementType === "url") {
+      // fetches base 64 data from image
       // parentElement contains the base64 encoded image src
       // you might use to store somewhere
-      const parentElement =
-        parent.qrcElement.nativeElement.querySelector("img").src
+      parentElement = parent.qrcElement.nativeElement.querySelector("img").src
+    } else {
+      alert("Set elementType to 'canvas', 'img' or 'url'.")
+    }
+
+    if (parentElement) {
       // converts base 64 encoded image to blobData
       let blobData = this.convertBase64ToBlob(parentElement)
       // saves as image
@@ -143,8 +183,6 @@ export class AppComponent {
       // name of the file
       link.download = "Qrcode"
       link.click()
-    } else {
-      alert("Set elementType to 'img' or 'url'.")
     }
   }
 
@@ -173,29 +211,21 @@ export class AppComponent {
       f.push(`[qrdata]="'${this.qrdata}'"`)
     }
     if (this.allowEmptyString) {
-      f.push(`[allowEmptyString]="'${this.allowEmptyString}'"`)
+      f.push(`[allowEmptyString]="${this.allowEmptyString}"`)
     }
-    if (this.alt) {
-      if (this.elementType === "img" || this.elementType === "url") {
-        f.push(`[alt]="'${this.alt}'"`)
-      } else {
-        f.push(
-          `/* alt attribute is only available for elementTypes "img" and "url" */`
-        )
-      }
+    if (
+      this.alt &&
+      (this.elementType === "img" || this.elementType === "url")
+    ) {
+      f.push(`[alt]="'${this.alt}'"`)
     }
-    if (this.ariaLabel) {
-      if (
-        this.elementType === "canvas" ||
+    if (
+      this.ariaLabel &&
+      (this.elementType === "canvas" ||
         this.elementType === "img" ||
-        this.elementType === "url"
-      ) {
-        f.push(`[ariaLabel]="'${this.ariaLabel}'"`)
-      } else {
-        f.push(
-          `/* aria-label attribute is only available for elementTypes "canvas", "img" and "url" */`
-        )
-      }
+        this.elementType === "url")
+    ) {
+      f.push(`[ariaLabel]="'${this.ariaLabel}'"`)
     }
 
     if (this.cssClass) {
@@ -209,16 +239,25 @@ export class AppComponent {
     }
     f.push(`[elementType]="'${this.elementType}'"`)
     f.push(`[errorCorrectionLevel]="'${this.errorCorrectionLevel}'"`)
+    if (this.showImage && this.imageSrc) {
+      f.push(`[imageSrc]="'${this.imageSrc}'"`)
+    }
+    if (this.showImage && this.imageHeight) {
+      f.push(`[imageHeight]="${this.imageHeight}"`)
+    }
+    if (this.showImage && this.imageWidth) {
+      f.push(`[imageWidth]="${this.imageWidth}"`)
+    }
     if (this.margin) {
-      f.push(`[margin]="'${this.margin}'"`)
+      f.push(`[margin]="${this.margin}"`)
     }
     if (this.scale) {
-      f.push(`[scale]="'${this.scale}'"`)
+      f.push(`[scale]="${this.scale}"`)
     }
     if (this.title) {
       f.push(`[title]="'${this.title}'"`)
     }
-    f.push(`[width]="'${this.width}'"`)
+    f.push(`[width]="${this.width}"`)
 
     return f.join("\n    ")
   }

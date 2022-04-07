@@ -16,7 +16,8 @@
 - Compatible with **Angular** and Ionic
 - Ivy compiler support, AOT, SSR (Server Side Rendering)
 - Under active development
-- Accessibility(a11y) attributes supported (alt, aria-label, title)
+- Accessibility (a11y) attributes supported (alt, aria-label, title)
+- Support for images
 - Trusted and used by thousands of developers like you
 
 `angularx-qrcode` is compatible with Ionic 3/4/5 and Angular 4/5/6/7/8/9/10/11/12/13+ with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
@@ -141,6 +142,9 @@ The [online demo](https://cordobo.github.io/angularx-qrcode/) contains a [`worki
 | cssClass             | String  | 'qrcode'    | CSS Class                                                      |
 | elementType          | String  | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                |
 | errorCorrectionLevel | String  | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                       |
+| imageSrc             | String  | null        | Link to your image                                             |
+| imageHeight          | Number  | null        | height of your image                                           |
+| imageWidth           | Number  | null        | width of your image                                            |
 | margin               | Number  | 4           | Define how much wide the quiet zone should be.                 |
 | qrdata               | String  | ''          | String to encode                                               |
 | scale                | Number  | 4           | Scale factor. A value of 1 means 1px per modules (black dots). |

@@ -47,3 +47,7 @@
 .demoMargin {
   margin: 0 10px;
 }
+
+mat-slider {
+  width: 300px;
+}

@@ -1,3 +1,16 @@
+export type QRCodeConfigType = {
+  color: {
+    dark: string
+    light: string
+  }
+  errorCorrectionLevel: QRCodeErrorCorrectionLevel
+  margin: number
+  scale: number
+  type: QRCodeElementType
+  version: QRCodeVersion | undefined
+  width: number
+}
+
 export type QRCodeErrorCorrectionLevel =
   | "L"
   | "M"

@@ -167,8 +167,8 @@ export class QRCodeComponent implements OnChanges {
       }
 
       const centerImageSrc = this.imageSrc
-      const centerImageWidth = this.imageHeight || 40
-      const centerImageHeight = this.imageWidth || 40
+      const centerImageHeight = this.imageHeight || 40
+      const centerImageWidth = this.imageWidth || 40
 
       switch (this.elementType) {
         case "canvas":

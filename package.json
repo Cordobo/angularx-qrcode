@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "13.0.11",
+  "version": "13.0.12",
   "main": "dist/angularx-qrcode/bundles/angularx-qrcode.umd.js",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",

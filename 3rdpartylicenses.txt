@@ -127,6 +127,9 @@ THE SOFTWARE.
 encode-utf8
 MIT
 
+ngx-color-picker
+MIT
+
 rxjs
 Apache-2.0
                                Apache License

@@ -37,17 +37,6 @@
   overflow: hidden;
 }
 
-.demoSection {
-  display: flex;
-  align-content: center;
-  align-items: center;
-  height: 60px;
-}
-
-.demoMargin {
-  margin: 0 10px;
-}
-
 mat-slider {
   width: 300px;
 }

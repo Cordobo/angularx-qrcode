@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { MatSnackBar } from "@angular/material/snack-bar"
 import {
   QRCodeElementType,
   QRCodeErrorCorrectionLevel,
@@ -59,13 +60,17 @@ export class AppComponent {
   public scaleList: ListType
   public widthList: ListType
 
-  public toggleCSS: boolean
-
+  public showA11y: boolean
+  public showColors: boolean
+  public showCss: boolean
   public showImage: boolean
 
-  constructor() {
-    this.toggleCSS = true
+  constructor(private _snackBar: MatSnackBar) {
     this.selectedIndex = 0
+
+    this.showA11y = true
+    this.showColors = true
+    this.showCss = true
     this.showImage = true
 
     this.allowEmptyString = this.data_model.allowEmptyString
@@ -133,6 +138,13 @@ export class AppComponent {
     this.scale = this.data_model.scale
     this.title = this.data_model.title
     this.width = this.data_model.width
+
+    this.setA11yVisibility(true)
+    this.setColorsVisibility(true)
+    this.setCssVisibility(true)
+    this.setImageVisibility(true)
+
+    this._snackBar.open("All values resetted", "close")
   }
 
   setTabIndex(idx: number): boolean {
@@ -140,14 +152,22 @@ export class AppComponent {
     return false
   }
 
+  setA11yVisibility(enable?: boolean): void {
+    this.showA11y = enable ? enable : !this.showA11y
+  }
+
+  setColorsVisibility(enable?: boolean): void {
+    this.showColors = enable ? enable : !this.showColors
+  }
+
+  setCssVisibility(enable?: boolean): void {
+    this.showCss = enable ? enable : !this.showCss
+  }
+
   setImageVisibility(enable?: boolean): void {
-    this.showImage =
-      this.elementType === "canvas"
-        ? enable
-          ? enable
-          : !this.showImage
-        : false
+    this.showImage = enable !== undefined ? enable : !this.showImage
     this.imageSrc = this.showImage ? this.data_model.imageSrc : undefined
+
     if (this.showImage) {
       this.elementType = this.data_model.elementType
       this.imageHeight = this.data_model.imageHeight
@@ -214,12 +234,14 @@ export class AppComponent {
       f.push(`[allowEmptyString]="${this.allowEmptyString}"`)
     }
     if (
+      this.showA11y &&
       this.alt &&
       (this.elementType === "img" || this.elementType === "url")
     ) {
       f.push(`[alt]="'${this.alt}'"`)
     }
     if (
+      this.showA11y &&
       this.ariaLabel &&
       (this.elementType === "canvas" ||
         this.elementType === "img" ||
@@ -228,13 +250,13 @@ export class AppComponent {
       f.push(`[ariaLabel]="'${this.ariaLabel}'"`)
     }
 
-    if (this.cssClass) {
+    if (this.showCss && this.cssClass) {
       f.push(`[cssClass]="'${this.cssClass}'"`)
     }
-    if (this.colorDark) {
+    if (this.showColors && this.colorDark) {
       f.push(`[colorDark]="'${this.colorDark}'"`)
     }
-    if (this.colorLight) {
+    if (this.showColors && this.colorLight) {
       f.push(`[colorLight]="'${this.colorLight}'"`)
     }
     f.push(`[elementType]="'${this.elementType}'"`)
@@ -254,7 +276,7 @@ export class AppComponent {
     if (this.scale) {
       f.push(`[scale]="${this.scale}"`)
     }
-    if (this.title) {
+    if (this.showA11y && this.title) {
       f.push(`[title]="'${this.title}'"`)
     }
     f.push(`[width]="${this.width}"`)

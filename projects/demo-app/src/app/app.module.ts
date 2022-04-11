@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core"
 import { BrowserModule } from "@angular/platform-browser"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
+import { ColorPickerModule } from "ngx-color-picker"
 import { FormsModule } from "@angular/forms"
 import { MatButtonModule } from "@angular/material/button"
 import { MatButtonToggleModule } from "@angular/material/button-toggle"
@@ -13,8 +14,10 @@ import { MatInputModule } from "@angular/material/input"
 import { MatRadioModule } from "@angular/material/radio"
 import { MatSliderModule } from "@angular/material/slider"
 import { MatSlideToggleModule } from "@angular/material/slide-toggle"
+import { MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTabsModule } from "@angular/material/tabs"
 import { MatToolbarModule } from "@angular/material/toolbar"
+import { MatTooltipModule } from "@angular/material/tooltip"
 import { QRCodeModule } from "dist/angularx-qrcode"
 import { AppComponent } from "./app.component"
 
@@ -23,6 +26,7 @@ import { AppComponent } from "./app.component"
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ColorPickerModule,
     FormsModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -35,8 +39,10 @@ import { AppComponent } from "./app.component"
     MatRadioModule,
     MatSlideToggleModule,
     MatSliderModule,
+    MatSnackBarModule,
     MatTabsModule,
     MatToolbarModule,
+    MatTooltipModule,
     QRCodeModule,
   ],
   providers: [],

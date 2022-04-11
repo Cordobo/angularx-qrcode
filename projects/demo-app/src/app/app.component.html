@@ -10,7 +10,7 @@
   </a>
   <a mat-button href="https://www.npmjs.com/package/angularx-qrcode" aria-label="Example icon-button with heart icon">
     <mat-icon>file_download</mat-icon>
-    npm 13.0.13
+    npm 13.0.14
   </a>
 
   <iframe src="https://ghbtns.com/github-btn.html?user=cordobo&repo=angularx-qrcode&type=star&count=true"
@@ -38,8 +38,8 @@
         <mat-card-title>QR Code Preview</mat-card-title>
         <mat-card-content>
           <div class="qrcodeImage">
-            <qrcode #parent [elementType]="elementType" errorCorrectionLevel="M" [qrdata]="qrdata" [scale]="scale"
-              [width]="width" [allowEmptyString]="true" [className]="cssClass" [colorDark]="colorDark"
+            <qrcode #parent [elementType]="elementType" [errorCorrectionLevel]="errorCorrectionLevel" [qrdata]="qrdata"
+              [scale]="scale" [width]="width" [allowEmptyString]="true" [className]="cssClass" [colorDark]="colorDark"
               [colorLight]="colorLight" [margin]="margin" [alt]="alt" [ariaLabel]="ariaLabel" [title]="title"
               [imageSrc]="imageSrc" [imageHeight]="imageHeight" [imageWidth]="imageWidth"></qrcode>
           </div>
@@ -51,12 +51,6 @@
         <mat-card-content>
           <mat-tab-group animationDuration="0ms" [(selectedIndex)]="selectedIndex">
             <mat-tab label="HTML">
-
-              <!-- <section class="demoSection">
-                Show:
-                <mat-checkbox class="demoMargin" [(ngModel)]="toggleCSS">CSS</mat-checkbox>
-              </section> -->
-
               <h4>Copy & Paste this code</h4>
               <p>Note: The surrounding <code>&#60;div class="qrcodeImage"&#62;</code>-tag is optional, but should
                 be included
@@ -214,7 +208,7 @@ export class AppModule {{ '{' }} }</pre>
 
           <h4>Image/Logo (optional)</h4>
 
-          <mat-slide-toggle [checked]="showImage" (change)="setImageVisibility()">Include image properties for canvas
+          <mat-slide-toggle [checked]="showImage" (change)="setImageVisibility()">Include image properties (canvas only)
           </mat-slide-toggle>
           <br />
           <br />
@@ -252,29 +246,45 @@ export class AppModule {{ '{' }} }</pre>
 
           <h4>Colors (optional)</h4>
 
-          <section>
+          <mat-slide-toggle [checked]="showColors" (change)="setColorsVisibility()">Include colors properties
+          </mat-slide-toggle>
+          <br />
+          <br />
+          <section *ngIf="showColors">
             <div class="button-label">Foreground:</div>
             <div class="button-row">
+
+              <button mat-stroked-button [style.color]="'#ffffff'" [style.background]="colorDark" [cpPosition]="'top'"
+                [cpPositionOffset]="'50%'" [cpPositionRelativeToArrow]="true" [(colorPicker)]="colorDark"
+                [cpOutputFormat]="'hex'">
+                <mat-icon aria-hidden="false" aria-label="Color picker">format_color_fill</mat-icon>
+              </button>
+
               <mat-button-toggle-group name="colorDark" aria-label="ColorDark" [(ngModel)]="colorDark"
                 selected="colorDark">
-                <mat-button-toggle value="#3f51b5ff">Indigo</mat-button-toggle>
-                <mat-button-toggle value="#ff0000ff">Red</mat-button-toggle>
-                <mat-button-toggle value="ffffffff">White</mat-button-toggle>
-                <mat-button-toggle value="#000000ff">Default colorDark (#000000ff)</mat-button-toggle>
+                <mat-button-toggle value="#3f51b5">Indigo</mat-button-toggle>
+                <mat-button-toggle value="#ff0000">Red</mat-button-toggle>
+                <mat-button-toggle value="#ffffff">White</mat-button-toggle>
+                <mat-button-toggle value="#000000">Default colorDark (#000000ff)</mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </section>
 
-          <section>
+          <section *ngIf="showColors">
             <div class="button-label">Background:</div>
             <div class="button-row">
 
+              <button mat-stroked-button [style.background]="colorLight" [cpPosition]="'top'" [cpPositionOffset]="'50%'"
+                [cpPositionRelativeToArrow]="true" [(colorPicker)]="colorLight" [cpOutputFormat]="'hex'">
+                <mat-icon aria-hidden="false" aria-label="Color picker">format_color_fill</mat-icon>
+              </button>
+
               <mat-button-toggle-group name="colorLight" aria-label="ColorLight" [(ngModel)]="colorLight"
                 selected="colorLight">
-                <mat-button-toggle value="#ff4081ff">Pink</mat-button-toggle>
-                <mat-button-toggle value="#ff0000ff">Red</mat-button-toggle>
-                <mat-button-toggle value="#000000ff">Black</mat-button-toggle>
-                <mat-button-toggle value="#ffffffff">Default colorLight (#ffffffff)</mat-button-toggle>
+                <mat-button-toggle value="#ff4081">Pink</mat-button-toggle>
+                <mat-button-toggle value="#ff0000">Red</mat-button-toggle>
+                <mat-button-toggle value="#000000">Black</mat-button-toggle>
+                <mat-button-toggle value="#ffffff">Default colorLight (#ffffffff)</mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </section>
@@ -282,45 +292,59 @@ export class AppModule {{ '{' }} }</pre>
           <mat-divider></mat-divider>
 
           <h4>CSS Styling (optional)</h4>
-          <p>These are sample styles how you can align the qrcode directive or add some styling.</p>
 
-          <mat-radio-group aria-label="Select an option" [(ngModel)]="cssClass" class="radio-vertical">
-            <mat-radio-button value="left">Left</mat-radio-button>
-            <mat-radio-button value="center">Center</mat-radio-button>
-            <mat-radio-button value="right">Right</mat-radio-button>
-            <mat-radio-button value="demoBorder">Border</mat-radio-button>
-            <mat-radio-button value="demoBorderRadius">BorderRadius</mat-radio-button>
-            <mat-radio-button value="demoBorderRadius" (click)="changeMargin(0)">BorderRadius without margin
-            </mat-radio-button>
-          </mat-radio-group>
 
+          <mat-slide-toggle [checked]="showCss" (change)="setCssVisibility()">Include CSS styling for the qrcode
+            directive
+          </mat-slide-toggle>
+
+          <section *ngIf="showCss">
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="cssClass" class="radio-vertical">
+              <mat-radio-button value="left">Left</mat-radio-button>
+              <mat-radio-button value="center">Center</mat-radio-button>
+              <mat-radio-button value="right">Right</mat-radio-button>
+              <mat-radio-button value="demoBorder">Border</mat-radio-button>
+              <mat-radio-button value="demoBorderRadius">BorderRadius</mat-radio-button>
+              <mat-radio-button value="demoBorderRadius" (click)="changeMargin(0)">BorderRadius without margin
+              </mat-radio-button>
+            </mat-radio-group>
+          </section>
+
+          <br />
           <br />
 
           <mat-divider></mat-divider>
 
           <h4>Accessibility/a11y attributes (optional)</h4>
 
-          <form class="form-full-width">
-            <mat-form-field class="input-full-width" appearance="fill">
-              <mat-label>alt Attribute</mat-label>
-              <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" />
-              <mat-hint>alt attribute is only available for elementTypes "img" and "url"</mat-hint>
-            </mat-form-field>
-            <br /><br />
-
-            <mat-form-field class="input-full-width" appearance="fill">
-              <mat-label>title Attribute</mat-label>
-              <input matInput name="title" placeholder="title" [(ngModel)]="title" />
-            </mat-form-field>
-
-            <mat-form-field class="input-full-width" appearance="fill">
-              <mat-label>aria-label Attribute</mat-label>
-              <input matInput name="ariaLabel" placeholder="ariaLabel" [(ngModel)]="ariaLabel" />
-              <mat-hint>aria-label attribute is only available for elementTypes "canvas", "img" and "url"</mat-hint>
-            </mat-form-field>
-          </form>
-
+          <mat-slide-toggle [checked]="showA11y" (change)="setA11yVisibility()">Include Accessibility attributes
+          </mat-slide-toggle>
           <br />
+          <br />
+
+          <section *ngIf="showA11y">
+            <form class="form-full-width">
+              <mat-form-field class="input-full-width" appearance="fill">
+                <mat-label>alt Attribute</mat-label>
+                <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" />
+                <mat-hint>alt attribute is only available for elementTypes "img" and "url"</mat-hint>
+              </mat-form-field>
+              <br /><br />
+
+              <mat-form-field class="input-full-width" appearance="fill">
+                <mat-label>title Attribute</mat-label>
+                <input matInput name="title" placeholder="title" [(ngModel)]="title" />
+              </mat-form-field>
+
+              <mat-form-field class="input-full-width" appearance="fill">
+                <mat-label>aria-label Attribute</mat-label>
+                <input matInput name="ariaLabel" placeholder="ariaLabel" [(ngModel)]="ariaLabel" />
+                <mat-hint>aria-label attribute is only available for elementTypes "canvas", "img" and "url"</mat-hint>
+              </mat-form-field>
+            </form>
+
+
+          </section>
 
         </mat-card-content>
       </mat-card>
@@ -335,6 +359,7 @@ export class AppModule {{ '{' }} }</pre>
   <a href="https://cordobo.com">Andreas Jacob (Cordobo.com)</a>
 </footer>
 
-<button mat-fab id="button-reset" color="accent" aria-label="Reset all changes" (click)="reset()">
+<button mat-fab id="button-reset" color="accent" aria-label="Reset all changes" (click)="reset()"
+  matTooltip="Reset to defaults">
   <mat-icon>restart_alt</mat-icon>
 </button>

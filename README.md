@@ -118,6 +118,35 @@ export class QRCodeComponent {
 <qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
 ```
 
+### Getting the QRCode URL
+To download the QRCode, we have to use the `qrCodeURL` attribute
+of the `<qrcode>` which returns a sanitized URL representing the 
+location of the QRCode.
+```
+// File: example.ts
+export class QRCodeComponent {
+  public myAngularxQrCode: string = "";
+  public qrCodeDownloadLink: SafeUrl = "";
+
+  constructor () {
+    this.myAngularxQrCode = 'Your QR code data string';
+  }
+  
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
+  }
+}
+
+// File: example.html
+<qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+<a [href]="qrCodeDownloadLink" download="qrcode">Download</a>
+```
+The file format obtained by `qrCodeURL` depends directly on the 
+elementType of `<qrcode>`. If it is canvas, url or img, the return 
+will be an image in `.png` format. If it is svg, the return will be 
+a file of `svg` format.
+
+
 ## Available Parameters
 
 | Attribute            | Type    | Default     | Description                                                    |

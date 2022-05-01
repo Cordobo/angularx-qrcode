@@ -142,9 +142,8 @@ export class QRCodeComponent {
 <a [href]="qrCodeDownloadLink" download="qrcode">Download</a>
 ```
 The file format obtained by `qrCodeURL` depends directly on the 
-elementType of `<qrcode>`. If it is canvas, url or img, the return 
-will be an image in `.png` format. If it is svg, the return will be 
-a file of `svg` format.
+elementType of `<qrcode>`.  If it's either canvas, url or image, 
+it returns an image as `.png`, if it's svg, returns a `.svg` file.
 
 
 ## Available Parameters

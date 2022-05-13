@@ -1,5 +1,6 @@
 import { Component } from "@angular/core"
 import { MatSnackBar } from "@angular/material/snack-bar"
+import { SafeUrl } from "@angular/platform-browser"
 import {
   QRCodeElementType,
   QRCodeErrorCorrectionLevel,
@@ -53,6 +54,8 @@ export class AppComponent {
   public scale: number
   public title: string
   public width: number
+
+  public qrCodeSrc!: SafeUrl
 
   public selectedIndex: number
 
@@ -173,6 +176,11 @@ export class AppComponent {
       this.imageHeight = this.data_model.imageHeight
       this.imageWidth = this.data_model.imageWidth
     }
+  }
+
+  // Re-enable, when a method to download images has been implemented
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeSrc = url
   }
 
   saveAsImage(parent: any) {

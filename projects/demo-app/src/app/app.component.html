@@ -41,10 +41,15 @@
             <qrcode #parent [elementType]="elementType" [errorCorrectionLevel]="errorCorrectionLevel" [qrdata]="qrdata"
               [scale]="scale" [width]="width" [allowEmptyString]="true" [className]="cssClass" [colorDark]="colorDark"
               [colorLight]="colorLight" [margin]="margin" [alt]="alt" [ariaLabel]="ariaLabel" [title]="title"
-              [imageSrc]="imageSrc" [imageHeight]="imageHeight" [imageWidth]="imageWidth"></qrcode>
+              [imageSrc]="imageSrc" [imageHeight]="imageHeight" [imageWidth]="imageWidth"
+              (qrCodeURL)="onChangeURL($event)"></qrcode>
           </div>
           <div class="downloadButton">
-            <button mat-raised-button color="primary" (click)="saveAsImage(parent)">Download QR Code Image</button>
+            <button *ngIf="this.elementType !== 'svg'" mat-raised-button color="primary"
+              (click)="saveAsImage(parent)">Download QR Code Image</button>
+            <a *ngIf="this.elementType === 'svg'" mat-raised-button color="primary" [href]="qrCodeSrc"
+              download="qrcode">Download QR Code
+              Image</a>
           </div>
         </mat-card-content>
 

@@ -199,12 +199,10 @@ export class QRCodeComponent implements OnChanges {
               }
 
               if (centerImageSrc && this.context) {
-                // if (!this.imageSrc) {
                 this.centerImage = new Image(
                   centerImageWidth,
                   centerImageHeight
                 )
-                // }
 
                 if (centerImageSrc !== this.centerImage.src) {
                   this.centerImage.src = centerImageSrc
@@ -301,6 +299,7 @@ export class QRCodeComponent implements OnChanges {
     }
 
     let urlImage = ""
+
     if (className === HTMLCanvasElement.name) {
       urlImage = (element as HTMLCanvasElement).toDataURL("image/png")
     }

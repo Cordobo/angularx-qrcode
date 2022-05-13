@@ -130,27 +130,58 @@ export class QRCodeComponent {
 
 The [online demo](https://cordobo.github.io/angularx-qrcode/) contains a [`working sample`](projects/demo-app) how to download the QR Code with a button.
 
+### Getting the QR Code URL
+
+To download the QR Code, we have to use the `qrCodeURL` attribute
+of the `<qrcode>` which returns a sanitized URL representing the
+location of the QR Code.
+
+```
+// File: example.ts
+export class QRCodeComponent {
+  public myAngularxQrCode: string = "";
+  public qrCodeDownloadLink: SafeUrl = "";
+
+  constructor () {
+    this.myAngularxQrCode = 'Your QR code data string';
+  }
+
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
+  }
+}
+
+// File: example.html
+<qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+<a [href]="qrCodeDownloadLink" download="qrcode">Download</a>
+```
+
+The file format obtained by `qrCodeURL` depends directly on the
+elementType of `<qrcode>`. If it's either canvas, url or image,
+it returns an image as `.png`, if it's svg, returns a `.svg` file.
+
 ## Available Parameters
 
-| Attribute            | Type    | Default     | Description                                                    |
-| -------------------- | ------- | ----------- | -------------------------------------------------------------- |
-| allowEmptyString     | Boolean | false       | Allow qrdata to be an empty string                             |
-| alt                  | String  | null        | HTML alt attribute (supported by img, url)                     |
-| ariaLabel            | String  | null        | HTML aria-label attribute (supported by canvas, img, url)      |
-| colorDark            | String  | '#000000ff' | RGBA color, color of dark module (foreground)                  |
-| colorLight           | String  | '#ffffffff' | RGBA color, color of light module (background)                 |
-| cssClass             | String  | 'qrcode'    | CSS Class                                                      |
-| elementType          | String  | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                |
-| errorCorrectionLevel | String  | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                       |
-| imageSrc             | String  | null        | Link to your image                                             |
-| imageHeight          | Number  | null        | height of your image                                           |
-| imageWidth           | Number  | null        | width of your image                                            |
-| margin               | Number  | 4           | Define how much wide the quiet zone should be.                 |
-| qrdata               | String  | ''          | String to encode                                               |
-| scale                | Number  | 4           | Scale factor. A value of 1 means 1px per modules (black dots). |
-| title                | String  | null        | HTML title attribute (supported by canvas, img, url)           |
-| version              | Number  | (auto)      | 1-40                                                           |
-| width                | Number  | 10          | Height/Width (any value)                                       |
+| Attribute            | Type                    | Default     | Description                                                    |
+| -------------------- | ----------------------- | ----------- | -------------------------------------------------------------- |
+| allowEmptyString     | Boolean                 | false       | Allow qrdata to be an empty string                             |
+| alt                  | String                  | null        | HTML alt attribute (supported by img, url)                     |
+| ariaLabel            | String                  | null        | HTML aria-label attribute (supported by canvas, img, url)      |
+| colorDark            | String                  | '#000000ff' | RGBA color, color of dark module (foreground)                  |
+| colorLight           | String                  | '#ffffffff' | RGBA color, color of light module (background)                 |
+| cssClass             | String                  | 'qrcode'    | CSS Class                                                      |
+| elementType          | String                  | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                |
+| errorCorrectionLevel | String                  | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                       |
+| imageSrc             | String                  | null        | Link to your image                                             |
+| imageHeight          | Number                  | null        | height of your image                                           |
+| imageWidth           | Number                  | null        | width of your image                                            |
+| margin               | Number                  | 4           | Define how much wide the quiet zone should be.                 |
+| qrCodeURL            | EventEmitter\<SafeUrl\> |             | Returns the QR Code URL                                        |
+| qrdata               | String                  | ''          | String to encode                                               |
+| scale                | Number                  | 4           | Scale factor. A value of 1 means 1px per modules (black dots). |
+| title                | String                  | null        | HTML title attribute (supported by canvas, img, url)           |
+| version              | Number                  | (auto)      | 1-40                                                           |
+| width                | Number                  | 10          | Height/Width (any value)                                       |
 
 ## QR Code capacity
 

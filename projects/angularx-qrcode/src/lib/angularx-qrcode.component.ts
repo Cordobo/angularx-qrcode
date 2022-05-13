@@ -2,11 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   Renderer2,
   ViewChild,
 } from "@angular/core"
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser"
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import * as QRCode from "@cordobo/qrcode"
@@ -43,12 +46,15 @@ export class QRCodeComponent implements OnChanges {
   @Input() public alt?: string
   @Input() public ariaLabel?: string
   @Input() public title?: string
+
+  @Output() qrCodeURL = new EventEmitter<SafeUrl>()
+
   @ViewChild("qrcElement", { static: true }) public qrcElement!: ElementRef
 
   public context: CanvasRenderingContext2D | null = null
   private centerImage?: HTMLImageElement
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private sanitizer: DomSanitizer) {}
 
   public async ngOnChanges(): Promise<void> {
     await this.createQRCode()
@@ -228,24 +234,27 @@ export class QRCodeComponent implements OnChanges {
               }
 
               this.renderElement(canvasElement)
+              this.emitQRCodeURL(canvasElement as HTMLCanvasElement)
             })
             .catch((e) => {
               console.error("[angularx-qrcode] canvas error:", e)
             })
           break
         case "svg":
-          const svgElement: HTMLElement = this.renderer.createElement("div")
+          const svgParentElement: HTMLElement =
+            this.renderer.createElement("div")
           this.toSVG(config)
             .then((svgString: string) => {
-              this.renderer.setProperty(svgElement, "innerHTML", svgString)
-              const innerElement = svgElement.firstChild as Element
-              this.renderer.setAttribute(
-                innerElement,
-                "height",
-                `${this.width}`
+              this.renderer.setProperty(
+                svgParentElement,
+                "innerHTML",
+                svgString
               )
-              this.renderer.setAttribute(innerElement, "width", `${this.width}`)
-              this.renderElement(innerElement)
+              const svgElement = svgParentElement.firstChild as SVGSVGElement
+              this.renderer.setAttribute(svgElement, "height", `${this.width}`)
+              this.renderer.setAttribute(svgElement, "width", `${this.width}`)
+              this.renderElement(svgElement)
+              this.emitQRCodeURL(svgElement)
             })
             .catch((e) => {
               console.error("[angularx-qrcode] svg error:", e)
@@ -254,7 +263,8 @@ export class QRCodeComponent implements OnChanges {
         case "url":
         case "img":
         default:
-          const imgElement = this.renderer.createElement("img")
+          const imgElement: HTMLImageElement =
+            this.renderer.createElement("img")
           this.toDataURL(config)
             .then((dataUrl: string) => {
               if (this.alt) {
@@ -268,6 +278,7 @@ export class QRCodeComponent implements OnChanges {
                 imgElement.setAttribute("title", this.title)
               }
               this.renderElement(imgElement)
+              this.emitQRCodeURL(imgElement)
             })
             .catch((e) => {
               console.error("[angularx-qrcode] img/url error:", e)
@@ -276,5 +287,39 @@ export class QRCodeComponent implements OnChanges {
     } catch (e: any) {
       console.error("[angularx-qrcode] Error generating QR Code:", e.message)
     }
+  }
+
+  emitQRCodeURL(element: HTMLCanvasElement | HTMLImageElement | SVGSVGElement) {
+    const className = element.constructor.name
+    if (className === SVGSVGElement.name) {
+      const svgHTML = element.outerHTML
+      const blob = new Blob([svgHTML], { type: "image/svg+xml" })
+      const urlSvg = URL.createObjectURL(blob)
+      const urlSanitized = this.sanitizer.bypassSecurityTrustUrl(urlSvg)
+      this.qrCodeURL.emit(urlSanitized)
+      return
+    }
+
+    let urlImage = ""
+    if (className === HTMLCanvasElement.name) {
+      urlImage = (element as HTMLCanvasElement).toDataURL("image/png")
+    }
+
+    if (className === HTMLImageElement.name) {
+      urlImage = (element as HTMLImageElement).src
+    }
+
+    fetch(urlImage)
+      .then((urlResponse: Response) => urlResponse.blob())
+      .then((blob: Blob) => URL.createObjectURL(blob))
+      .then((url: string) => this.sanitizer.bypassSecurityTrustUrl(url))
+      .then((urlSanitized: SafeUrl) => {
+        this.qrCodeURL.emit(urlSanitized)
+      })
+      .catch((error) => {
+        console.error(
+          "[angularx-qrcode] Error when fetching image/png URL: " + error
+        )
+      })
   }
 }

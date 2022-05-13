@@ -118,6 +118,34 @@ export class QRCodeComponent {
 <qrcode [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
 ```
 
+### Getting the QRCode URL
+To download the QRCode, we have to use the `qrCodeURL` attribute
+of the `<qrcode>` which returns a sanitized URL representing the 
+location of the QRCode.
+```
+// File: example.ts
+export class QRCodeComponent {
+  public myAngularxQrCode: string = "";
+  public qrCodeDownloadLink: SafeUrl = "";
+
+  constructor () {
+    this.myAngularxQrCode = 'Your QR code data string';
+  }
+  
+  onChangeURL(url: SafeUrl) {
+    this.qrCodeDownloadLink = url;
+  }
+}
+
+// File: example.html
+<qrcode (qrCodeURL)="onChangeURL($event)" [qrdata]="myAngularxQrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+<a [href]="qrCodeDownloadLink" download="qrcode">Download</a>
+```
+The file format obtained by `qrCodeURL` depends directly on the 
+elementType of `<qrcode>`.  If it's either canvas, url or image, 
+it returns an image as `.png`, if it's svg, returns a `.svg` file.
+
+
 ## Available Parameters
 
 | Attribute            | Type    | Default     | Description                                                    |
@@ -136,7 +164,7 @@ export class QRCodeComponent {
 | title                | String  | null        | HTML title attribute (supported by canvas, img, url)           |
 | version              | Number  | (auto)      | 1-40                                                           |
 | width                | Number  | 10          | Height/Width (any value)                                       |
-
+| qrCodeURL            | EventEmitter\<SafeUrl\> | | Output the QRCode URL
 ## QR Code capacity
 
 Depending on the amount of data of the **qrdata** to encode, a minimum **width** is required.

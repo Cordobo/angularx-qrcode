@@ -2,11 +2,14 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnChanges,
+  Output,
   Renderer2,
   ViewChild,
 } from "@angular/core"
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser"
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 import * as QRCode from "@cordobo/qrcode"
@@ -34,6 +37,7 @@ export class QRCodeComponent implements OnChanges {
   @Input() public scale = 4
   @Input() public version: QRCodeVersion | undefined
   @Input() public width = 10
+  @Output() qrCodeURL = new EventEmitter<SafeUrl>()
 
   // Accessibility features introduced in 13.0.4+
   @Input() public alt: string | null = null
@@ -42,7 +46,7 @@ export class QRCodeComponent implements OnChanges {
 
   @ViewChild("qrcElement", { static: true }) public qrcElement!: ElementRef
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2, private sanitizer: DomSanitizer) {}
 
   public ngOnChanges(): void {
     this.createQRCode()
@@ -198,6 +202,7 @@ export class QRCodeComponent implements OnChanges {
                 this.renderer.setAttribute(element, "title", `${this.title}`)
               }
               this.renderElement(element)
+              this.emitQRCodeURL(element as HTMLCanvasElement)
             })
             .catch((e) => {
               console.error("[angularx-qrcode] canvas error:", e)
@@ -216,6 +221,7 @@ export class QRCodeComponent implements OnChanges {
               )
               this.renderer.setAttribute(innerElement, "width", `${this.width}`)
               this.renderElement(innerElement)
+              this.emitQRCodeURL(innerElement as SVGSVGElement)
             })
             .catch((e) => {
               console.error("[angularx-qrcode] svg error:", e)
@@ -238,6 +244,7 @@ export class QRCodeComponent implements OnChanges {
                 element.setAttribute("title", this.title)
               }
               this.renderElement(element)
+              this.emitQRCodeURL(element as HTMLImageElement)
             })
             .catch((e) => {
               console.error("[angularx-qrcode] img/url error:", e)
@@ -246,5 +253,37 @@ export class QRCodeComponent implements OnChanges {
     } catch (e: any) {
       console.error("[angularx-qrcode] Error generating QR Code:", e.message)
     }
+  }
+
+  emitQRCodeURL(element: HTMLCanvasElement | HTMLImageElement | SVGSVGElement) {
+    const className = element.constructor.name
+    if (className === SVGSVGElement.name) {
+      const svgHTML = element.outerHTML
+      const blob = new Blob([svgHTML], {type: "image/svg+xml"})
+      const urlSvg = URL.createObjectURL(blob)
+      const urlSanitized = this.sanitizer.bypassSecurityTrustUrl(urlSvg)
+      this.qrCodeURL.emit(urlSanitized)
+      return
+    }
+
+    let urlImage = ""
+    if (className === HTMLCanvasElement.name) {
+      urlImage = (element as HTMLCanvasElement).toDataURL("image/png")
+    }
+
+    if (className === HTMLImageElement.name) {
+      urlImage = (element as HTMLImageElement).src
+    }
+
+    fetch(urlImage)
+      .then((urlResponse: Response) => urlResponse.blob())
+      .then((blob: Blob) => URL.createObjectURL(blob))
+      .then((url: string) => this.sanitizer.bypassSecurityTrustUrl(url))
+      .then((urlSanitized: SafeUrl) => {
+        this.qrCodeURL.emit(urlSanitized)
+      })
+      .catch((error) => {
+        console.error("[angularx-qrcode] Error when fetching image/png URL: "+error)
+      })
   }
 }

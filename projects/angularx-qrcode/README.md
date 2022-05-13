@@ -136,7 +136,7 @@ export class QRCodeComponent {
 | title                | String  | null        | HTML title attribute (supported by canvas, img, url)           |
 | version              | Number  | (auto)      | 1-40                                                           |
 | width                | Number  | 10          | Height/Width (any value)                                       |
-
+| qrCodeURL            | EventEmitter\<SafeUrl\> | | Output the QRCode URL
 ## QR Code capacity
 
 Depending on the amount of data of the **qrdata** to encode, a minimum **width** is required.

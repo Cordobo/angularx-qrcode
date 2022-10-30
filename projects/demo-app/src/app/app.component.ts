@@ -28,6 +28,7 @@ export class AppComponent {
     imageWidth: 75,
     margin: 4,
     qrdata: "https://github.com/Cordobo/angularx-qrcode",
+    qrCodeClicked: false,
     scale: 1,
     version: undefined,
     title: "A custom title attribute",
@@ -51,6 +52,7 @@ export class AppComponent {
   public imageWidth?: number
   public margin: number
   public qrdata: string
+  public qrCodeClicked: boolean
   public scale: number
   public title: string
   public width: number
@@ -89,6 +91,7 @@ export class AppComponent {
     this.imageWidth = this.showImage ? this.data_model.imageWidth : undefined
     this.margin = this.data_model.margin
     this.qrdata = this.data_model.qrdata
+    this.qrCodeClicked = this.data_model.qrCodeClicked
     this.scale = this.data_model.scale
     this.title = this.data_model.title
     this.width = this.data_model.width
@@ -181,6 +184,10 @@ export class AppComponent {
   // Re-enable, when a method to download images has been implemented
   onChangeURL(url: SafeUrl) {
     this.qrCodeSrc = url
+  }
+
+  onQrCodeClicked() {
+    this.qrCodeClicked = true
   }
 
   saveAsImage(parent: any) {

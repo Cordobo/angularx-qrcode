@@ -23,7 +23,7 @@ import {
 @Component({
   selector: "qrcode",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div #qrcElement [class]="cssClass"></div>`,
+  template: `<div (click)="qrCodeClicked.emit($event)" #qrcElement [class]="cssClass"></div>`,
 })
 export class QRCodeComponent implements OnChanges {
   @Input() public allowEmptyString = false
@@ -48,6 +48,7 @@ export class QRCodeComponent implements OnChanges {
   @Input() public title?: string
 
   @Output() qrCodeURL = new EventEmitter<SafeUrl>()
+  @Output() qrCodeClicked = new EventEmitter<Event>();
 
   @ViewChild("qrcElement", { static: true }) public qrcElement!: ElementRef
 

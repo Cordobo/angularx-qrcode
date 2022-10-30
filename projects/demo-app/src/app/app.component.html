@@ -42,8 +42,11 @@
               [scale]="scale" [width]="width" [allowEmptyString]="true" [className]="cssClass" [colorDark]="colorDark"
               [colorLight]="colorLight" [margin]="margin" [alt]="alt" [ariaLabel]="ariaLabel" [title]="title"
               [imageSrc]="imageSrc" [imageHeight]="imageHeight" [imageWidth]="imageWidth"
-              (qrCodeURL)="onChangeURL($event)"></qrcode>
+              (qrCodeClicked)="onQrCodeClicked()"
+              (qrCodeURL)="onChangeURL($event)">
+            </qrcode>
           </div>
+          <div *ngIf="qrCodeClicked" class="downloadButton">QR code has been clicked!</div>
           <div class="downloadButton">
             <button *ngIf="this.elementType !== 'svg'" mat-raised-button color="primary"
               (click)="saveAsImage(parent)">Download QR Code Image</button>

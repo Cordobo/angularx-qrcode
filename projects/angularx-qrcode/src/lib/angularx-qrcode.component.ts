@@ -48,7 +48,7 @@ export class QRCodeComponent implements OnChanges {
   @Input() public title?: string
 
   @Output() qrCodeURL = new EventEmitter<SafeUrl>()
-  @Output() qrCodeClicked = new EventEmitter<Event>();
+  @Output() qrCodeClicked = new EventEmitter<Event>()
 
   @ViewChild("qrcElement", { static: true }) public qrcElement!: ElementRef
 

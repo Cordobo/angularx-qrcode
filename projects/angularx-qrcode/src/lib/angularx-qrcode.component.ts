@@ -20,18 +20,18 @@ import {
   template: `<div #qrcElement [class]="cssClass"></div>`,
 })
 export class QRCodeComponent implements OnChanges {
-  @Input() public allowEmptyString = false;
-  @Input() public colorDark = '#000000ff';
-  @Input() public colorLight = '#ffffffff';
-  @Input() public cssClass = 'qrcode';
+  @Input() public allowEmptyString: boolean = false;
+  @Input() public colorDark: string = '#000000ff';
+  @Input() public colorLight: string = '#ffffffff';
+  @Input() public cssClass: string = 'qrcode';
   @Input() public elementType: keyof typeof QRCodeElementType = 'canvas';
   @Input()
-  public errorCorrectionLevel: keyof typeof QRCodeErrorCorrectionLevel = 'M';
-  @Input() public margin = 4;
-  @Input() public qrdata = '';
-  @Input() public scale = 4;
+public errorCorrectionLevel: keyof typeof QRCodeErrorCorrectionLevel = 'M';
+  @Input() public margin: number = 4;
+  @Input() public qrdata: string = '';
+  @Input() public scale: number = 4;
   @Input() public version: QRCodeVersion | undefined;
-  @Input() public width = 10;
+  @Input() public width: number = 10;
 
   @ViewChild('qrcElement', { static: true }) public qrcElement: ElementRef;
 

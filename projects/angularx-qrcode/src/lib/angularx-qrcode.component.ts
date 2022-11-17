@@ -10,15 +10,16 @@ import {
   ViewChild,
 } from "@angular/core"
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser"
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-import * as QRCode from "@cordobo/qrcode"
 import {
   QRCodeErrorCorrectionLevel,
-  QRCodeVersion,
-  QRCodeElementType,
-  QRCodeConfigType,
-} from "./types"
+  QRCodeRenderersOptions,
+  QRCodeToDataURLOptions,
+  QRCodeToStringOptions,
+  toCanvas,
+  toDataURL,
+  toString,
+} from "qrcode"
+import { QRCodeVersion, QRCodeElementType } from "./types"
 
 @Component({
   selector: "qrcode",
@@ -72,13 +73,13 @@ export class QRCodeComponent implements OnChanges {
     return !(typeof data === "undefined")
   }
 
-  private toDataURL(qrCodeConfig: QRCodeConfigType): Promise<any> {
+  private toDataURL(qrCodeConfig: QRCodeToDataURLOptions): Promise<any> {
     return new Promise(
       (resolve: (arg: any) => any, reject: (arg: any) => any) => {
-        QRCode.toDataURL(
+        toDataURL(
           this.qrdata,
           qrCodeConfig,
-          (err: Error, url: string) => {
+          (err: Error | null | undefined, url: string) => {
             if (err) {
               reject(err)
             } else {
@@ -91,29 +92,34 @@ export class QRCodeComponent implements OnChanges {
   }
 
   private toCanvas(
-    canvas: Element,
-    qrCodeConfig: QRCodeConfigType
+    canvas: HTMLCanvasElement,
+    qrCodeConfig: QRCodeRenderersOptions
   ): Promise<any> {
     return new Promise(
       (resolve: (arg: any) => any, reject: (arg: any) => any) => {
-        QRCode.toCanvas(canvas, this.qrdata, qrCodeConfig, (error: Error) => {
-          if (error) {
-            reject(error)
-          } else {
-            resolve("success")
+        toCanvas(
+          canvas,
+          this.qrdata,
+          qrCodeConfig,
+          (error: Error | null | undefined) => {
+            if (error) {
+              reject(error)
+            } else {
+              resolve("success")
+            }
           }
-        })
+        )
       }
     )
   }
 
-  private toSVG(qrCodeConfig: QRCodeConfigType): Promise<any> {
+  private toSVG(qrCodeConfig: QRCodeToStringOptions): Promise<any> {
     return new Promise(
       (resolve: (arg: any) => any, reject: (arg: any) => any) => {
-        QRCode.toString(
+        toString(
           this.qrdata,
           qrCodeConfig,
-          (err: Error, url: string) => {
+          (err: Error | null | undefined, url: string) => {
             if (err) {
               reject(err)
             } else {
@@ -159,7 +165,7 @@ export class QRCodeComponent implements OnChanges {
         this.qrdata = " "
       }
 
-      const config: QRCodeConfigType = {
+      const config = {
         color: {
           dark: this.colorDark,
           light: this.colorLight,
@@ -167,7 +173,6 @@ export class QRCodeComponent implements OnChanges {
         errorCorrectionLevel: this.errorCorrectionLevel,
         margin: this.margin,
         scale: this.scale,
-        type: this.elementType,
         version: this.version,
         width: this.width,
       }

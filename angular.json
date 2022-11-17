@@ -57,9 +57,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "qrcode"
-            ],
+            "allowedCommonJsDependencies": ["qrcode"],
             "outputPath": "dist/demo-app",
             "index": "projects/demo-app/src/index.html",
             "main": "projects/demo-app/src/main.ts",
@@ -155,5 +153,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

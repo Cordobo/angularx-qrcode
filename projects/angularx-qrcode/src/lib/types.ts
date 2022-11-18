@@ -1,3 +1,5 @@
+import { QRCodeErrorCorrectionLevel } from "qrcode"
+
 export interface QRCodeConfigType {
   color: {
     dark: string
@@ -6,20 +8,9 @@ export interface QRCodeConfigType {
   errorCorrectionLevel: QRCodeErrorCorrectionLevel
   margin: number
   scale: number
-  type: QRCodeElementType
   version: QRCodeVersion | undefined
   width: number
 }
-
-export type QRCodeErrorCorrectionLevel =
-  | "L"
-  | "M"
-  | "Q"
-  | "H"
-  | "low"
-  | "medium"
-  | "quartile"
-  | "high"
 
 export type QRCodeElementType = "url" | "img" | "canvas" | "svg"
 

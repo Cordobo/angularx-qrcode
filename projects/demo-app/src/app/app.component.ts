@@ -1,9 +1,9 @@
 import { Component } from "@angular/core"
 import { MatSnackBar } from "@angular/material/snack-bar"
 import { SafeUrl } from "@angular/platform-browser"
+import { QRCodeErrorCorrectionLevel } from "qrcode"
 import {
   QRCodeElementType,
-  QRCodeErrorCorrectionLevel,
 } from "dist/angularx-qrcode"
 
 type ListType = { title: string; val: number }[]

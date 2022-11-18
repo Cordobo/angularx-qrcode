@@ -20,16 +20,24 @@
 - Support for images
 - Trusted and used by thousands of developers like you
 
-`angularx-qrcode` is compatible with Ionic 3/4/5 and Angular 4/5/6/7/8/9/10/11/12/13/14+ with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
+`angularx-qrcode` is compatible with Ionic 3/4/5 and Angular 4/5/6/7/8/9/10/11/12/13/14/15+ with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
 
 ## Installation
 
-**Angular 14 and Ionic with angularx-qrcode 14**
+**Angular 15 and Ionic with angularx-qrcode 15**
 
 ```
 npm install angularx-qrcode --save
 # Or with yarn
 yarn add angularx-qrcode
+```
+
+**Angular 14 and Ionic with angularx-qrcode 14**
+
+```
+npm install angularx-qrcode@14.0.0 --save
+# Or with yarn
+yarn add angularx-qrcode@14.0.0
 ```
 
 **Angular 13 and Ionic with angularx-qrcode 13**

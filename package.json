@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "15.0.0",
+  "version": "15.0.1",
   "main": "dist/angularx-qrcode/bundles/angularx-qrcode.umd.js",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
@@ -29,7 +29,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "qrcode": "1.5.1"
+    "qrcode": "1.5.1",
+    "@types/qrcode": "1.5.0"
   },
   "peerDependencies": {
     "@angular/core": ">= 15.0.0 < 16.0.0"
@@ -57,7 +58,6 @@
     "@babel/core": "^7.16.7",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^16.0.0",
-    "@types/qrcode": "1.5.0",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
     "@typescript-eslint/parser": "^5.36.2",
     "eslint": "^8.23.0",

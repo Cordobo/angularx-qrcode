@@ -1,17 +1,3 @@
-import { QRCodeErrorCorrectionLevel } from "qrcode"
-
-export interface QRCodeConfigType {
-  color: {
-    dark: string
-    light: string
-  }
-  errorCorrectionLevel: QRCodeErrorCorrectionLevel
-  margin: number
-  scale: number
-  version: QRCodeVersion | undefined
-  width: number
-}
-
 export type QRCodeElementType = "url" | "img" | "canvas" | "svg"
 
 export type QRCodeVersion =

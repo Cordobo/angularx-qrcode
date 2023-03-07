@@ -3,7 +3,8 @@ import { QRCodeComponent } from "./angularx-qrcode.component"
 
 @NgModule({
   providers: [],
-  declarations: [QRCodeComponent],
+  imports: [QRCodeComponent],
+  declarations: [],
   exports: [QRCodeComponent],
 })
 export class QRCodeModule {}

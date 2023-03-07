@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  inject,
   Input,
   OnChanges,
   Output,
@@ -11,7 +12,6 @@ import {
 } from "@angular/core"
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser"
 import {
-  QRCodeErrorCorrectionLevel,
   QRCodeRenderersOptions,
   QRCodeToDataURLOptions,
   QRCodeToStringOptions,
@@ -19,29 +19,44 @@ import {
   toDataURL,
   toString,
 } from "qrcode"
-import { QRCodeVersion, QRCodeElementType } from "./types"
+import {
+  QRCODE_ALLOW_EMPTY_STRING,
+  QRCODE_COLOR_DARK,
+  QRCODE_COLOR_LIGHT,
+  QRCODE_CSS_CLASS,
+  QRCODE_ELEMENT_TYPE,
+  QRCODE_ERROR_CORRECTION_LEVEL,
+  QRCODE_IMAGE_HEIGHT,
+  QRCODE_IMAGE_SRC,
+  QRCODE_IMAGE_WIDTH,
+  QRCODE_MARGIN,
+  QRCODE_SCALE,
+  QRCODE_VERSION,
+  QRCODE_WIDTH,
+} from "./angularx-qrcode.config"
 
 @Component({
   selector: "qrcode",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div #qrcElement [class]="cssClass"></div>`,
+  standalone: true,
+  template: ` <div #qrcElement [class]="cssClass"></div>`,
 })
 export class QRCodeComponent implements OnChanges {
-  @Input() public allowEmptyString = false
-  @Input() public colorDark = "#000000ff"
-  @Input() public colorLight = "#ffffffff"
-  @Input() public cssClass = "qrcode"
-  @Input() public elementType: QRCodeElementType = "canvas"
+  @Input() public allowEmptyString = inject(QRCODE_ALLOW_EMPTY_STRING)
+  @Input() public colorDark = inject(QRCODE_COLOR_DARK)
+  @Input() public colorLight = inject(QRCODE_COLOR_LIGHT)
+  @Input() public cssClass = inject(QRCODE_CSS_CLASS)
+  @Input() public elementType = inject(QRCODE_ELEMENT_TYPE)
   @Input()
-  public errorCorrectionLevel: QRCodeErrorCorrectionLevel = "M"
-  @Input() public imageSrc?: string
-  @Input() public imageHeight?: number
-  @Input() public imageWidth?: number
-  @Input() public margin = 4
+  public errorCorrectionLevel = inject(QRCODE_ERROR_CORRECTION_LEVEL)
+  @Input() public imageSrc = inject(QRCODE_IMAGE_SRC)
+  @Input() public imageHeight? = inject(QRCODE_IMAGE_HEIGHT)
+  @Input() public imageWidth? = inject(QRCODE_IMAGE_WIDTH)
+  @Input() public margin = inject(QRCODE_MARGIN)
   @Input() public qrdata = ""
-  @Input() public scale = 4
-  @Input() public version?: QRCodeVersion
-  @Input() public width = 10
+  @Input() public scale = inject(QRCODE_SCALE)
+  @Input() public version = inject(QRCODE_VERSION)
+  @Input() public width = inject(QRCODE_WIDTH)
 
   // Accessibility features introduced in 13.0.4+
   @Input() public alt?: string
@@ -153,15 +168,16 @@ export class QRCodeComponent implements OnChanges {
       this.version = undefined
     }
 
-    try {
-      if (!this.isValidQrCodeText(this.qrdata)) {
-        throw new Error(
-          "[angularx-qrcode] Field `qrdata` is empty, set 'allowEmptyString=\"true\"' to overwrite this behaviour."
-        )
-      }
+    if (!this.isValidQrCodeText(this.qrdata)) {
+      console.error(
+        "[angularx-qrcode] Field `qrdata` is empty, set 'allowEmptyString=\"true\"' to overwrite this behaviour."
+      )
+      return
+    }
 
+    try {
       // This is a workaround to allow an empty string as qrdata
-      if (this.isValidQrCodeText(this.qrdata) && this.qrdata === "") {
+      if (this.qrdata === "") {
         this.qrdata = " "
       }
 
@@ -177,7 +193,11 @@ export class QRCodeComponent implements OnChanges {
         width: this.width,
       }
 
+      console.log(config, this.colorDark)
+
       const centerImageSrc = this.imageSrc
+      // As we do not want to break the API, @Input of imageHeight and imageWidth should be "number | undefined",
+      // although it makes no sense to pass undefined
       const centerImageHeight = this.imageHeight || 40
       const centerImageWidth = this.imageWidth || 40
 

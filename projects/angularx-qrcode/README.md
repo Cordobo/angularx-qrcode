@@ -199,6 +199,42 @@ it returns an image as `.png`, if it's svg, returns a `.svg` file.
 | version              | Number                  | (auto)      | 1-40                                                           |
 | width                | Number                  | 10          | Height/Width (any value)                                       |
 
+### Configuring the default values (Angular v15+)
+
+Nearly all default values can be customized using the new provide syntax.
+
+Following is an example of how to use it and also a list with all possible configuration options.
+But note that you **do not** have to configure **all values**.
+
+```
+@NgModule({
+  imports: [
+    QRCodeModule,
+  ],
+  providers: [
+    provideQRCode(
+      withAllowEmptyString(false),
+      withColorDark('#000000ff'), 
+      withColorLight('#ffffffff'), 
+      withCssClass('qrcode'),
+      withElementType('canvas'), 
+      withErrorCorrectionLevel('M'),
+      //withImage(
+      //  withImageSrc(), 
+      //  withImageHeight(),
+      //  withImageWidth()
+      //),
+      withMargin(4),
+      withScale(4), 
+      //withVersion(),
+      withWidth(10)
+    )
+  ],
+})
+export class ExampleModule {}
+```
+*Note: The commented configuration options default to `undefined` or `auto` so it would not really make sense to provide them without configuring them.*
+
 ## QR Code capacity
 
 Depending on the amount of data of the **qrdata** to encode, a minimum **width** is required.

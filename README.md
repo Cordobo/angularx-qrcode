@@ -24,10 +24,18 @@
 
 ## Installation
 
-**Angular 15 and Ionic with angularx-qrcode 15**
+**Angular 16 and Ionic with angularx-qrcode 16**
 
 ```
 npm install angularx-qrcode --save
+# Or with yarn
+yarn add angularx-qrcode
+```
+
+**Angular 15 and Ionic with angularx-qrcode 15**
+
+```
+npm install angularx-qrcode@15.0.1 --save
 # Or with yarn
 yarn add angularx-qrcode
 ```

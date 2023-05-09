@@ -19,7 +19,7 @@ import {
   toDataURL,
   toString,
 } from "qrcode"
-import { QRCodeVersion, QRCodeElementType } from "./types"
+import { QRCodeVersion, QRCodeElementType, FixMeLater } from "./types"
 
 @Component({
   selector: "qrcode",
@@ -73,9 +73,12 @@ export class QRCodeComponent implements OnChanges {
     return !(typeof data === "undefined")
   }
 
-  private toDataURL(qrCodeConfig: QRCodeToDataURLOptions): Promise<any> {
+  private toDataURL(qrCodeConfig: QRCodeToDataURLOptions): Promise<FixMeLater> {
     return new Promise(
-      (resolve: (arg: any) => any, reject: (arg: any) => any) => {
+      (
+        resolve: (arg: FixMeLater) => FixMeLater,
+        reject: (arg: FixMeLater) => FixMeLater
+      ) => {
         toDataURL(
           this.qrdata,
           qrCodeConfig,
@@ -94,9 +97,12 @@ export class QRCodeComponent implements OnChanges {
   private toCanvas(
     canvas: HTMLCanvasElement,
     qrCodeConfig: QRCodeRenderersOptions
-  ): Promise<any> {
+  ): Promise<FixMeLater> {
     return new Promise(
-      (resolve: (arg: any) => any, reject: (arg: any) => any) => {
+      (
+        resolve: (arg: FixMeLater) => FixMeLater,
+        reject: (arg: FixMeLater) => FixMeLater
+      ) => {
         toCanvas(
           canvas,
           this.qrdata,
@@ -113,9 +119,12 @@ export class QRCodeComponent implements OnChanges {
     )
   }
 
-  private toSVG(qrCodeConfig: QRCodeToStringOptions): Promise<any> {
+  private toSVG(qrCodeConfig: QRCodeToStringOptions): Promise<FixMeLater> {
     return new Promise(
-      (resolve: (arg: any) => any, reject: (arg: any) => any) => {
+      (
+        resolve: (arg: FixMeLater) => FixMeLater,
+        reject: (arg: FixMeLater) => FixMeLater
+      ) => {
         toString(
           this.qrdata,
           qrCodeConfig,
@@ -182,7 +191,7 @@ export class QRCodeComponent implements OnChanges {
       const centerImageWidth = this.imageWidth || 40
 
       switch (this.elementType) {
-        case "canvas":
+        case "canvas": {
           const canvasElement: HTMLCanvasElement =
             this.renderer.createElement("canvas")
           this.context = canvasElement.getContext("2d")
@@ -243,7 +252,8 @@ export class QRCodeComponent implements OnChanges {
               console.error("[angularx-qrcode] canvas error:", e)
             })
           break
-        case "svg":
+        }
+        case "svg": {
           const svgParentElement: HTMLElement =
             this.renderer.createElement("div")
           this.toSVG(config)
@@ -263,9 +273,10 @@ export class QRCodeComponent implements OnChanges {
               console.error("[angularx-qrcode] svg error:", e)
             })
           break
+        }
         case "url":
         case "img":
-        default:
+        default: {
           const imgElement: HTMLImageElement =
             this.renderer.createElement("img")
           this.toDataURL(config)
@@ -286,8 +297,9 @@ export class QRCodeComponent implements OnChanges {
             .catch((e) => {
               console.error("[angularx-qrcode] img/url error:", e)
             })
+        }
       }
-    } catch (e: any) {
+    } catch (e: FixMeLater) {
       console.error("[angularx-qrcode] Error generating QR Code:", e.message)
     }
   }

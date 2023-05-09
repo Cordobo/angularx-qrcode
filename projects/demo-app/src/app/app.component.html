@@ -22,7 +22,7 @@
     aria-label="Example icon-button with heart icon"
   >
     <mat-icon>file_download</mat-icon>
-    npm 15.0.1
+    npm 16.0.0
   </a>
 
   <iframe
@@ -86,7 +86,7 @@
               mat-raised-button
               color="primary"
               [href]="qrCodeSrc"
-              download="qrcode"
+              download="angularx-qrcode"
               >Download QR Code Image</a
             >
           </div>
@@ -343,7 +343,7 @@ export class AppModule {{ "{" }} }</pre
               [step]="'5'"
               aria-labelledby="image width"
             >
-              <input matSliderThumb [(ngModel)]="imageWidth">
+              <input matSliderThumb [(ngModel)]="imageWidth" />
             </mat-slider>
             <mat-form-field appearance="fill">
               <mat-label>Width</mat-label>
@@ -366,7 +366,7 @@ export class AppModule {{ "{" }} }</pre
               [step]="'5'"
               aria-labelledby="image height"
             >
-              <input matSliderThumb [(ngModel)]="imageHeight">
+              <input matSliderThumb [(ngModel)]="imageHeight" />
             </mat-slider>
             <mat-form-field appearance="fill">
               <mat-label>Height</mat-label>

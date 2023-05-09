@@ -1,13 +1,13 @@
 {
   "$schema": "./node_modules/ng-packagr/package.schema.json",
   "name": "angularx-qrcode",
-  "version": "15.0.1",
+  "version": "16.0.0",
   "main": "dist/angularx-qrcode/bundles/angularx-qrcode.umd.js",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
   },
-  "description": "Simple QRCode generator library for Angular4/5/6/7/8/9/10/11/12/13/14/15+ and Ionic 3/4/5 using node-qrcode",
+  "description": "Simple QRCode generator library for Angular4/5/6/7/8/9/10/11/12/13/14/15/16+ and Ionic 3/4/5 using node-qrcode",
   "license": "MIT",
   "scripts": {
     "lint": "ng lint",
@@ -32,6 +32,9 @@
     "@types/qrcode": "1.5.0",
     "qrcode": "1.5.1"
   },
+  "peerDependencies": {
+    "@angular/core": ">= 16.0.0 < 17.0.0"
+  },
   "devDependencies": {
     "@angular-devkit/architect": "0.1600.0",
     "@angular-devkit/build-angular": "~16.0.0",
@@ -55,11 +58,11 @@
     "@babel/core": "^7.16.7",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^16.18.26",
-    "@typescript-eslint/eslint-plugin": "^5.59.2",
-    "@typescript-eslint/parser": "^5.59.2",
+    "@typescript-eslint/eslint-plugin": "^5.59.5",
+    "@typescript-eslint/parser": "^5.59.5",
     "eslint": "^8.39.0",
-    "eslint-plugin-import": "2.25.4",
-    "eslint-plugin-jsdoc": "37.5.1",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsdoc": "44.0.2",
     "eslint-plugin-prefer-arrow": "latest",
     "jasmine-core": "~3.10.0",
     "karma": "6.3.17",
@@ -69,8 +72,8 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "lite-server": "2.6.1",
     "ng-packagr": "~16.0.0",
-    "ngx-color-picker": "13.0.0",
-    "prettier": "2.7.1",
+    "ngx-color-picker": "14.0.0",
+    "prettier": "2.8.8",
     "rimraf": "3.0.2",
     "rxjs": "~7.4.0",
     "tslib": "^2.4.1",

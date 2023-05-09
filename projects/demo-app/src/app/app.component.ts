@@ -2,9 +2,8 @@ import { Component } from "@angular/core"
 import { MatSnackBar } from "@angular/material/snack-bar"
 import { SafeUrl } from "@angular/platform-browser"
 import { QRCodeErrorCorrectionLevel } from "qrcode"
-import {
-  QRCodeElementType,
-} from "dist/angularx-qrcode"
+import { QRCodeElementType } from "dist/angularx-qrcode"
+import { FixMeLater } from "projects/angularx-qrcode/src/public-api"
 
 type ListType = { title: string; val: number }[]
 
@@ -183,7 +182,7 @@ export class AppComponent {
     this.qrCodeSrc = url
   }
 
-  saveAsImage(parent: any) {
+  saveAsImage(parent: FixMeLater) {
     let parentElement = null
 
     if (this.elementType === "canvas") {
@@ -209,7 +208,7 @@ export class AppComponent {
       const link = document.createElement("a")
       link.href = url
       // name of the file
-      link.download = "Qrcode"
+      link.download = "angularx-qrcode"
       link.click()
     }
   }

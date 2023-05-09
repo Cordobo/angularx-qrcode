@@ -60,3 +60,6 @@ export type QRCodeVersion =
 // TODO A little-bit-of-a-better solution
 // https://stackoverflow.com/a/67511209
 export type RGBAColor = `#${string}`
+
+// eslint-disable-next-line  @typescript-eslint/no-explicit-any
+export type FixMeLater = any

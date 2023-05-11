@@ -18,7 +18,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar"
 import { MatTabsModule } from "@angular/material/tabs"
 import { MatToolbarModule } from "@angular/material/toolbar"
 import { MatTooltipModule } from "@angular/material/tooltip"
-import { QRCodeModule } from "dist/angularx-qrcode"
+import { QRCodeComponent } from "dist/angularx-qrcode"
 import { AppComponent } from "./app.component"
 
 @NgModule({
@@ -43,7 +43,7 @@ import { AppComponent } from "./app.component"
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    QRCodeModule,
+    QRCodeComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

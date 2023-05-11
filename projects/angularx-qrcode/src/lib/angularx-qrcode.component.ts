@@ -24,6 +24,7 @@ import { QRCodeVersion, QRCodeElementType, FixMeLater } from "./types"
 @Component({
   selector: "qrcode",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   template: `<div #qrcElement [class]="cssClass"></div>`,
 })
 export class QRCodeComponent implements OnChanges {

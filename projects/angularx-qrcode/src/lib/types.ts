@@ -1,4 +1,12 @@
-import { QRCodeErrorCorrectionLevel } from "qrcode"
+export type QRCodeErrorCorrectionLevel =
+  | "L"
+  | "M"
+  | "Q"
+  | "H"
+  | "low"
+  | "medium"
+  | "quartile"
+  | "high"
 
 export interface QRCodeConfigType {
   color: {

@@ -31,7 +31,9 @@
   "dependencies": {
     "qrcode": "1.5.3"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@angular/core": ">= 17.0.0 < 18.0.0"
+  },
   "devDependencies": {
     "@angular-devkit/architect": "0.1700.0",
     "@angular-devkit/build-angular": "~17.0.0",

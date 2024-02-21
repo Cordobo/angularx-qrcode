@@ -11,7 +11,6 @@ import {
 } from "@angular/core"
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser"
 import {
-  QRCodeErrorCorrectionLevel,
   QRCodeRenderersOptions,
   QRCodeToDataURLOptions,
   QRCodeToStringOptions,
@@ -19,7 +18,13 @@ import {
   toDataURL,
   toString,
 } from "qrcode"
-import { QRCodeVersion, QRCodeElementType, FixMeLater } from "./types"
+import {
+  QRCodeErrorCorrectionLevel,
+  QRCodeConfigType,
+  QRCodeElementType,
+  QRCodeVersion,
+  FixMeLater,
+} from "./types"
 
 @Component({
   selector: "qrcode",
@@ -174,7 +179,7 @@ export class QRCodeComponent implements OnChanges {
         this.qrdata = " "
       }
 
-      const config = {
+      const config: QRCodeConfigType = {
         color: {
           dark: this.colorDark,
           light: this.colorLight,

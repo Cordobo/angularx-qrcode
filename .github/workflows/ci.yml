@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 20
       - name: Install
-        run: npm install  
+        run: npm install
       - name: Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
           npm run ci:lint

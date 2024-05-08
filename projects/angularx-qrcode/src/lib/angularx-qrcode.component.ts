@@ -11,7 +11,6 @@ import {
 } from "@angular/core"
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser"
 import {
-  QRCodeErrorCorrectionLevel,
   QRCodeRenderersOptions,
   QRCodeToDataURLOptions,
   QRCodeToStringOptions,
@@ -19,7 +18,13 @@ import {
   toDataURL,
   toString,
 } from "qrcode"
-import { QRCodeVersion, QRCodeElementType, FixMeLater } from "./types"
+import {
+  QRCodeVersion,
+  QRCodeElementType,
+  FixMeLater,
+  QRCodeConfigType,
+  QRCodeErrorCorrectionLevel,
+} from "./types"
 
 @Component({
   selector: "qrcode",
@@ -55,7 +60,10 @@ export class QRCodeComponent implements OnChanges {
   public context: CanvasRenderingContext2D | null = null
   private centerImage?: HTMLImageElement
 
-  constructor(private renderer: Renderer2, private sanitizer: DomSanitizer) {}
+  constructor(
+    private renderer: Renderer2,
+    private sanitizer: DomSanitizer
+  ) {}
 
   public async ngOnChanges(): Promise<void> {
     await this.createQRCode()
@@ -174,7 +182,7 @@ export class QRCodeComponent implements OnChanges {
         this.qrdata = " "
       }
 
-      const config = {
+      const config: QRCodeConfigType = {
         color: {
           dark: this.colorDark,
           light: this.colorLight,

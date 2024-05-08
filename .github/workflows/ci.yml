@@ -21,7 +21,6 @@ jobs:
       - name: Build 🔧
         run: |
           npm run ci:lint
-          npm run ci:build:lib
           npm run ci:build:app
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

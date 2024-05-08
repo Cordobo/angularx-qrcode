@@ -18,10 +18,9 @@ jobs:
           node-version: 20
       - name: Install
         run: npm install
-      - name: Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+      - name: Build 🔧
         run: |
           npm run ci:lint
-          npm run ci:build:lib
           npm run ci:build:app
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

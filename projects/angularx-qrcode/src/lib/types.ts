@@ -16,7 +16,7 @@ export interface QRCodeConfigType {
   errorCorrectionLevel: QRCodeErrorCorrectionLevel
   margin: number
   scale: number
-  version: QRCodeVersion | undefined
+  version?: QRCodeVersion
   width: number
 }
 

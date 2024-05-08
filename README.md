@@ -4,11 +4,11 @@
 
 - [Features](#features)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Example Implementations](#examples)
+- [Demo App](#demo-app)
+- [Usage & Example Implementations](#usage-and-example-implementations)
 - [Available Parameters](#available-parameters)
-- [Demo](#demo)
 - [Contribute](#contribute)
+- [Sponsoring](#sponsoring)
 - [License](#license)
 
 ## Features
@@ -48,41 +48,17 @@ npm install angularx-qrcode@15.0.1 --save
 yarn add angularx-qrcode@15.0.1
 ```
 
-**Angular 14 and Ionic with angularx-qrcode 14**
-
-```
-npm install angularx-qrcode@14.0.0 --save
-# Or with yarn
-yarn add angularx-qrcode@14.0.0
-```
-
-**Angular 13 and Ionic with angularx-qrcode 13**
-
-```
-npm install angularx-qrcode@13.0.15 --save
-# Or with yarn
-yarn add angularx-qrcode@13.0.15
-```
-
-**Angular 12 and Ionic**
-
-```
-npm install angularx-qrcode@12.0.3 --save
-# Or with yarn
-yarn add angularx-qrcode@12.0.3
-```
-
-**Angular 11 and Ionic**
-
-```
-npm install angularx-qrcode@11.0.0 --save
-# Or with yarn
-yarn add angularx-qrcode@11.0.0
-```
-
 **Older supported angular versions**
 
 ```
+# angular 14 and Ionic
+npm install angularx-qrcode@14.0.0 --save
+# angular 13 and Ionic
+npm install angularx-qrcode@13.0.15 --save
+# angular 12 and Ionic
+npm install angularx-qrcode@12.0.3 --save
+# angular 11 and Ionic
+npm install angularx-qrcode@11.0.0 --save
 # angular 10 and Ionic
 npm install angularx-qrcode@10.0.12 --save
 # angular 9 and Ionic
@@ -95,7 +71,21 @@ npm install angularx-qrcode@1.6.4 --save
 npm install angularx-qrcode@1.0.3 --save
 ```
 
-# Usage
+# Demo App
+
+**[Working online demo of Angular QR Code Generator](https://cordobo.github.io/angularx-qrcode/)**
+
+The source for the demo angular app is available in [`projects/demo-app`](projects/demo-app). Run the command
+
+```
+npm start
+```
+
+and open the url `http://localhost:4200/` in your browser
+
+# Usage and Example Implementations
+
+The source for **[a live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)** and more examples how to implement angularx-qrcode is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository.
 
 ### Import the module and add it to your imports section in your main AppModule:
 
@@ -123,10 +113,6 @@ export class AppModule { }
 
 <qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
 ```
-
-## Examples
-
-The source for **[a live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)** and more examples how to implement angularx-qrcode is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository.
 
 ### Generate a QR Code from a string (directive only)
 
@@ -219,18 +205,6 @@ it returns an image as `.png`, if it's svg, returns a `.svg` file.
 
 Depending on the amount of data of the **qrdata** to encode, a minimum **width** is required.
 
-# Demo
-
-**[Working online demo of Angular QR Code Generator](https://cordobo.github.io/angularx-qrcode/)**
-
-The source for the angular app is available in [`projects/demo-app`](projects/demo-app). Run the command
-
-```
-ng serve demo-app --open
-```
-
-and open the url `http://localhost:4200/` in your browser
-
 ## AOT - Ahead Of Time Compilation
 
 `angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler
@@ -243,6 +217,11 @@ As of version 1.6.0, SSR support is fully implemented, the following workaround 
 
 - Please open your PR against the development branch.
 - Make sure your editor uses **prettier** to minimize commited code changes.
+- You cannot contribute but want to support development? Consider a [sponsorship](https://github.com/sponsors/Cordobo).
+
+## Sponsoring
+
+Support the development of angularx-qrcode (or even see your logo here?), consider [sponsoring angularx-qrcode](https://github.com/sponsors/Cordobo). Your support is much appreciated!
 
 ## License
 

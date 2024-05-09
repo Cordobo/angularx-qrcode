@@ -29,6 +29,8 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
+      - name: Install 
+        run: npm install
       - name: Build
         run: npm run ci:build:lib && npm run ci:build:app && ls && cd dist/angularx-qrcode
       - name: Publish 

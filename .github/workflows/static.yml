@@ -34,7 +34,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Install
-        run: ci install
+        run: npm install
       - name: Build
         run: npm run ci:build:app
       - name: Upload artifact

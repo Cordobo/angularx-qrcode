@@ -53,7 +53,8 @@
         </mat-card-content>
 
         <mat-card-content>
-          <mat-tab-group animationDuration="0ms" [(selectedIndex)]="selectedIndex">
+          <mat-tab-group animationDuration="0ms" [selectedIndex]="selected.value"
+            (selectedIndexChange)="selected.setValue($event)">
             <mat-tab label="HTML">
               <h4>Copy & Paste this code</h4>
               <p>

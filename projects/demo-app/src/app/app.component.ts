@@ -1,4 +1,5 @@
 import { Component } from "@angular/core"
+import { FormControl } from "@angular/forms"
 import { MatSnackBar } from "@angular/material/snack-bar"
 import { SafeUrl } from "@angular/platform-browser"
 import {
@@ -58,7 +59,7 @@ export class AppComponent {
 
   public qrCodeSrc!: SafeUrl
 
-  public selectedIndex: number
+  public selected = new FormControl(0)
 
   public marginList: ListType
   public scaleList: ListType
@@ -70,8 +71,6 @@ export class AppComponent {
   public showImage: boolean
 
   constructor(private _snackBar: MatSnackBar) {
-    this.selectedIndex = 0
-
     this.showA11y = true
     this.showColors = true
     this.showCss = true
@@ -152,7 +151,7 @@ export class AppComponent {
   }
 
   setTabIndex(idx: number): boolean {
-    this.selectedIndex = idx
+    this.selected.setValue(idx)
     return false
   }
 

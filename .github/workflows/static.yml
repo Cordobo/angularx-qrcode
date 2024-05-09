@@ -39,8 +39,7 @@ jobs:
       - name: Install
         run: npm install
       - name: Build
-        run: npm run ci:build:lib
-        run: npm run ci:build:app
+        run: npm run ci:build:lib && npm run ci:build:app
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

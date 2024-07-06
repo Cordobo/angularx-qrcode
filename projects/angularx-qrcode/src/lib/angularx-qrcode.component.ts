@@ -312,6 +312,23 @@ export class QRCodeComponent implements OnChanges {
     }
   }
 
+  convertBase64ImageUrlToBlob(base64ImageUrl: string) {
+    // split into two parts
+    const parts = base64ImageUrl.split(";base64,")
+    // hold the content/mime type f.e. image/png
+    const imageType = parts[0].split(":")[1]
+    // decode base64 string
+    const decodedData = atob(parts[1])
+    // create unit8array of size same as row data length
+    const uInt8Array = new Uint8Array(decodedData.length)
+    // insert all character code into uint8array
+    for (let i = 0; i < decodedData.length; ++i) {
+      uInt8Array[i] = decodedData.charCodeAt(i)
+    }
+    // return blob image after conversion
+    return new Blob([uInt8Array], { type: imageType })
+  }
+
   emitQRCodeURL(element: HTMLCanvasElement | HTMLImageElement | SVGSVGElement) {
     const className = element.constructor.name
     if (className === SVGSVGElement.name) {
@@ -333,17 +350,9 @@ export class QRCodeComponent implements OnChanges {
       urlImage = (element as HTMLImageElement).src
     }
 
-    fetch(urlImage)
-      .then((urlResponse: Response) => urlResponse.blob())
-      .then((blob: Blob) => URL.createObjectURL(blob))
-      .then((url: string) => this.sanitizer.bypassSecurityTrustUrl(url))
-      .then((urlSanitized: SafeUrl) => {
-        this.qrCodeURL.emit(urlSanitized)
-      })
-      .catch((error) => {
-        console.error(
-          "[angularx-qrcode] Error when fetching image/png URL: " + error
-        )
-      })
+    const blobData: Blob = this.convertBase64ImageUrlToBlob(urlImage)
+    const urlBlob = URL.createObjectURL(blobData)
+    const urlSanitized = this.sanitizer.bypassSecurityTrustUrl(urlBlob)
+    this.qrCodeURL.emit(urlSanitized);
   }
 }

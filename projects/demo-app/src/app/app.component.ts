@@ -232,7 +232,6 @@ export class AppComponent {
   }
 
   strBuilder(): string {
-    // featureList
     const f: string[] = []
 
     if (this.qrdata) {
@@ -293,7 +292,7 @@ export class AppComponent {
   }
 
   get renderSampleHtmlCode() {
-    return `<div class="qrcodeImage">
+    return `/* Put this code in your html file, e.g. app.component.html */ \n \n<div class="qrcodeImage">
   <qrcode
     ${this.strBuilder()}
   ></qrcode>
@@ -336,7 +335,7 @@ export class AppComponent {
   }
 
   get renderSampleCssCode() {
-    return `/* Put this code in your CSS file */
+    return `/* Put this code in your CSS file, e.g. app.component.css */
 
 /* The div container */
 .qrcodeImage {

@@ -39,6 +39,7 @@ npm install angularx-qrcode@17.0.1 --save
 # Or with yarn
 yarn add angularx-qrcode@17.0.1
 ```
+
 **Angular 16 and Ionic with angularx-qrcode 16**
 
 ```
@@ -47,17 +48,11 @@ npm install angularx-qrcode@16.0.2 --save
 yarn add angularx-qrcode@16.0.2
 ```
 
-**Angular 15 and Ionic with angularx-qrcode 15**
-
-```
-npm install angularx-qrcode@15.0.1 --save
-# Or with yarn
-yarn add angularx-qrcode@15.0.1
-```
-
 **Older supported angular versions**
 
 ```
+# angular 15 and Ionic
+npm install angularx-qrcode@15.0.1 --save
 # angular 14 and Ionic
 npm install angularx-qrcode@14.0.0 --save
 # angular 13 and Ionic

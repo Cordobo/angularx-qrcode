@@ -353,6 +353,6 @@ export class QRCodeComponent implements OnChanges {
     const blobData: Blob = this.convertBase64ImageUrlToBlob(urlImage)
     const urlBlob = URL.createObjectURL(blobData)
     const urlSanitized = this.sanitizer.bypassSecurityTrustUrl(urlBlob)
-    this.qrCodeURL.emit(urlSanitized);
+    this.qrCodeURL.emit(urlSanitized)
   }
 }

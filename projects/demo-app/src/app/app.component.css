@@ -40,3 +40,7 @@
 mat-slider {
   width: 300px;
 }
+
+.mat-mdc-card-content {
+  padding: 16px;
+}

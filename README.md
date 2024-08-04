@@ -13,12 +13,13 @@
 
 ## Features
 
-- Compatible with **Angular** and Ionic
+- Compatible with **Angular** and **Ionic**
 - Ivy compiler support, AOT, SSR (Server Side Rendering)
 - Under active development
 - Accessibility (a11y) attributes supported (alt, aria-label, title)
 - Support for images
 - Trusted and used by thousands of developers like you
+- Easy to use, [sample web app](#demo-app) included
 
 `angularx-qrcode` is compatible with Ionic 3/4/5/6/7/8 and Angular 4/5/6/7/8/9/10/11/12/13/14/15/16/17/18+ with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
 
@@ -48,36 +49,32 @@ npm install angularx-qrcode@16.0.2 --save
 yarn add angularx-qrcode@16.0.2
 ```
 
-**Older supported angular versions**
+**All supported angular versions**
 
-```
-# angular 15 and Ionic
-npm install angularx-qrcode@15.0.1 --save
-# angular 14 and Ionic
-npm install angularx-qrcode@14.0.0 --save
-# angular 13 and Ionic
-npm install angularx-qrcode@13.0.15 --save
-# angular 12 and Ionic
-npm install angularx-qrcode@12.0.3 --save
-# angular 11 and Ionic
-npm install angularx-qrcode@11.0.0 --save
-# angular 10 and Ionic
-npm install angularx-qrcode@10.0.12 --save
-# angular 9 and Ionic
-npm install angularx-qrcode@~2.3.7 --save
-# angular 8 and Ionic
-npm install angularx-qrcode@~2.1.4 --save
-# angular 5/6/7
-npm install angularx-qrcode@1.6.4 --save
-# Angular 4
-npm install angularx-qrcode@1.0.3 --save
-```
+| Angular Version | angularx-qrcode Version |
+|-----------------|-------------------------|
+| ^18             | ^18.0.1                 |
+| ^17             | ^17.0.1                 |
+| ^16             | ^16.0.2                 |
+| ^15             | ^15.0.1                 |
+| ^14             | ^14.0.0                 |
+| ^13             | ^13.0.15                |
+| ^12             | ^12.0.3                 |
+| ^11             | ^11.0.0                 |
+| ^10             | ^10.0.12                |
+| ^9              | ^2.3.7                  |
+| ^8              | ^2.1.4                  |
+| ^5 / ^6 / ^7    | ^1.6.4                  |
+| ^4              | ^1.0.3                  |
+
 
 # Demo App
 
 **[Working online demo of Angular QR Code Generator](https://cordobo.github.io/angularx-qrcode/)**
 
-The source for the demo angular app is available in [`projects/demo-app`](projects/demo-app). Run the command
+The source for the working angular app is available in [`projects/demo-app`](projects/demo-app).
+
+Run the command:
 
 ```
 npm start

@@ -52,8 +52,8 @@ yarn add angularx-qrcode@16.0.2
 **All supported angular versions**
 
 | Angular Version | angularx-qrcode Version |
-|-----------------|-------------------------|
-| ^18             | ^18.0.1                 |
+| --------------- | ----------------------- |
+| ^18             | ^18.0.2                 |
 | ^17             | ^17.0.1                 |
 | ^16             | ^16.0.2                 |
 | ^15             | ^15.0.1                 |
@@ -66,7 +66,6 @@ yarn add angularx-qrcode@16.0.2
 | ^8              | ^2.1.4                  |
 | ^5 / ^6 / ^7    | ^1.6.4                  |
 | ^4              | ^1.0.3                  |
-
 
 # Demo App
 

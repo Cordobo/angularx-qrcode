@@ -227,6 +227,7 @@ export class QRCodeComponent implements OnChanges {
                 )
 
                 if (centerImageSrc !== this.centerImage.src) {
+                  this.centerImage.crossOrigin = "anonymous"
                   this.centerImage.src = centerImageSrc
                 }
 

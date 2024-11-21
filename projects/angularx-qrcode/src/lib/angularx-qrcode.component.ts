@@ -30,6 +30,7 @@ import {
   selector: "qrcode",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div #qrcElement [class]="cssClass"></div>`,
+  standalone: false,
 })
 export class QRCodeComponent implements OnChanges {
   @Input() public allowEmptyString = false

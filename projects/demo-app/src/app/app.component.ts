@@ -14,6 +14,7 @@ type ListType = { title: string; val: number }[]
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
+  standalone: false,
 })
 export class AppComponent {
   public initial_state = {

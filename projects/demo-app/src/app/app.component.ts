@@ -1,17 +1,56 @@
+import { CommonModule } from "@angular/common"
 import { Component } from "@angular/core"
-import { FormControl } from "@angular/forms"
-import { MatSnackBar } from "@angular/material/snack-bar"
+import { FormsModule, FormControl } from "@angular/forms"
+import { MatSnackBarModule, MatSnackBar } from "@angular/material/snack-bar"
 import { SafeUrl } from "@angular/platform-browser"
+import { ColorPickerModule } from "ngx-color-picker"
+import { MatButtonModule } from "@angular/material/button"
+import { MatButtonToggleModule } from "@angular/material/button-toggle"
+import { MatCardModule } from "@angular/material/card"
+import { MatCheckboxModule } from "@angular/material/checkbox"
+import { MatDividerModule } from "@angular/material/divider"
+import { MatFormFieldModule } from "@angular/material/form-field"
+import { MatIconModule } from "@angular/material/icon"
+import { MatInputModule } from "@angular/material/input"
+import { MatRadioModule } from "@angular/material/radio"
+import { MatSliderModule } from "@angular/material/slider"
+import { MatSlideToggleModule } from "@angular/material/slide-toggle"
+import { MatTabsModule } from "@angular/material/tabs"
+import { MatToolbarModule } from "@angular/material/toolbar"
+import { MatTooltipModule } from "@angular/material/tooltip"
+
 import {
   FixMeLater,
   QRCodeErrorCorrectionLevel,
   QRCodeElementType,
 } from "projects/angularx-qrcode/src/public-api"
+import { QRCodeComponent } from "dist/angularx-qrcode"
 
 type ListType = { title: string; val: number }[]
 
 @Component({
   selector: "app-root",
+  imports: [
+    ColorPickerModule,
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatButtonToggleModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatSnackBarModule,
+    MatTabsModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    QRCodeComponent,
+  ],
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })

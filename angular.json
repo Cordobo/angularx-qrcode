@@ -55,13 +55,15 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": ["qrcode"],
-            "outputPath": "dist/demo-app",
+            "outputPath": {
+              "base": "dist/demo-app",
+              "browser": ""
+            },
             "index": "projects/demo-app/src/index.html",
-            "main": "projects/demo-app/src/main.ts",
-            "polyfills": "projects/demo-app/src/polyfills.ts",
+            "polyfills": ["projects/demo-app/src/polyfills.ts"],
             "tsConfig": "projects/demo-app/tsconfig.app.json",
             "assets": [
               "projects/demo-app/src/favicon.ico",
@@ -71,7 +73,8 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/demo-app/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "browser": "projects/demo-app/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -96,9 +99,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true

@@ -2,15 +2,16 @@
 
 `angularx-qrcode` - a fast and easy-to-use Ivy compatible Ionic and Angular QR Code Generator library
 
-- Compatible with **Angular 18** and **Ionic**
-- Ivy compiler support, AOT, SSR (Server Side Rendering)
+- Compatible with **Angular 19** and **Ionic**
 - Under active development
+- Standalone component support
+- Ivy compiler support, AOT, SSR (Server Side Rendering)
 - Accessibility (a11y) attributes supported (alt, aria-label, title)
 - Support for images
 - Trusted and used by thousands of developers like you
 - Easy to use, [sample web app](#demo-app) included
 
-`angularx-qrcode` is compatible with Ionic 3/4/5/6/7/8 and Angular 4/5/6/7/8/9/10/11/12/13/14/15/16/17/18+ with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
+`angularx-qrcode` is compatible with Ionic 3/4/5/6/7/8 and Angular 4/5/6/7/8/9/10/11/12/13/14/15/16/17/18/19+ with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
 
 - [Installation](#installation)
 - [Demo App](#demo-app)
@@ -22,12 +23,20 @@
 
 ## Installation
 
-**Angular 18 and Ionic with angularx-qrcode 18**
+**Angular 19 and Ionic with angularx-qrcode 19**
 
 ```
 npm install angularx-qrcode --save
 # Or with yarn
 yarn add angularx-qrcode
+```
+
+**Angular 18 and Ionic with angularx-qrcode 18**
+
+```
+npm install angularx-qrcode@18.0.2 --save
+# Or with yarn
+yarn add angularx-qrcode@18.0.2
 ```
 
 **Angular 17 and Ionic with angularx-qrcode 17**
@@ -38,18 +47,11 @@ npm install angularx-qrcode@17.0.1 --save
 yarn add angularx-qrcode@17.0.1
 ```
 
-**Angular 16 and Ionic with angularx-qrcode 16**
-
-```
-npm install angularx-qrcode@16.0.2 --save
-# Or with yarn
-yarn add angularx-qrcode@16.0.2
-```
-
 **All supported angular versions**
 
 | Angular Version | angularx-qrcode Version |
 | --------------- | ----------------------- |
+| ^19             | ^19.0.0                 |
 | ^18             | ^18.0.2                 |
 | ^17             | ^17.0.1                 |
 | ^16             | ^16.0.2                 |
@@ -80,26 +82,46 @@ and open the url `http://localhost:4200/` in your browser
 
 # Usage and Example Implementations
 
-The source for **[a live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)** and more examples how to implement angularx-qrcode is in the folder [`projects/demo-app`](projects/demo-app/src/app) in this repository.
+The source for **[a live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)** and more examples how to implement angularx-qrcode is located in the directory [`projects/demo-app`](projects/demo-app/src/app) of this repository.
 
-### Import the module and add it to your imports section in your main AppModule:
+### Upgrade angularx-qrcode from angularx-qrcode 18 and earlier
 
-```
-// File: app.module.ts
-// all your other imports...
+Since Angular 19, the latest version of the angularx-qrcode module is now exported as a standalone component. If you’re upgrading from a version before Angular 19, please replace the import statement with the component’s name since it’s now a standalone component.
+
+
+````
+# OLD - angular 18 and older
+# File: app.module.ts
 import { QRCodeModule } from 'angularx-qrcode';
 
-@NgModule({
-declarations: [
-  AppComponent
-],
-imports: [
-  QRCodeModule
-],
-providers: [],
-bootstrap: [AppComponent]
+# NEW - angular 19 and newer
+// File: app.component.ts
+import { QRCodeComponent } from 'angularx-qrcode';
+````
+For more uses with angular 18 and earlier see: [angularx/qrcode as ngModule](https://github.com/Cordobo/angularx-qrcode/tree/18.0.0)
+
+
+###  Import the component and add it to your imports section in your main AppComponent:
+
+
+```
+// For angular 19, see above for angular 18 and older
+// File: app.component.ts
+// other imports...
+import { QRCodeComponent } from 'angularx-qrcode';
+
+@Component({
+  selector: "app-root",
+  imports: [
+    // other component imports...
+    QRCodeComponent,
+  ],
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
-export class AppModule { }
+export class AppComponent {
+  // your code
+}
 ```
 
 ```
@@ -109,10 +131,10 @@ export class AppModule { }
 <qrcode [qrdata]="'Your data string'" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
 ```
 
-### Generate a QR Code from a string (directive only)
+### Generate a QR Code from a string
 
-Now that angular/Ionic know about the new QR Code module,
-let's invoke it from our template with a directive.
+Now that angular/Ionic know about the new QR Code component,
+let's invoke it from our template.
 If we use a simple text-string, we need no additional
 code in our controller.
 

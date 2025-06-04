@@ -2,7 +2,7 @@
 
 `angularx-qrcode` - a fast and easy-to-use Ivy compatible Ionic and Angular QR Code Generator library
 
-- Compatible with **Angular 19** and **Ionic**
+- Compatible with **Angular 20** and **Ionic**
 - Under active development
 - Standalone component support
 - Ivy compiler support, AOT, SSR (Server Side Rendering)
@@ -11,7 +11,7 @@
 - Trusted and used by thousands of developers like you
 - Easy to use, [sample web app](#demo-app) included
 
-`angularx-qrcode` is compatible with Ionic 3/4/5/6/7/8 and Angular 4/5/6/7/8/9/10/11/12/13/14/15/16/17/18/19+ with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
+`angularx-qrcode` is compatible with Ionic 3-8 and Angular 4-20 with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
 
 - [Installation](#installation)
 - [Demo App](#demo-app)
@@ -51,6 +51,7 @@ yarn add angularx-qrcode@17.0.1
 
 | Angular Version | angularx-qrcode Version |
 | --------------- | ----------------------- |
+| ^20             | ^20.0.0                 |
 | ^19             | ^19.0.0                 |
 | ^18             | ^18.0.2                 |
 | ^17             | ^17.0.1                 |

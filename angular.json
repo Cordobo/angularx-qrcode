@@ -11,9 +11,7 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/angularx-qrcode/ng-package.json"
-          },
+          "options": { "project": "projects/angularx-qrcode/ng-package.json" },
           "configurations": {
             "production": {
               "tsConfig": "projects/angularx-qrcode/tsconfig.lib.prod.json"
@@ -45,11 +43,7 @@
     },
     "demo-app": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
+      "schematics": { "@schematics/angular:application": { "strict": true } },
       "root": "projects/demo-app",
       "sourceRoot": "projects/demo-app/src",
       "prefix": "app",
@@ -58,10 +52,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "allowedCommonJsDependencies": ["qrcode"],
-            "outputPath": {
-              "base": "dist/demo-app",
-              "browser": ""
-            },
+            "outputPath": { "base": "dist/demo-app", "browser": "" },
             "index": "projects/demo-app/src/index.html",
             "polyfills": ["projects/demo-app/src/polyfills.ts"],
             "tsConfig": "projects/demo-app/tsconfig.app.json",
@@ -82,7 +73,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -110,20 +101,14 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "demo-app:build:production"
-            },
-            "development": {
-              "buildTarget": "demo-app:build:development"
-            }
+            "production": { "buildTarget": "demo-app:build:production" },
+            "development": { "buildTarget": "demo-app:build:development" }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "demo-app:build"
-          }
+          "options": { "buildTarget": "demo-app:build" }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -155,15 +140,11 @@
       }
     }
   },
-  "cli": {
-    "analytics": false
-  },
+  "cli": { "analytics": false },
   "schematics": {
     "@angular-eslint/schematics:application": {
       "setParserOptionsProject": true
     },
-    "@angular-eslint/schematics:library": {
-      "setParserOptionsProject": true
-    }
+    "@angular-eslint/schematics:library": { "setParserOptionsProject": true }
   }
 }

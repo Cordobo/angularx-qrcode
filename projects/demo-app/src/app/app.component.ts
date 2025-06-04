@@ -3,7 +3,7 @@ import { Component } from "@angular/core"
 import { FormsModule, FormControl } from "@angular/forms"
 import { MatSnackBarModule, MatSnackBar } from "@angular/material/snack-bar"
 import { SafeUrl } from "@angular/platform-browser"
-import { ColorPickerModule } from "ngx-color-picker"
+import { ColorPickerDirective } from "ngx-color-picker"
 import { MatButtonModule } from "@angular/material/button"
 import { MatButtonToggleModule } from "@angular/material/button-toggle"
 import { MatCardModule } from "@angular/material/card"
@@ -31,7 +31,7 @@ type ListType = { title: string; val: number }[]
 @Component({
   selector: "app-root",
   imports: [
-    ColorPickerModule,
+    ColorPickerDirective,
     CommonModule,
     FormsModule,
     MatButtonModule,
@@ -75,9 +75,7 @@ export class AppComponent {
     width: 300,
   }
 
-  public data_model = {
-    ...this.initial_state,
-  }
+  public data_model = { ...this.initial_state }
 
   public allowEmptyString: boolean
   public alt: string

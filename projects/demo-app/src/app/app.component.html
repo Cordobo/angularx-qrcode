@@ -110,29 +110,23 @@
             [selectedIndex]="selected.value"
             (selectedIndexChange)="selected.setValue($event)"
           >
-            <mat-tab label="HTML">
+            <mat-tab label="CODE">
               <h4>
-                Use the options on the right to customize the code. Then Copy &
-                Paste it into your projects html file
+                Use the options on the right to customize your code. Then Copy &
+                Paste it into your projects HTML and CSS file
               </h4>
+
+              <h4>HTML</h4>
+              <pre [innerText]="renderSampleHtmlCode"></pre>
+
+              <h4>CSS (optional)</h4>
+              <pre [innerText]="renderSampleCssCode"></pre>
 
               <p>
                 Note: The surrounding
                 <code>&#60;div class="qrcodeImage"&#62;</code>-tag is optional,
-                but should be included when using the
-                <a href="" (click)="setTabIndex(1)">generated CSS</a>
+                but should be included when using the generated CSS.
               </p>
-              <pre [innerText]="renderSampleHtmlCode"></pre>
-            </mat-tab>
-            <!-- <mat-tab label="TypeScript"> TypeScript </mat-tab> -->
-            <mat-tab label="CSS">
-              <h4>Copy & Paste this code (optional)</h4>
-              <p>
-                Note: The surrounding
-                <code>&#60;div class="qrcodeImage"&#62;</code>-tag is optional,
-                but should be included when using the generated CSS
-              </p>
-              <pre [innerText]="renderSampleCssCode"></pre>
             </mat-tab>
             <mat-tab label="Installation">
               <h4>Installation</h4>
@@ -155,18 +149,23 @@ imports: [
 QRCodeComponent
 ],
 &#125;)
-export class AppComponent {{ "{
+export class AppComponent {{
+                  "{
   // your code
-"}} &#125;</pre>
+"
+                }} &#125;</pre
+              >
 
-<p>For more working examples or the source code of this demo app see:
-<a
-target="_blank"
-rel="noopener"
-href="https://github.com/Cordobo/angularx-qrcode/tree/main/projects/demo-app"
->angularx-qrcode demo app source code (this app)</a
-></p>
-
+              <p>
+                For more working examples or the source code of this demo app
+                see:
+                <a
+                  target="_blank"
+                  rel="noopener"
+                  href="https://github.com/Cordobo/angularx-qrcode/tree/main/projects/demo-app"
+                  >angularx-qrcode demo app source code (this app)</a
+                >
+              </p>
             </mat-tab>
             <mat-tab label="Tutorials">
               <h4>Get started with angularx-qrcode:</h4>
@@ -609,12 +608,13 @@ href="https://github.com/Cordobo/angularx-qrcode/tree/main/projects/demo-app"
 <footer id="footer">
   <span>MIT License | Copyright © 2018 - present</span>
   <a href="https://cordobo.com">Andreas Jacob (Cordobo.com)</a>
-  |
-  Source: <a
-  target="_blank"
-  rel="noopener"
-  href="https://github.com/Cordobo/angularx-qrcode"
-  >angularx-qrcode source code</a>
+  | Source:
+  <a
+    target="_blank"
+    rel="noopener"
+    href="https://github.com/Cordobo/angularx-qrcode"
+    >angularx-qrcode source code</a
+  >
 </footer>
 
 <button

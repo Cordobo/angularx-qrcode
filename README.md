@@ -23,12 +23,21 @@
 
 ## Installation
 
-**Angular 19 and Ionic with angularx-qrcode 19**
+**Angular 20 and Ionic with angularx-qrcode 20**
 
 ```
 npm install angularx-qrcode --save
 # Or with yarn
 yarn add angularx-qrcode
+```
+
+
+**Angular 19 and Ionic with angularx-qrcode 19**
+
+```
+npm install angularx-qrcode@19.0.0 --save
+# Or with yarn
+yarn add angularx-qrcode@19.0.0
 ```
 
 **Angular 18 and Ionic with angularx-qrcode 18**
@@ -103,7 +112,6 @@ For more uses with angular 18 and earlier see: [angularx/qrcode as ngModule](htt
 
 
 ###  Import the component and add it to your imports section in your main AppComponent:
-
 
 ```
 // For angular 19, see above for angular 18 and older

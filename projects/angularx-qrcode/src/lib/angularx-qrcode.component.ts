@@ -40,8 +40,8 @@ export class QRCodeComponent implements OnChanges {
   @Input()
   public errorCorrectionLevel: QRCodeErrorCorrectionLevel = "M"
   @Input() public imageSrc?: string
-  @Input() public imageHeight?: number
-  @Input() public imageWidth?: number
+  @Input() public imageHeight?: number | string
+  @Input() public imageWidth?: number | string
   @Input() public margin = 4
   @Input() public qrdata = ""
   @Input() public scale = 4
@@ -195,8 +195,8 @@ export class QRCodeComponent implements OnChanges {
       }
 
       const centerImageSrc = this.imageSrc
-      const centerImageHeight = this.imageHeight || 40
-      const centerImageWidth = this.imageWidth || 40
+      const centerImageHeight = this.imageHeight ? +this.imageHeight : 40
+      const centerImageWidth = this.imageWidth ? +this.imageWidth : 40
 
       switch (this.elementType) {
         case "canvas": {

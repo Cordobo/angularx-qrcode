@@ -68,7 +68,7 @@ export class QRCodeComponent implements OnChanges {
 
   public async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (this.hasVisualChanges(changes)) {
-      await this.createQRCode() // Regenerate QR code
+      await this.createQRCode()
     }
 
     if (this.hasAccessibilityChanges(changes)) {

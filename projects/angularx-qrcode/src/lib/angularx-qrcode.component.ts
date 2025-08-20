@@ -72,7 +72,7 @@ export class QRCodeComponent implements OnChanges {
     }
 
     if (this.hasAccessibilityChanges(changes)) {
-      this.setAccessibilityAttributes() // Update existing element attributes
+      this.setAccessibilityAttributes()
     }
   }
 

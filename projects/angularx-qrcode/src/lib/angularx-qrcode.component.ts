@@ -119,7 +119,8 @@ export class QRCodeComponent implements OnChanges {
     const qrElement = el || this.qrcElement.nativeElement.firstChild as
       | HTMLElement
       | SVGSVGElement
-
+    const qrElement = (el || this.qrcElement.nativeElement.firstChild) as
+      HTMLElement | SVGSVGElement
     if (!qrElement) {
       return
     }

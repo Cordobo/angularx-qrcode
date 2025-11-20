@@ -1,20 +1,22 @@
 {
   "name": "angularx-qrcode",
-  "version": "20.0.0",
+  "version": "21.0.0",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
   },
-  "description": "Simple QRCode module generator for Angular 4-20 and Ionic 3-8 using node-qrcode",
+  "description": "Simple QRCode module generator for Angular 4-21 and Ionic 3-8 using node-qrcode",
   "license": "MIT",
   "peerDependencies": {
-    "@angular/core": "^20.0.0"
+    "@angular/common": "^21.0.0",
+    "@angular/core": "^21.0.0"
   },
   "dependencies": {
-    "qrcode": "1.5.4"
+    "qrcode": "1.5.4",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@types/qrcode": "1.5.5"
+    "@types/qrcode": "1.5.6"
   },
   "repository": {
     "type": "git",

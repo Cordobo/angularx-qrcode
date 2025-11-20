@@ -8,11 +8,7 @@
     angularx-qrcode
   </a>
   <span class="toolbar-header-spacer"></span>
-  <a
-    mat-button
-    href="https://github.com/sponsors/Cordobo"
-    aria-label="icon-button with heart icon"
-  >
+  <a mat-button href="https://github.com/sponsors/Cordobo" aria-label="icon-button with heart icon">
     <mat-icon>favorite</mat-icon>
     Sponsor
   </a>
@@ -30,7 +26,7 @@
     aria-label="icon-button with file download icon"
   >
     <mat-icon>file_download</mat-icon>
-    npm 20.0.0
+    npm 21.0.0
   </a>
 
   <iframe
@@ -112,8 +108,8 @@
           >
             <mat-tab label="CODE">
               <h4>
-                Use the options on the right to customize your code. Then Copy &
-                Paste it into your projects HTML and CSS file
+                Use the options on the right to customize your code. Then Copy & Paste it into your
+                projects HTML and CSS file
               </h4>
 
               <h4>HTML</h4>
@@ -124,8 +120,8 @@
 
               <p>
                 Note: The surrounding
-                <code>&#60;div class="qrcodeImage"&#62;</code>-tag is optional,
-                but should be included when using the generated CSS.
+                <code>&#60;div class="qrcodeImage"&#62;</code>-tag is optional, but should be
+                included when using the generated CSS.
               </p>
             </mat-tab>
             <mat-tab label="Installation">
@@ -140,9 +136,9 @@ yarn add angularx-qrcode</pre
               <pre>
 // File: app.component.ts
 // other imports...
-import {{ "{" }} QRCodeComponent &#125; from 'angularx-qrcode';
+import {{ '{' }} QRCodeComponent &#125; from 'angularx-qrcode';
 
-&#64;Component({{ "{" }}
+&#64;Component({{ '{' }}
 // other properties like selector, templateUrl or styleUrls
 // selector: "app-root",
 imports: [
@@ -150,15 +146,14 @@ QRCodeComponent
 ],
 &#125;)
 export class AppComponent {{
-                  "{
+                  '{
   // your code
-"
+'
                 }} &#125;</pre
               >
 
               <p>
-                For more working examples or the source code of this demo app
-                see:
+                For more working examples or the source code of this demo app see:
                 <a
                   target="_blank"
                   rel="noopener"
@@ -204,12 +199,7 @@ export class AppComponent {{
           <form class="form-full-width">
             <mat-form-field class="input-full-width" appearance="fill">
               <mat-label>QR Code (qrdata)</mat-label>
-              <input
-                matInput
-                name="qrdata"
-                placeholder="qrdata"
-                [(ngModel)]="qrdata"
-              />
+              <input matInput name="qrdata" placeholder="qrdata" [(ngModel)]="qrdata" />
             </mat-form-field>
 
             <section>
@@ -221,17 +211,12 @@ export class AppComponent {{
                   [(ngModel)]="qrdata"
                   selected="qrdata"
                 >
-                  <mat-button-toggle
-                    value="https://github.com/Cordobo/angularx-qrcode"
+                  <mat-button-toggle value="https://github.com/Cordobo/angularx-qrcode"
                     >URL</mat-button-toggle
                   >
-                  <mat-button-toggle value="Peter Parker"
-                    >Peter Parker</mat-button-toggle
-                  >
+                  <mat-button-toggle value="Peter Parker">Peter Parker</mat-button-toggle>
                   <mat-button-toggle value="42">42</mat-button-toggle>
-                  <mat-button-toggle value=""
-                    >"" (empty string)</mat-button-toggle
-                  >
+                  <mat-button-toggle value="">"" (empty string)</mat-button-toggle>
                 </mat-button-toggle-group>
               </div>
             </section>
@@ -255,9 +240,7 @@ export class AppComponent {{
                 selected="elementType"
                 (change)="setImageVisibility(elementType === 'canvas')"
               >
-                <mat-button-toggle value="canvas"
-                  >canvas (Default)</mat-button-toggle
-                >
+                <mat-button-toggle value="canvas">canvas (Default)</mat-button-toggle>
                 <mat-button-toggle value="img">img</mat-button-toggle>
                 <mat-button-toggle value="url">url</mat-button-toggle>
                 <mat-button-toggle value="svg">svg</mat-button-toggle>
@@ -305,11 +288,9 @@ export class AppComponent {{
                 [(ngModel)]="width"
                 selected="width"
               >
-                <mat-button-toggle
-                  *ngFor="let o of widthList"
-                  [value]="o.val"
-                  >{{ o.title }}</mat-button-toggle
-                >
+                <mat-button-toggle *ngFor="let o of widthList" [value]="o.val">{{
+                  o.title
+                }}</mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </section>
@@ -323,11 +304,9 @@ export class AppComponent {{
                 [(ngModel)]="margin"
                 selected="margin"
               >
-                <mat-button-toggle
-                  *ngFor="let o of marginList"
-                  [value]="o.val"
-                  >{{ o.title }}</mat-button-toggle
-                >
+                <mat-button-toggle *ngFor="let o of marginList" [value]="o.val">{{
+                  o.title
+                }}</mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </section>
@@ -341,11 +320,9 @@ export class AppComponent {{
                 [(ngModel)]="scale"
                 selected="scale"
               >
-                <mat-button-toggle
-                  *ngFor="let o of scaleList"
-                  [value]="o.val"
-                  >{{ o.title }}</mat-button-toggle
-                >
+                <mat-button-toggle *ngFor="let o of scaleList" [value]="o.val">{{
+                  o.title
+                }}</mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </section>
@@ -361,21 +338,15 @@ export class AppComponent {{
         </mat-card-header>
 
         <mat-card-content>
-          <mat-slide-toggle
-            [checked]="showImage"
-            (change)="setImageVisibility()"
+          <mat-slide-toggle [checked]="showImage" (change)="setImageVisibility()"
             >Include image properties (canvas only)
           </mat-slide-toggle>
           <br />
           <br />
           <section *ngIf="showImage">
             <div class="example-label-container">
-              <label id="example-name-label" class="example-name-label"
-                >Width/Height:
-              </label>
-              <label class="example-value-label"
-                >{{ imageWidth }}/{{ imageHeight }}</label
-              >
+              <label id="example-name-label" class="example-name-label">Width/Height: </label>
+              <label class="example-value-label">{{ imageWidth }}/{{ imageHeight }}</label>
             </div>
             Width:
             <mat-slider
@@ -431,9 +402,7 @@ export class AppComponent {{
         </mat-card-header>
 
         <mat-card-content>
-          <mat-slide-toggle
-            [checked]="showColors"
-            (change)="setColorsVisibility()"
+          <mat-slide-toggle [checked]="showColors" (change)="setColorsVisibility()"
             >Include colors properties
           </mat-slide-toggle>
           <br />
@@ -451,9 +420,7 @@ export class AppComponent {{
                 [(colorPicker)]="colorDark"
                 [cpOutputFormat]="'hex'"
               >
-                <mat-icon aria-hidden="false" aria-label="Color picker"
-                  >format_color_fill</mat-icon
-                >
+                <mat-icon aria-hidden="false" aria-label="Color picker">format_color_fill</mat-icon>
               </button>
 
               <mat-button-toggle-group
@@ -465,9 +432,7 @@ export class AppComponent {{
                 <mat-button-toggle value="#3f51b5">Indigo</mat-button-toggle>
                 <mat-button-toggle value="#ff0000">Red</mat-button-toggle>
                 <mat-button-toggle value="#ffffff">White</mat-button-toggle>
-                <mat-button-toggle value="#000000"
-                  >Default colorDark (#000000ff)</mat-button-toggle
-                >
+                <mat-button-toggle value="#000000">Default colorDark (#000000ff)</mat-button-toggle>
               </mat-button-toggle-group>
             </div>
           </section>
@@ -484,9 +449,7 @@ export class AppComponent {{
                 [(colorPicker)]="colorLight"
                 [cpOutputFormat]="'hex'"
               >
-                <mat-icon aria-hidden="false" aria-label="Color picker"
-                  >format_color_fill</mat-icon
-                >
+                <mat-icon aria-hidden="false" aria-label="Color picker">format_color_fill</mat-icon>
               </button>
 
               <mat-button-toggle-group
@@ -527,14 +490,10 @@ export class AppComponent {{
               <mat-radio-button value="center">Center</mat-radio-button>
               <mat-radio-button value="right">Right</mat-radio-button>
               <mat-radio-button value="demoBorder">Border</mat-radio-button>
-              <mat-radio-button
-                value="demoBorderRadius"
-                (click)="changeMargin(0)"
+              <mat-radio-button value="demoBorderRadius" (click)="changeMargin(0)"
                 >BorderRadius without margin</mat-radio-button
               >
-              <mat-radio-button
-                value="demoBorderRadius"
-                (click)="changeMargin(10)"
+              <mat-radio-button value="demoBorderRadius" (click)="changeMargin(10)"
                 >BorderRadius with margin
               </mat-radio-button>
             </mat-radio-group>
@@ -544,9 +503,7 @@ export class AppComponent {{
         <mat-divider></mat-divider>
 
         <mat-card-header>
-          <mat-card-title
-            >Accessibility/a11y attributes (optional)</mat-card-title
-          >
+          <mat-card-title>Accessibility/a11y attributes (optional)</mat-card-title>
         </mat-card-header>
 
         <mat-card-content>
@@ -560,40 +517,24 @@ export class AppComponent {{
             <form class="form-full-width">
               <mat-form-field class="input-full-width" appearance="fill">
                 <mat-label>alt Attribute</mat-label>
-                <input
-                  matInput
-                  name="alt"
-                  placeholder="alt"
-                  [(ngModel)]="alt"
-                />
+                <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" />
                 <mat-hint
-                  >alt attribute is only available for elementTypes "img" and
-                  "url"</mat-hint
+                  >alt attribute is only available for elementTypes "img" and "url"</mat-hint
                 >
               </mat-form-field>
               <br /><br />
 
               <mat-form-field class="input-full-width" appearance="fill">
                 <mat-label>title Attribute</mat-label>
-                <input
-                  matInput
-                  name="title"
-                  placeholder="title"
-                  [(ngModel)]="title"
-                />
+                <input matInput name="title" placeholder="title" [(ngModel)]="title" />
               </mat-form-field>
 
               <mat-form-field class="input-full-width" appearance="fill">
                 <mat-label>aria-label Attribute</mat-label>
-                <input
-                  matInput
-                  name="ariaLabel"
-                  placeholder="ariaLabel"
-                  [(ngModel)]="ariaLabel"
-                />
+                <input matInput name="ariaLabel" placeholder="ariaLabel" [(ngModel)]="ariaLabel" />
                 <mat-hint
-                  >aria-label attribute is only available for elementTypes
-                  "canvas", "img" and "url"</mat-hint
+                  >aria-label attribute is only available for elementTypes "canvas", "img" and
+                  "url"</mat-hint
                 >
               </mat-form-field>
             </form>
@@ -609,10 +550,7 @@ export class AppComponent {{
   <span>MIT License | Copyright © 2018 - present</span>
   <a href="https://cordobo.com">Andreas Jacob (Cordobo.com)</a>
   | Source:
-  <a
-    target="_blank"
-    rel="noopener"
-    href="https://github.com/Cordobo/angularx-qrcode"
+  <a target="_blank" rel="noopener" href="https://github.com/Cordobo/angularx-qrcode"
     >angularx-qrcode source code</a
   >
 </footer>

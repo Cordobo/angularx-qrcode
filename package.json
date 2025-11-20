@@ -1,12 +1,12 @@
 {
   "name": "angularx-qrcode",
-  "version": "20.0.0",
-  "main": "dist/angularx-qrcode/bundles/angularx-qrcode.umd.js",
+  "version": "21.0.0",
+  "private": true,
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
   },
-  "description": "Simple QRCode generator library for Angular 4-20 and Ionic 3-8 using node-qrcode",
+  "description": "Simple QRCode generator library for Angular 4-21 and Ionic 3-8 using node-qrcode",
   "license": "MIT",
   "scripts": {
     "lint": "ng lint",
@@ -23,60 +23,52 @@
     "publish": "rm -rf node_modules && npm install && npm run build && cd dist/angularx-qrcode && npm publish && cd ../../",
     "ci:build:lib": "ng build --project angularx-qrcode --configuration production",
     "ci:build:app": "ng build --project demo-app --configuration production --base-href=/angularx-qrcode/",
-    "ci:lint": "ng lint",
-    "ci:test": "ng test --code-coverage",
     "format": "prettier --write ."
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
   },
   "dependencies": {
     "qrcode": "1.5.4"
   },
   "peerDependencies": {
-    "@angular/core": ">= 20.0.0 < 21.0.0"
+    "@angular/core": ">= 21.0.0 < 22.0.0"
   },
   "devDependencies": {
-    "@angular-devkit/architect": "^0.2000.0",
-    "@angular-devkit/build-angular": "^20.0.0",
-    "@angular-eslint/builder": "^19.6.0",
-    "@angular-eslint/eslint-plugin": "^19.6.0",
-    "@angular-eslint/eslint-plugin-template": "^19.6.0",
-    "@angular-eslint/schematics": "^19.6.0",
-    "@angular-eslint/template-parser": "^19.6.0",
-    "@angular/animations": "^20.0.0",
-    "@angular/cli": "^20.0.0",
-    "@angular/common": "^20.0.0",
-    "@angular/compiler": "^20.0.0",
-    "@angular/compiler-cli": "^20.0.0",
-    "@angular/core": "^20.0.0",
-    "@angular/forms": "^20.0.0",
-    "@angular/material": "^20.0.0",
-    "@angular/platform-browser": "^20.0.0",
-    "@angular/platform-browser-dynamic": "^20.0.0",
-    "@angular/router": "^20.0.0",
-    "@babel/core": "^7.27.3",
-    "@types/jasmine": "~5.1.8",
-    "@types/node": "^22.15.24",
-    "@types/qrcode": "1.5.5",
-    "@typescript-eslint/eslint-plugin": "^8.33.0",
-    "@typescript-eslint/parser": "^8.33.0",
-    "eslint": "^9.27.0",
-    "eslint-plugin-import": "2.31.0",
-    "eslint-plugin-jsdoc": "50.6.17",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
-    "jasmine-core": "~5.7.1",
-    "karma": "~6.4.4",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.1",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "@angular/build": "^21.0.0",
+    "@angular/cdk": "^21.0.0",
+    "@angular/cli": "^21.0.0",
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/compiler-cli": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0 || ^22.0.0",
+    "@angular/material": "^21.0.0",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-browser-dynamic": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "@types/qrcode": "1.5.6",
+    "jsdom": "^27.1.0",
     "lite-server": "2.6.1",
-    "ng-packagr": "^20.0.0",
-    "ngx-color-picker": "19.0.0",
-    "prettier": "3.5.3",
-    "rimraf": "6.0.1",
-    "rxjs": "^7.8.2",
-    "tslib": "^2.8.1",
-    "typescript": "~5.8.3",
-    "zone.js": "^0.15.1"
+    "ng-packagr": "^21.0.0",
+    "ngx-color-picker": "20.1.1",
+    "prettier": "3.6.2",
+    "rimraf": "6.1.2",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
   },
   "keywords": [
     "angularx-qrcode",
@@ -101,6 +93,7 @@
     "angular18",
     "angular19",
     "angular20",
+    "angular21",
     "ionic",
     "ionic3",
     "ionic4",
@@ -113,6 +106,7 @@
     "aot-compilation",
     "library",
     "ng",
+    "ng-qrcode",
     "ng2",
     "ngx",
     "ivy",

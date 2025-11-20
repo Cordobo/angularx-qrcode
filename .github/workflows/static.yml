@@ -4,7 +4,7 @@ name: Deploy github page
 on:
   # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ['main']
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -18,7 +18,7 @@ permissions:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
 
 jobs:
@@ -30,10 +30,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+        uses: actions/checkout@v6
         with:
-          node-version: 24
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          cache: npm
+          node-version-file: '.nvmrc'
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Install
@@ -41,10 +44,10 @@ jobs:
       - name: Build
         run: npm run ci:build:lib && npm run ci:build:app
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           # Upload entire repository
-          path: "dist/demo-app"
+          path: 'dist/demo-app'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4

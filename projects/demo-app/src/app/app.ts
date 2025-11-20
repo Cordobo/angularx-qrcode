@@ -1,35 +1,35 @@
-import { CommonModule } from "@angular/common"
-import { Component } from "@angular/core"
-import { FormsModule, FormControl } from "@angular/forms"
-import { MatSnackBarModule, MatSnackBar } from "@angular/material/snack-bar"
-import { SafeUrl } from "@angular/platform-browser"
-import { ColorPickerDirective } from "ngx-color-picker"
-import { MatButtonModule } from "@angular/material/button"
-import { MatButtonToggleModule } from "@angular/material/button-toggle"
-import { MatCardModule } from "@angular/material/card"
-import { MatCheckboxModule } from "@angular/material/checkbox"
-import { MatDividerModule } from "@angular/material/divider"
-import { MatFormFieldModule } from "@angular/material/form-field"
-import { MatIconModule } from "@angular/material/icon"
-import { MatInputModule } from "@angular/material/input"
-import { MatRadioModule } from "@angular/material/radio"
-import { MatSliderModule } from "@angular/material/slider"
-import { MatSlideToggleModule } from "@angular/material/slide-toggle"
-import { MatTabsModule } from "@angular/material/tabs"
-import { MatToolbarModule } from "@angular/material/toolbar"
-import { MatTooltipModule } from "@angular/material/tooltip"
+import { CommonModule } from '@angular/common'
+import { Component } from '@angular/core'
+import { FormsModule, FormControl } from '@angular/forms'
+import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar'
+import { SafeUrl } from '@angular/platform-browser'
+import { ColorPickerDirective } from 'ngx-color-picker'
+import { MatButtonModule } from '@angular/material/button'
+import { MatButtonToggleModule } from '@angular/material/button-toggle'
+import { MatCardModule } from '@angular/material/card'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatDividerModule } from '@angular/material/divider'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input'
+import { MatRadioModule } from '@angular/material/radio'
+import { MatSliderModule } from '@angular/material/slider'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatTabsModule } from '@angular/material/tabs'
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { MatTooltipModule } from '@angular/material/tooltip'
 
 import {
   FixMeLater,
   QRCodeErrorCorrectionLevel,
   QRCodeElementType,
-} from "projects/angularx-qrcode/src/public-api"
-import { QRCodeComponent } from "dist/angularx-qrcode"
+  QRCodeComponent,
+} from '../../../angularx-qrcode/src/public-api'
 
 type ListType = { title: string; val: number }[]
 
 @Component({
-  selector: "app-root",
+  selector: 'app-root',
   imports: [
     ColorPickerDirective,
     CommonModule,
@@ -51,27 +51,27 @@ type ListType = { title: string; val: number }[]
     MatTooltipModule,
     QRCodeComponent,
   ],
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.css"],
+  templateUrl: './app.html',
+  styleUrls: ['./app.css'],
 })
-export class AppComponent {
+export class App {
   public initial_state = {
     allowEmptyString: true,
-    alt: "A custom alt attribute",
+    alt: 'A custom alt attribute',
     ariaLabel: `QR Code image with the following content...`,
-    colorDark: "#000000ff",
-    colorLight: "#ffffffff",
-    cssClass: "center",
-    elementType: "canvas" as QRCodeElementType,
-    errorCorrectionLevel: "M" as QRCodeErrorCorrectionLevel,
-    imageSrc: "./assets/angular-logo.png",
+    colorDark: '#000000ff',
+    colorLight: '#ffffffff',
+    cssClass: 'center',
+    elementType: 'canvas' as QRCodeElementType,
+    errorCorrectionLevel: 'M' as QRCodeErrorCorrectionLevel,
+    imageSrc: './assets/angular-logo.png',
     imageHeight: 75,
     imageWidth: 75,
     margin: 4,
-    qrdata: "https://github.com/Cordobo/angularx-qrcode",
+    qrdata: 'https://github.com/Cordobo/angularx-qrcode',
     scale: 1,
     version: undefined,
-    title: "A custom title attribute",
+    title: 'A custom title attribute',
     width: 300,
   }
 
@@ -131,28 +131,28 @@ export class AppComponent {
     this.width = this.data_model.width
 
     this.marginList = [
-      { title: "4 (Default)", val: 4 },
-      { title: "0", val: 0 },
-      { title: "10", val: 10 },
-      { title: "25", val: 25 },
+      { title: '4 (Default)', val: 4 },
+      { title: '0', val: 0 },
+      { title: '10', val: 10 },
+      { title: '25', val: 25 },
     ]
 
     this.scaleList = [
-      { title: "128", val: 128 },
-      { title: "64", val: 64 },
-      { title: "32", val: 32 },
-      { title: "8", val: 8 },
-      { title: "4", val: 4 },
-      { title: "1 (Default)", val: 1 },
+      { title: '128', val: 128 },
+      { title: '64', val: 64 },
+      { title: '32', val: 32 },
+      { title: '8', val: 8 },
+      { title: '4', val: 4 },
+      { title: '1 (Default)', val: 1 },
     ]
 
     this.widthList = [
-      { title: "400", val: 400 },
-      { title: "300", val: 300 },
-      { title: "200", val: 200 },
-      { title: "100", val: 100 },
-      { title: "50", val: 50 },
-      { title: "10 (Default)", val: 10 },
+      { title: '400', val: 400 },
+      { title: '300', val: 300 },
+      { title: '200', val: 200 },
+      { title: '100', val: 100 },
+      { title: '50', val: 50 },
+      { title: '10 (Default)', val: 10 },
     ]
   }
 
@@ -184,7 +184,7 @@ export class AppComponent {
     this.setCssVisibility(true)
     this.setImageVisibility(true)
 
-    this._snackBar.open("All values resetted", "close")
+    this._snackBar.open('All values resetted', 'close')
   }
 
   setTabIndex(idx: number): boolean {
@@ -223,16 +223,14 @@ export class AppComponent {
   saveAsImage(parent: FixMeLater) {
     let parentElement = null
 
-    if (this.elementType === "canvas") {
+    if (this.elementType === 'canvas') {
       // fetches base 64 data from canvas
-      parentElement = parent.qrcElement.nativeElement
-        .querySelector("canvas")
-        .toDataURL("image/png")
-    } else if (this.elementType === "img" || this.elementType === "url") {
+      parentElement = parent.qrcElement.nativeElement.querySelector('canvas').toDataURL('image/png')
+    } else if (this.elementType === 'img' || this.elementType === 'url') {
       // fetches base 64 data from image
       // parentElement contains the base64 encoded image src
       // you might use to store somewhere
-      parentElement = parent.qrcElement.nativeElement.querySelector("img").src
+      parentElement = parent.qrcElement.nativeElement.querySelector('img').src
     } else {
       alert("Set elementType to 'canvas', 'img' or 'url'.")
     }
@@ -241,21 +239,21 @@ export class AppComponent {
       // converts base 64 encoded image to blobData
       let blobData = this.convertBase64ToBlob(parentElement)
       // saves as image
-      const blob = new Blob([blobData], { type: "image/png" })
+      const blob = new Blob([blobData], { type: 'image/png' })
       const url = window.URL.createObjectURL(blob)
-      const link = document.createElement("a")
+      const link = document.createElement('a')
       link.href = url
       // name of the file
-      link.download = "angularx-qrcode"
+      link.download = 'angularx-qrcode'
       link.click()
     }
   }
 
   private convertBase64ToBlob(Base64Image: string) {
     // split into two parts
-    const parts = Base64Image.split(";base64,")
+    const parts = Base64Image.split(';base64,')
     // hold the content type
-    const imageType = parts[0].split(":")[1]
+    const imageType = parts[0].split(':')[1]
     // decode base64 string
     const decodedData = window.atob(parts[1])
     // create unit8array of size same as row data length
@@ -277,19 +275,13 @@ export class AppComponent {
     if (this.allowEmptyString) {
       f.push(`[allowEmptyString]="${this.allowEmptyString}"`)
     }
-    if (
-      this.showA11y &&
-      this.alt &&
-      (this.elementType === "img" || this.elementType === "url")
-    ) {
+    if (this.showA11y && this.alt && (this.elementType === 'img' || this.elementType === 'url')) {
       f.push(`[alt]="'${this.alt}'"`)
     }
     if (
       this.showA11y &&
       this.ariaLabel &&
-      (this.elementType === "canvas" ||
-        this.elementType === "img" ||
-        this.elementType === "url")
+      (this.elementType === 'canvas' || this.elementType === 'img' || this.elementType === 'url')
     ) {
       f.push(`[ariaLabel]="'${this.ariaLabel}'"`)
     }
@@ -325,7 +317,7 @@ export class AppComponent {
     }
     f.push(`[width]="${this.width}"`)
 
-    return f.join("\n    ")
+    return f.join('\n    ')
   }
 
   get renderSampleHtmlCode() {
@@ -338,30 +330,30 @@ export class AppComponent {
 
   cssCodeBuilder(): string {
     switch (this.cssClass) {
-      case "center":
+      case 'center':
         return `.center {
   display: flex;
   flex: 1;
   justify-content: center;
 }`
-      case "right":
+      case 'right':
         return `.right {
   display: flex;
   flex: 1;
   justify-content: right;
 }`
-      case "demoBorder":
+      case 'demoBorder':
         return `.demoBorder {
   border: 10px solid red;
 }`
-      case "demoBorderRadius":
+      case 'demoBorderRadius':
         return `.demoBorderRadius {
   border: dashed;
   border-width: 2px 4px;
   border-radius: 40px;
   overflow: hidden;
 }`
-      case "left":
+      case 'left':
       default:
         return `.left {
   display: flex;

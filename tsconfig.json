@@ -1,36 +1,44 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
+    "paths": {
+      "angularx-qrcode": ["dist/angularx-qrcode/angularx-qrcode", "dist/angularx-qrcode"]
+    },
     "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "removeComments": true,
-    "sourceMap": true,
-    "declaration": false,
+    "skipLibCheck": true,
+    "isolatedModules": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
-    "module": "es2020",
-    "lib": ["es2020", "dom"],
-    "paths": {
-      "angularx-qrcode": [
-        "dist/angularx-qrcode/angularx-qrcode",
-        "dist/angularx-qrcode"
-      ]
-    },
-    "useDefineForClassFields": false
+    "module": "preserve"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "files": [],
+  "references": [
+    {
+      "path": "./projects/demo-app/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/demo-app/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/angularx-qrcode/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/angularx-qrcode/tsconfig.spec.json"
+    }
+  ]
 }

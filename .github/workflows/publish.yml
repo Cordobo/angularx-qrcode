@@ -12,7 +12,7 @@ on:
 
 jobs:
   publish:
-    environment: prod
+    # environment: prod
     runs-on: ubuntu-latest
     permissions:
       contents: write

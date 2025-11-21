@@ -117,10 +117,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cordobo/angularx-qrcode.git"
+    "url": "https://github.com/Cordobo/angularx-qrcode"
   },
   "bugs": {
-    "url": "https://github.com/cordobo/angularx-qrcode/issues"
+    "url": "https://github.com/Cordobo/angularx-qrcode/issues"
   },
-  "homepage": "https://github.com/cordobo/angularx-qrcode#readme"
+  "homepage": "https://github.com/Cordobo/angularx-qrcode#readme"
 }

@@ -29,6 +29,16 @@
           "options": {
             "tsConfig": "projects/angularx-qrcode/tsconfig.spec.json"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/angularx-qrcode/**/*.ts",
+              "projects/angularx-qrcode/**/*.html"
+            ],
+            "eslintConfig": "projects/angularx-qrcode/eslint.config.js"
+          }
         }
       }
     },

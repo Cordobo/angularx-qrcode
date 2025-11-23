@@ -21,7 +21,6 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { Router, ActivatedRoute } from '@angular/router'
 
 import {
-  FixMeLater,
   QRCodeErrorCorrectionLevel,
   QRCodeElementType,
   QRCodeComponent,
@@ -329,17 +328,17 @@ export class App implements OnInit {
     this.qrCodeSrc = url
   }
 
-  saveAsImage(parent: FixMeLater) {
+  saveAsImage(parent: QRCodeComponent) {
     let parentElement = null
 
     if (this.elementType === 'canvas') {
       // fetches base 64 data from canvas
-      parentElement = parent.qrcElement.nativeElement.querySelector('canvas').toDataURL('image/png')
+      parentElement = parent.qrcElement().nativeElement.querySelector('canvas').toDataURL('image/png')
     } else if (this.elementType === 'img' || this.elementType === 'url') {
       // fetches base 64 data from image
       // parentElement contains the base64 encoded image src
       // you might use to store somewhere
-      parentElement = parent.qrcElement.nativeElement.querySelector('img').src
+      parentElement = parent.qrcElement().nativeElement.querySelector('img').src
     } else {
       alert("Set elementType to 'canvas', 'img' or 'url'.")
     }

@@ -69,4 +69,3 @@ export type QRCodeVersion =
 // https://stackoverflow.com/a/67511209
 export type RGBAColor = `#${string}`
 
-export type FixMeLater = any

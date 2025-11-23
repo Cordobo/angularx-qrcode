@@ -2,12 +2,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
   Renderer2,
-  ViewChild,
+  viewChild,
+  input,
+  output,
+  effect,
+  inject,
 } from "@angular/core"
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser"
 import {
@@ -21,56 +21,57 @@ import {
 import {
   QRCodeVersion,
   QRCodeElementType,
-  FixMeLater,
   QRCodeConfigType,
   QRCodeErrorCorrectionLevel,
 } from "./types"
 
 @Component({
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: "qrcode",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `<div #qrcElement [class]="cssClass"></div>`,
+  template: `<div #qrcElement [class]="cssClass()"></div>`,
 })
-export class QRCodeComponent implements OnChanges {
-  @Input() public allowEmptyString = false
-  @Input() public colorDark = "#000000ff"
-  @Input() public colorLight = "#ffffffff"
-  @Input() public cssClass = "qrcode"
-  @Input() public elementType: QRCodeElementType = "canvas"
-  @Input()
-  public errorCorrectionLevel: QRCodeErrorCorrectionLevel = "M"
-  @Input() public imageSrc?: string
-  @Input() public imageHeight?: number
-  @Input() public imageWidth?: number
-  @Input() public margin = 4
-  @Input() public qrdata = ""
-  @Input() public scale = 4
-  @Input() public version?: QRCodeVersion
-  @Input() public width = 10
+export class QRCodeComponent {
+  public allowEmptyString = input(false)
+  public colorDark = input("#000000ff")
+  public colorLight = input("#ffffffff")
+  public cssClass = input("qrcode")
+  public elementType = input<QRCodeElementType>("canvas")
+  public errorCorrectionLevel = input<QRCodeErrorCorrectionLevel>("M")
+  public imageSrc = input<string | undefined>(undefined)
+  public imageHeight = input<number | undefined>(undefined)
+  public imageWidth = input<number | undefined>(undefined)
+  public margin = input(4)
+  public qrdata = input("")
+  public scale = input(4)
+  public version = input<QRCodeVersion | undefined>(undefined)
+  public width = input(10)
 
   // Accessibility features introduced in 13.0.4+
-  @Input() public alt?: string
-  @Input() public ariaLabel?: string
-  @Input() public title?: string
+  public alt = input<string | undefined>(undefined)
+  public ariaLabel = input<string | undefined>(undefined)
+  public title = input<string | undefined>(undefined)
 
-  @Output() qrCodeURL = new EventEmitter<SafeUrl>()
+  public qrCodeURL = output<SafeUrl>()
 
-  @ViewChild("qrcElement", { static: true }) public qrcElement!: ElementRef
+  public qrcElement = viewChild.required<ElementRef>("qrcElement")
 
   public context: CanvasRenderingContext2D | null = null
   private centerImage?: HTMLImageElement
 
-  constructor(
-    private renderer: Renderer2,
-    private sanitizer: DomSanitizer
-  ) {}
+  private renderer = inject(Renderer2)
+  private sanitizer = inject(DomSanitizer)
 
-  public async ngOnChanges(): Promise<void> {
-    await this.createQRCode()
+  constructor() {
+    effect(() => {
+      // This effect depends on all inputs used in createQRCode
+      // It will automatically re-run when any of them change
+      this.createQRCode()
+    })
   }
 
   protected isValidQrCodeText(data: string | null): boolean {
-    if (this.allowEmptyString === false) {
+    if (this.allowEmptyString() === false) {
       return !(
         typeof data === "undefined" ||
         data === "" ||
@@ -81,14 +82,14 @@ export class QRCodeComponent implements OnChanges {
     return !(typeof data === "undefined")
   }
 
-  private toDataURL(qrCodeConfig: QRCodeToDataURLOptions): Promise<FixMeLater> {
+  private toDataURL(
+    qrData: string,
+    qrCodeConfig: QRCodeToDataURLOptions
+  ): Promise<string> {
     return new Promise(
-      (
-        resolve: (arg: FixMeLater) => FixMeLater,
-        reject: (arg: FixMeLater) => FixMeLater
-      ) => {
+      (resolve: (arg: string) => void, reject: (arg: unknown) => void) => {
         toDataURL(
-          this.qrdata,
+          qrData,
           qrCodeConfig,
           (err: Error | null | undefined, url: string) => {
             if (err) {
@@ -104,16 +105,14 @@ export class QRCodeComponent implements OnChanges {
 
   private toCanvas(
     canvas: HTMLCanvasElement,
+    qrData: string,
     qrCodeConfig: QRCodeRenderersOptions
-  ): Promise<FixMeLater> {
+  ): Promise<string> {
     return new Promise(
-      (
-        resolve: (arg: FixMeLater) => FixMeLater,
-        reject: (arg: FixMeLater) => FixMeLater
-      ) => {
+      (resolve: (arg: string) => void, reject: (arg: unknown) => void) => {
         toCanvas(
           canvas,
-          this.qrdata,
+          qrData,
           qrCodeConfig,
           (error: Error | null | undefined) => {
             if (error) {
@@ -127,14 +126,14 @@ export class QRCodeComponent implements OnChanges {
     )
   }
 
-  private toSVG(qrCodeConfig: QRCodeToStringOptions): Promise<FixMeLater> {
+  private toSVG(
+    qrData: string,
+    qrCodeConfig: QRCodeToStringOptions
+  ): Promise<string> {
     return new Promise(
-      (
-        resolve: (arg: FixMeLater) => FixMeLater,
-        reject: (arg: FixMeLater) => FixMeLater
-      ) => {
+      (resolve: (arg: string) => void, reject: (arg: unknown) => void) => {
         toString(
-          this.qrdata,
+          qrData,
           qrCodeConfig,
           (err: Error | null | undefined, url: string) => {
             if (err) {
@@ -149,74 +148,84 @@ export class QRCodeComponent implements OnChanges {
   }
 
   private renderElement(element: Element): void {
-    for (const node of this.qrcElement.nativeElement.childNodes) {
-      this.renderer.removeChild(this.qrcElement.nativeElement, node)
+    for (const node of this.qrcElement().nativeElement.childNodes) {
+      this.renderer.removeChild(this.qrcElement().nativeElement, node)
     }
-    this.renderer.appendChild(this.qrcElement.nativeElement, element)
+    this.renderer.appendChild(this.qrcElement().nativeElement, element)
   }
 
   private async createQRCode(): Promise<void> {
+    let version = this.version()
     // Set sensitive defaults
-    if (this.version && this.version > 40) {
+    if (version && version > 40) {
       console.warn("[angularx-qrcode] max value for `version` is 40")
-      this.version = 40
-    } else if (this.version && this.version < 1) {
+      version = 40
+    } else if (version && version < 1) {
       console.warn("[angularx-qrcode]`min value for `version` is 1")
-      this.version = 1
-    } else if (this.version !== undefined && isNaN(this.version)) {
+      version = 1
+    } else if (version !== undefined && isNaN(version)) {
       console.warn(
         "[angularx-qrcode] version should be a number, defaulting to auto."
       )
-      this.version = undefined
+      version = undefined
     }
 
     try {
-      if (!this.isValidQrCodeText(this.qrdata)) {
+      if (!this.isValidQrCodeText(this.qrdata())) {
         throw new Error(
           "[angularx-qrcode] Field `qrdata` is empty, set 'allowEmptyString=\"true\"' to overwrite this behaviour."
         )
       }
 
       // This is a workaround to allow an empty string as qrdata
-      if (this.isValidQrCodeText(this.qrdata) && this.qrdata === "") {
-        this.qrdata = " "
+      // Note: We can't modify the signal, so we use a local variable if needed,
+      // but toDataURL uses this.qrdata(). 
+      // If qrdata is empty string and valid (allowEmptyString=true), toDataURL might fail if it expects non-empty?
+      // The original code did: if (valid && qrdata === "") qrdata = " "
+      // We can't mutate the signal. We should handle this by passing the modified data to the generation functions.
+      // However, the generation functions read `this.qrdata()`.
+      // I will modify `toDataURL`, `toCanvas`, `toSVG` to take the data as argument instead of reading `this.qrdata()`.
+      
+      let qrData = this.qrdata()
+      if (this.isValidQrCodeText(qrData) && qrData === "") {
+        qrData = " "
       }
 
       const config: QRCodeConfigType = {
         color: {
-          dark: this.colorDark,
-          light: this.colorLight,
+          dark: this.colorDark(),
+          light: this.colorLight(),
         },
-        errorCorrectionLevel: this.errorCorrectionLevel,
-        margin: this.margin,
-        scale: this.scale,
-        version: this.version,
-        width: this.width,
+        errorCorrectionLevel: this.errorCorrectionLevel(),
+        margin: this.margin(),
+        scale: this.scale(),
+        version: version,
+        width: this.width(),
       }
 
-      const centerImageSrc = this.imageSrc
-      const centerImageHeight = this.imageHeight || 40
-      const centerImageWidth = this.imageWidth || 40
+      const centerImageSrc = this.imageSrc()
+      const centerImageHeight = this.imageHeight() || 40
+      const centerImageWidth = this.imageWidth() || 40
 
-      switch (this.elementType) {
+      switch (this.elementType()) {
         case "canvas": {
           const canvasElement: HTMLCanvasElement =
             this.renderer.createElement("canvas")
           this.context = canvasElement.getContext("2d")
-          this.toCanvas(canvasElement, config)
+          this.toCanvas(canvasElement, qrData, config)
             .then(() => {
-              if (this.ariaLabel) {
+              if (this.ariaLabel()) {
                 this.renderer.setAttribute(
                   canvasElement,
                   "aria-label",
-                  `${this.ariaLabel}`
+                  `${this.ariaLabel()}`
                 )
               }
-              if (this.title) {
+              if (this.title()) {
                 this.renderer.setAttribute(
                   canvasElement,
                   "title",
-                  `${this.title}`
+                  `${this.title()}`
                 )
               }
 
@@ -265,7 +274,7 @@ export class QRCodeComponent implements OnChanges {
         case "svg": {
           const svgParentElement: HTMLElement =
             this.renderer.createElement("div")
-          this.toSVG(config)
+          this.toSVG(qrData, config)
             .then((svgString: string) => {
               this.renderer.setProperty(
                 svgParentElement,
@@ -273,8 +282,8 @@ export class QRCodeComponent implements OnChanges {
                 svgString
               )
               const svgElement = svgParentElement.firstChild as SVGSVGElement
-              this.renderer.setAttribute(svgElement, "height", `${this.width}`)
-              this.renderer.setAttribute(svgElement, "width", `${this.width}`)
+              this.renderer.setAttribute(svgElement, "height", `${this.width()}`)
+              this.renderer.setAttribute(svgElement, "width", `${this.width()}`)
               this.renderElement(svgElement)
               this.emitQRCodeURL(svgElement)
             })
@@ -288,17 +297,17 @@ export class QRCodeComponent implements OnChanges {
         default: {
           const imgElement: HTMLImageElement =
             this.renderer.createElement("img")
-          this.toDataURL(config)
+          this.toDataURL(qrData, config)
             .then((dataUrl: string) => {
-              if (this.alt) {
-                imgElement.setAttribute("alt", this.alt)
+              if (this.alt()) {
+                imgElement.setAttribute("alt", this.alt()!)
               }
-              if (this.ariaLabel) {
-                imgElement.setAttribute("aria-label", this.ariaLabel)
+              if (this.ariaLabel()) {
+                imgElement.setAttribute("aria-label", this.ariaLabel()!)
               }
               imgElement.setAttribute("src", dataUrl)
-              if (this.title) {
-                imgElement.setAttribute("title", this.title)
+              if (this.title()) {
+                imgElement.setAttribute("title", this.title()!)
               }
               this.renderElement(imgElement)
               this.emitQRCodeURL(imgElement)
@@ -308,10 +317,18 @@ export class QRCodeComponent implements OnChanges {
             })
         }
       }
-    } catch (e: FixMeLater) {
-      console.error("[angularx-qrcode] Error generating QR Code:", e.message)
+    } catch (e: unknown) {
+      console.error(
+        "[angularx-qrcode] Error generating QR Code:",
+        e instanceof Error ? e.message : e
+      )
     }
   }
+
+  // Helper methods to pass data explicitly
+  // I will modify the helper methods to accept data as an argument
+  // But wait, I can't modify the private methods in the same pass if I use write_to_file with the content above...
+  // Actually, I am rewriting the whole file, so I can change the private methods too.
 
   convertBase64ImageUrlToBlob(base64ImageUrl: string) {
     // split into two parts

@@ -79,22 +79,20 @@
             ></qrcode>
           </div>
           <div class="downloadButton">
-            <button
-              *ngIf="this.elementType !== 'svg'"
-              mat-raised-button
-              color="primary"
-              (click)="saveAsImage(parent)"
-            >
-              Download QR Code Image
-            </button>
-            <a
-              *ngIf="this.elementType === 'svg'"
-              mat-raised-button
-              color="primary"
-              [href]="qrCodeSrc"
-              download="angularx-qrcode"
-              >Download QR Code Image</a
-            >
+            @if (this.elementType !== 'svg') {
+              <button mat-raised-button color="primary" (click)="saveAsImage(parent)">
+                Download QR Code Image
+              </button>
+            }
+            @if (this.elementType === 'svg') {
+              <a
+                mat-raised-button
+                color="primary"
+                [href]="qrCodeSrc"
+                download="angularx-qrcode"
+                >Download QR Code Image</a
+              >
+            }
           </div>
         </mat-card-content>
 
@@ -288,9 +286,9 @@ export class AppComponent {{
                 [(ngModel)]="width"
                 selected="width"
               >
-                <mat-button-toggle *ngFor="let o of widthList" [value]="o.val">{{
-                  o.title
-                }}</mat-button-toggle>
+                @for (o of widthList; track o.val) {
+                  <mat-button-toggle [value]="o.val">{{ o.title }}</mat-button-toggle>
+                }
               </mat-button-toggle-group>
             </div>
           </section>
@@ -304,9 +302,9 @@ export class AppComponent {{
                 [(ngModel)]="margin"
                 selected="margin"
               >
-                <mat-button-toggle *ngFor="let o of marginList" [value]="o.val">{{
-                  o.title
-                }}</mat-button-toggle>
+                @for (o of marginList; track o.val) {
+                  <mat-button-toggle [value]="o.val">{{ o.title }}</mat-button-toggle>
+                }
               </mat-button-toggle-group>
             </div>
           </section>
@@ -320,9 +318,9 @@ export class AppComponent {{
                 [(ngModel)]="scale"
                 selected="scale"
               >
-                <mat-button-toggle *ngFor="let o of scaleList" [value]="o.val">{{
-                  o.title
-                }}</mat-button-toggle>
+                @for (o of scaleList; track o.val) {
+                  <mat-button-toggle [value]="o.val">{{ o.title }}</mat-button-toggle>
+                }
               </mat-button-toggle-group>
             </div>
           </section>
@@ -343,7 +341,8 @@ export class AppComponent {{
           </mat-slide-toggle>
           <br />
           <br />
-          <section *ngIf="showImage">
+          @if (showImage) {
+            <section>
             <div class="example-label-container">
               <label id="example-name-label" class="example-name-label">Width/Height: </label>
               <label class="example-value-label">{{ imageWidth }}/{{ imageHeight }}</label>
@@ -393,6 +392,7 @@ export class AppComponent {{
               />
             </mat-form-field>
           </section>
+          }
         </mat-card-content>
 
         <mat-divider></mat-divider>
@@ -407,7 +407,8 @@ export class AppComponent {{
           </mat-slide-toggle>
           <br />
           <br />
-          <section *ngIf="showColors">
+          @if (showColors) {
+            <section>
             <div class="button-label">Foreground:</div>
             <div class="button-row">
               <button
@@ -437,7 +438,7 @@ export class AppComponent {{
             </div>
           </section>
 
-          <section *ngIf="showColors">
+          <section>
             <div class="button-label">Background:</div>
             <div class="button-row">
               <button
@@ -467,6 +468,7 @@ export class AppComponent {{
               </mat-button-toggle-group>
             </div>
           </section>
+          }
         </mat-card-content>
 
         <mat-divider></mat-divider>
@@ -480,7 +482,8 @@ export class AppComponent {{
             >Include CSS styling for the qrcode directive
           </mat-slide-toggle>
 
-          <section *ngIf="showCss">
+          @if (showCss) {
+            <section>
             <mat-radio-group
               aria-label="Select an option"
               [(ngModel)]="cssClass"
@@ -498,6 +501,7 @@ export class AppComponent {{
               </mat-radio-button>
             </mat-radio-group>
           </section>
+          }
         </mat-card-content>
 
         <mat-divider></mat-divider>
@@ -513,7 +517,8 @@ export class AppComponent {{
           <br />
           <br />
 
-          <section *ngIf="showA11y">
+          @if (showA11y) {
+            <section>
             <form class="form-full-width">
               <mat-form-field class="input-full-width" appearance="fill">
                 <mat-label>alt Attribute</mat-label>
@@ -540,6 +545,7 @@ export class AppComponent {{
             </form>
             <br />
           </section>
+          }
         </mat-card-content>
       </mat-card>
     </div>

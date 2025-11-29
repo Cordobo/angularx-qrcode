@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component } from '@angular/core'
+import { Component, inject } from '@angular/core'
 import { FormsModule, FormControl } from '@angular/forms'
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar'
 import { SafeUrl } from '@angular/platform-browser'
@@ -55,6 +55,8 @@ type ListType = { title: string; val: number }[]
   styleUrls: ['./app.css'],
 })
 export class App {
+  private _snackBar = inject(MatSnackBar)
+
   public initial_state = {
     allowEmptyString: true,
     alt: 'A custom alt attribute',
@@ -107,7 +109,7 @@ export class App {
   public showCss: boolean
   public showImage: boolean
 
-  constructor(private _snackBar: MatSnackBar) {
+  constructor() {
     this.showA11y = true
     this.showColors = true
     this.showCss = true

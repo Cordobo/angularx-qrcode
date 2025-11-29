@@ -193,7 +193,13 @@ export class AppComponent {{
           <form class="form-full-width">
             <mat-form-field class="input-full-width" appearance="fill">
               <mat-label>QR Code (qrdata)</mat-label>
-              <input matInput name="qrdata" placeholder="qrdata" [(ngModel)]="qrdata" (ngModelChange)="updateUrlParams()" />
+              <input
+                matInput
+                name="qrdata"
+                placeholder="qrdata"
+                [(ngModel)]="qrdata"
+                (ngModelChange)="updateUrlParams()"
+              />
             </mat-form-field>
 
             <section>
@@ -345,22 +351,10 @@ export class AppComponent {{
           <br />
           @if (showImage) {
             <section>
-              <div class="example-label-container">
-                <label id="example-name-label" class="example-name-label">Width/Height: </label>
-                <label class="example-value-label">{{ imageWidth }}/{{ imageHeight }}</label>
+              <div>
+                <div>Width/Height:</div>
+                <div>{{ imageWidth }}/{{ imageHeight }}</div>
               </div>
-              Width:
-
-              <mat-slider
-                discrete
-                class="example-margin"
-                [max]="width"
-                [min]="10"
-                [step]="'5'"
-                aria-labelledby="image width"
-              >
-                <input matSliderThumb [(ngModel)]="imageWidth" (ngModelChange)="updateUrlParams()" />
-              </mat-slider>
 
               <mat-form-field appearance="fill">
                 <mat-label>Width</mat-label>
@@ -370,6 +364,32 @@ export class AppComponent {{
                   placeholder="{{ width }}"
                   [(ngModel)]="imageWidth"
                   (ngModelChange)="updateUrlParams()"
+                  min="10"
+                />
+              </mat-form-field>
+
+              <mat-slider
+                discrete
+                class="example-margin"
+                [max]="width"
+                [min]="10"
+                [step]="'5'"
+                aria-labelledby="image width"
+              >
+                <input
+                  matSliderThumb
+                  [(ngModel)]="imageWidth"
+                  (ngModelChange)="updateUrlParams()"
+                />
+                <!-- <input matSliderThumb [(ngModel)]="imageWidth" /> -->
+              </mat-slider>
+              <mat-form-field appearance="fill">
+                <mat-label>Width</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  placeholder="{{ width }}"
+                  [(ngModel)]="imageWidth"
                   min="10"
                 />
               </mat-form-field>
@@ -384,7 +404,11 @@ export class AppComponent {{
                 [step]="'5'"
                 aria-labelledby="image height"
               >
-                <input matSliderThumb [(ngModel)]="imageHeight" (ngModelChange)="updateUrlParams()" />
+                <input
+                  matSliderThumb
+                  [(ngModel)]="imageHeight"
+                  (ngModelChange)="updateUrlParams()"
+                />
               </mat-slider>
               <mat-form-field appearance="fill">
                 <mat-label>Height</mat-label>
@@ -539,7 +563,13 @@ export class AppComponent {{
               <form class="form-full-width">
                 <mat-form-field class="input-full-width" appearance="fill">
                   <mat-label>alt Attribute</mat-label>
-                  <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" (ngModelChange)="updateUrlParams()" />
+                  <input
+                    matInput
+                    name="alt"
+                    placeholder="alt"
+                    [(ngModel)]="alt"
+                    (ngModelChange)="updateUrlParams()"
+                  />
                   <mat-hint
                     >alt attribute is only available for elementTypes "img" and "url"</mat-hint
                   >
@@ -548,7 +578,13 @@ export class AppComponent {{
 
                 <mat-form-field class="input-full-width" appearance="fill">
                   <mat-label>title Attribute</mat-label>
-                  <input matInput name="title" placeholder="title" [(ngModel)]="title" (ngModelChange)="updateUrlParams()" />
+                  <input
+                    matInput
+                    name="title"
+                    placeholder="title"
+                    [(ngModel)]="title"
+                    (ngModelChange)="updateUrlParams()"
+                  />
                 </mat-form-field>
 
                 <mat-form-field class="input-full-width" appearance="fill">

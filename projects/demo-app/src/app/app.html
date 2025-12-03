@@ -356,18 +356,6 @@ export class AppComponent {{
                 <div>{{ imageWidth }}/{{ imageHeight }}</div>
               </div>
 
-              <mat-form-field appearance="fill">
-                <mat-label>Width</mat-label>
-                <input
-                  matInput
-                  type="number"
-                  placeholder="{{ width }}"
-                  [(ngModel)]="imageWidth"
-                  (ngModelChange)="updateUrlParams()"
-                  min="10"
-                />
-              </mat-form-field>
-
               <mat-slider
                 discrete
                 class="example-margin"
@@ -381,7 +369,6 @@ export class AppComponent {{
                   [(ngModel)]="imageWidth"
                   (ngModelChange)="updateUrlParams()"
                 />
-                <!-- <input matSliderThumb [(ngModel)]="imageWidth" /> -->
               </mat-slider>
               <mat-form-field appearance="fill">
                 <mat-label>Width</mat-label>
@@ -390,6 +377,7 @@ export class AppComponent {{
                   type="number"
                   placeholder="{{ width }}"
                   [(ngModel)]="imageWidth"
+                  (ngModelChange)="updateUrlParams()"
                   min="10"
                 />
               </mat-form-field>

@@ -8,6 +8,7 @@ import {
   Output,
   Renderer2,
   ViewChild,
+  SimpleChanges,
 } from "@angular/core"
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser"
 import {
@@ -65,8 +66,78 @@ export class QRCodeComponent implements OnChanges {
     private sanitizer: DomSanitizer
   ) {}
 
-  public async ngOnChanges(): Promise<void> {
-    await this.createQRCode()
+  public async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    if (this.hasVisualChanges(changes)) {
+      await this.createQRCode()
+    }
+
+    if (this.hasAccessibilityChanges(changes)) {
+      this.setAccessibilityAttributes()
+    }
+  }
+
+  private hasVisualChanges(changes: SimpleChanges): boolean {
+    // Core inputs that affect QR generation for all element types
+    const universalVisualInputs = new Set([
+      "qrdata",
+      "colorDark",
+      "colorLight",
+      "errorCorrectionLevel",
+      "margin",
+      "scale",
+      "version",
+      "width",
+      "allowEmptyString",
+    ])
+
+    // Element type change always requires regeneration
+    if (changes["elementType"]) {
+      return true
+    }
+
+    // Image-related inputs only matter for canvas element type
+    const imageInputs = new Set(["imageSrc", "imageHeight", "imageWidth"])
+    const hasImageChanges = Object.keys(changes).some((key) =>
+      imageInputs.has(key)
+    )
+
+    if (hasImageChanges && this.elementType === "canvas") {
+      return true
+    }
+
+    // Check if any universal visual inputs changed
+    return Object.keys(changes).some((key) => universalVisualInputs.has(key))
+  }
+
+  private hasAccessibilityChanges(changes: SimpleChanges): boolean {
+    const accessibilityInputs = new Set(["alt", "ariaLabel", "title"])
+
+    return Object.keys(changes).some((key) => accessibilityInputs.has(key))
+  }
+
+  private setAccessibilityAttributes(el?: HTMLElement | SVGSVGElement): void {
+    const qrElement = el || this.qrcElement.nativeElement.firstChild as
+      | HTMLElement
+      | SVGSVGElement
+    const qrElement = (el || this.qrcElement.nativeElement.firstChild) as
+      HTMLElement | SVGSVGElement
+    if (!qrElement) {
+      return
+    }
+
+    const tag = qrElement.tagName.toLowerCase()
+
+    if (this.ariaLabel) {
+      this.renderer.setAttribute(qrElement, "aria-label", this.ariaLabel)
+    }
+
+    if (this.title) {
+      this.renderer.setAttribute(qrElement, "title", this.title)
+    }
+
+    if (this.alt && tag === "img") {
+      this.renderer.setAttribute(qrElement, "alt", this.alt)
+    }
   }
 
   protected isValidQrCodeText(data: string | null): boolean {
@@ -205,20 +276,7 @@ export class QRCodeComponent implements OnChanges {
           this.context = canvasElement.getContext("2d")
           this.toCanvas(canvasElement, config)
             .then(() => {
-              if (this.ariaLabel) {
-                this.renderer.setAttribute(
-                  canvasElement,
-                  "aria-label",
-                  `${this.ariaLabel}`
-                )
-              }
-              if (this.title) {
-                this.renderer.setAttribute(
-                  canvasElement,
-                  "title",
-                  `${this.title}`
-                )
-              }
+              this.setAccessibilityAttributes(canvasElement)
 
               if (centerImageSrc && this.context) {
                 this.centerImage = new Image(
@@ -277,6 +335,7 @@ export class QRCodeComponent implements OnChanges {
               this.renderer.setAttribute(svgElement, "width", `${this.width}`)
               this.renderElement(svgElement)
               this.emitQRCodeURL(svgElement)
+              this.setAccessibilityAttributes(svgElement)
             })
             .catch((e) => {
               console.error("[angularx-qrcode] svg error:", e)
@@ -290,18 +349,10 @@ export class QRCodeComponent implements OnChanges {
             this.renderer.createElement("img")
           this.toDataURL(config)
             .then((dataUrl: string) => {
-              if (this.alt) {
-                imgElement.setAttribute("alt", this.alt)
-              }
-              if (this.ariaLabel) {
-                imgElement.setAttribute("aria-label", this.ariaLabel)
-              }
               imgElement.setAttribute("src", dataUrl)
-              if (this.title) {
-                imgElement.setAttribute("title", this.title)
-              }
               this.renderElement(imgElement)
               this.emitQRCodeURL(imgElement)
+              this.setAccessibilityAttributes(imgElement)
             })
             .catch((e) => {
               console.error("[angularx-qrcode] img/url error:", e)

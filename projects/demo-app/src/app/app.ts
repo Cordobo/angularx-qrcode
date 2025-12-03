@@ -66,7 +66,7 @@ export class App {
     cssClass: 'center',
     elementType: 'canvas' as QRCodeElementType,
     errorCorrectionLevel: 'M' as QRCodeErrorCorrectionLevel,
-    imageSrc: './assets/angular-logo.png',
+    imageSrc: './angular-logo.png',
     imageHeight: 75,
     imageWidth: 75,
     margin: 4,

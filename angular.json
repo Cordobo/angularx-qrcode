@@ -2,7 +2,10 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -28,6 +31,16 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/angularx-qrcode/tsconfig.spec.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/angularx-qrcode/**/*.ts",
+              "projects/angularx-qrcode/**/*.html"
+            ],
+            "eslintConfig": "projects/angularx-qrcode/eslint.config.js"
           }
         }
       }
@@ -93,6 +106,16 @@
         },
         "test": {
           "builder": "@angular/build:unit-test"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/demo-app/**/*.ts",
+              "projects/demo-app/**/*.html"
+            ],
+            "eslintConfig": "projects/demo-app/eslint.config.js"
+          }
         }
       }
     }

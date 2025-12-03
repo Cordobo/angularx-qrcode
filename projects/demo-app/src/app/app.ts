@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, inject, OnInit, effect } from '@angular/core'
+import { Component, inject, OnInit } from '@angular/core'
 import { FormsModule, FormControl } from '@angular/forms'
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar'
 import { SafeUrl } from '@angular/platform-browser'
@@ -21,7 +21,6 @@ import { MatTooltipModule } from '@angular/material/tooltip'
 import { Router, ActivatedRoute } from '@angular/router'
 
 import {
-  FixMeLater,
   QRCodeErrorCorrectionLevel,
   QRCodeElementType,
   QRCodeComponent,
@@ -204,7 +203,7 @@ export class App implements OnInit {
   updateUrlParams(): void {
     if (this.isLoadingFromUrl) return
 
-    const queryParams: { [key: string]: string | number | boolean } = {
+    const queryParams: Record<string, string | number | boolean> = {
       qrdata: this.qrdata,
       allowEmptyString: this.allowEmptyString,
       elementType: this.elementType,
@@ -329,7 +328,7 @@ export class App implements OnInit {
     this.qrCodeSrc = url
   }
 
-  saveAsImage(parent: FixMeLater) {
+  saveAsImage(parent: QRCodeComponent) {
     let parentElement = null
 
     if (this.elementType === 'canvas') {
@@ -346,7 +345,7 @@ export class App implements OnInit {
 
     if (parentElement) {
       // converts base 64 encoded image to blobData
-      let blobData = this.convertBase64ToBlob(parentElement)
+      const blobData = this.convertBase64ToBlob(parentElement)
       // saves as image
       const blob = new Blob([blobData], { type: 'image/png' })
       const url = window.URL.createObjectURL(blob)

@@ -193,7 +193,7 @@ export class AppComponent {{
           <form class="form-full-width">
             <mat-form-field class="input-full-width" appearance="fill">
               <mat-label>QR Code (qrdata)</mat-label>
-              <input matInput name="qrdata" placeholder="qrdata" [(ngModel)]="qrdata" />
+              <input matInput name="qrdata" placeholder="qrdata" [(ngModel)]="qrdata" (ngModelChange)="updateUrlParams()" />
             </mat-form-field>
 
             <section>
@@ -203,6 +203,7 @@ export class AppComponent {{
                   name="qrdata"
                   aria-label="qrdata"
                   [(ngModel)]="qrdata"
+                  (ngModelChange)="updateUrlParams()"
                   selected="qrdata"
                 >
                   <mat-button-toggle value="https://github.com/Cordobo/angularx-qrcode"
@@ -233,6 +234,7 @@ export class AppComponent {{
                 [(ngModel)]="elementType"
                 selected="elementType"
                 (change)="setImageVisibility(elementType === 'canvas')"
+                (ngModelChange)="updateUrlParams()"
               >
                 <mat-button-toggle value="canvas">canvas (Default)</mat-button-toggle>
                 <mat-button-toggle value="img">img</mat-button-toggle>
@@ -254,6 +256,7 @@ export class AppComponent {{
             name="errorCorrectionLevel"
             aria-label="ErrorCorrectionLevel"
             [(ngModel)]="errorCorrectionLevel"
+            (ngModelChange)="updateUrlParams()"
             selected="errorCorrectionLevel"
           >
             <mat-button-toggle value="L">L</mat-button-toggle>
@@ -280,6 +283,7 @@ export class AppComponent {{
                 name="width"
                 aria-label="Width"
                 [(ngModel)]="width"
+                (ngModelChange)="updateUrlParams()"
                 selected="width"
               >
                 @for (o of widthList; track o.val) {
@@ -296,6 +300,7 @@ export class AppComponent {{
                 name="margin"
                 aria-label="Margin"
                 [(ngModel)]="margin"
+                (ngModelChange)="updateUrlParams()"
                 selected="margin"
               >
                 @for (o of marginList; track o.val) {
@@ -312,6 +317,7 @@ export class AppComponent {{
                 name="scale"
                 aria-label="Scale"
                 [(ngModel)]="scale"
+                (ngModelChange)="updateUrlParams()"
                 selected="scale"
               >
                 @for (o of scaleList; track o.val) {
@@ -353,7 +359,7 @@ export class AppComponent {{
                 [step]="'5'"
                 aria-labelledby="image width"
               >
-                <input matSliderThumb [(ngModel)]="imageWidth" />
+                <input matSliderThumb [(ngModel)]="imageWidth" (ngModelChange)="updateUrlParams()" />
               </mat-slider>
 
               <mat-form-field appearance="fill">
@@ -363,6 +369,7 @@ export class AppComponent {{
                   type="number"
                   placeholder="{{ width }}"
                   [(ngModel)]="imageWidth"
+                  (ngModelChange)="updateUrlParams()"
                   min="10"
                 />
               </mat-form-field>
@@ -377,7 +384,7 @@ export class AppComponent {{
                 [step]="'5'"
                 aria-labelledby="image height"
               >
-                <input matSliderThumb [(ngModel)]="imageHeight" />
+                <input matSliderThumb [(ngModel)]="imageHeight" (ngModelChange)="updateUrlParams()" />
               </mat-slider>
               <mat-form-field appearance="fill">
                 <mat-label>Height</mat-label>
@@ -386,6 +393,7 @@ export class AppComponent {{
                   type="number"
                   placeholder="{{ width }}"
                   [(ngModel)]="imageHeight"
+                  (ngModelChange)="updateUrlParams()"
                   min="10"
                 />
               </mat-form-field>
@@ -417,6 +425,7 @@ export class AppComponent {{
                   [cpPositionOffset]="'50%'"
                   [cpPositionRelativeToArrow]="true"
                   [(colorPicker)]="colorDark"
+                  (colorPickerChange)="updateUrlParams()"
                   [cpOutputFormat]="'hex'"
                 >
                   <mat-icon aria-hidden="false" aria-label="Color picker"
@@ -428,6 +437,7 @@ export class AppComponent {{
                   name="colorDark"
                   aria-label="ColorDark"
                   [(ngModel)]="colorDark"
+                  (ngModelChange)="updateUrlParams()"
                   selected="colorDark"
                 >
                   <mat-button-toggle value="#3f51b5">Indigo</mat-button-toggle>
@@ -450,6 +460,7 @@ export class AppComponent {{
                   [cpPositionOffset]="'50%'"
                   [cpPositionRelativeToArrow]="true"
                   [(colorPicker)]="colorLight"
+                  (colorPickerChange)="updateUrlParams()"
                   [cpOutputFormat]="'hex'"
                 >
                   <mat-icon aria-hidden="false" aria-label="Color picker"
@@ -461,6 +472,7 @@ export class AppComponent {{
                   name="colorLight"
                   aria-label="ColorLight"
                   [(ngModel)]="colorLight"
+                  (ngModelChange)="updateUrlParams()"
                   selected="colorLight"
                 >
                   <mat-button-toggle value="#ff4081">Pink</mat-button-toggle>
@@ -491,6 +503,7 @@ export class AppComponent {{
               <mat-radio-group
                 aria-label="Select an option"
                 [(ngModel)]="cssClass"
+                (ngModelChange)="updateUrlParams()"
                 class="radio-vertical"
               >
                 <mat-radio-button value="left">Left</mat-radio-button>
@@ -526,7 +539,7 @@ export class AppComponent {{
               <form class="form-full-width">
                 <mat-form-field class="input-full-width" appearance="fill">
                   <mat-label>alt Attribute</mat-label>
-                  <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" />
+                  <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" (ngModelChange)="updateUrlParams()" />
                   <mat-hint
                     >alt attribute is only available for elementTypes "img" and "url"</mat-hint
                   >
@@ -535,7 +548,7 @@ export class AppComponent {{
 
                 <mat-form-field class="input-full-width" appearance="fill">
                   <mat-label>title Attribute</mat-label>
-                  <input matInput name="title" placeholder="title" [(ngModel)]="title" />
+                  <input matInput name="title" placeholder="title" [(ngModel)]="title" (ngModelChange)="updateUrlParams()" />
                 </mat-form-field>
 
                 <mat-form-field class="input-full-width" appearance="fill">
@@ -545,6 +558,7 @@ export class AppComponent {{
                     name="ariaLabel"
                     placeholder="ariaLabel"
                     [(ngModel)]="ariaLabel"
+                    (ngModelChange)="updateUrlParams()"
                   />
                   <mat-hint
                     >aria-label attribute is only available for elementTypes "canvas", "img" and
@@ -579,4 +593,15 @@ export class AppComponent {{
   matTooltip="Reset to defaults"
 >
   <mat-icon>restart_alt</mat-icon>
+</button>
+
+<button
+  mat-fab
+  id="button-share"
+  color="primary"
+  aria-label="Share URL"
+  (click)="shareUrl()"
+  matTooltip="Copy shareable URL to clipboard"
+>
+  <mat-icon>share</mat-icon>
 </button>

@@ -50,7 +50,10 @@
                 "input": "projects/demo-app/public"
               }
             ],
-            "styles": ["projects/demo-app/src/styles.css"]
+            "styles": [
+              "projects/demo-app/src/custom-theme.scss",
+              "projects/demo-app/src/styles.css"
+            ]
           },
           "configurations": {
             "production": {

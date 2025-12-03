@@ -26,7 +26,7 @@
     aria-label="icon-button with file download icon"
   >
     <mat-icon>file_download</mat-icon>
-    npm 21.0.0
+    npm 21.0.1
   </a>
 
   <iframe
@@ -85,11 +85,7 @@
               </button>
             }
             @if (this.elementType === 'svg') {
-              <a
-                mat-raised-button
-                color="primary"
-                [href]="qrCodeSrc"
-                download="angularx-qrcode"
+              <a mat-raised-button color="primary" [href]="qrCodeSrc" download="angularx-qrcode"
                 >Download QR Code Image</a
               >
             }
@@ -343,55 +339,57 @@ export class AppComponent {{
           <br />
           @if (showImage) {
             <section>
-            <div class="example-label-container">
-              <label id="example-name-label" class="example-name-label">Width/Height: </label>
-              <label class="example-value-label">{{ imageWidth }}/{{ imageHeight }}</label>
-            </div>
-            Width:
-            <mat-slider
-              discrete
-              class="example-margin"
-              [max]="width"
-              [min]="10"
-              [step]="'5'"
-              aria-labelledby="image width"
-            >
-              <input matSliderThumb [(ngModel)]="imageWidth" />
-            </mat-slider>
-            <mat-form-field appearance="fill">
-              <mat-label>Width</mat-label>
-              <input
-                matInput
-                type="number"
-                placeholder="{{ width }}"
-                [(ngModel)]="imageWidth"
-                min="10"
-              />
-            </mat-form-field>
+              <div class="example-label-container">
+                <label id="example-name-label" class="example-name-label">Width/Height: </label>
+                <label class="example-value-label">{{ imageWidth }}/{{ imageHeight }}</label>
+              </div>
+              Width:
 
-            <br />
-            Height:
-            <mat-slider
-              discrete
-              class="example-margin"
-              [max]="width"
-              [min]="10"
-              [step]="'5'"
-              aria-labelledby="image height"
-            >
-              <input matSliderThumb [(ngModel)]="imageHeight" />
-            </mat-slider>
-            <mat-form-field appearance="fill">
-              <mat-label>Height</mat-label>
-              <input
-                matInput
-                type="number"
-                placeholder="{{ width }}"
-                [(ngModel)]="imageHeight"
-                min="10"
-              />
-            </mat-form-field>
-          </section>
+              <mat-slider
+                discrete
+                class="example-margin"
+                [max]="width"
+                [min]="10"
+                [step]="'5'"
+                aria-labelledby="image width"
+              >
+                <input matSliderThumb [(ngModel)]="imageWidth" />
+              </mat-slider>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Width</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  placeholder="{{ width }}"
+                  [(ngModel)]="imageWidth"
+                  min="10"
+                />
+              </mat-form-field>
+
+              <br />
+              Height:
+              <mat-slider
+                discrete
+                class="example-margin"
+                [max]="width"
+                [min]="10"
+                [step]="'5'"
+                aria-labelledby="image height"
+              >
+                <input matSliderThumb [(ngModel)]="imageHeight" />
+              </mat-slider>
+              <mat-form-field appearance="fill">
+                <mat-label>Height</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  placeholder="{{ width }}"
+                  [(ngModel)]="imageHeight"
+                  min="10"
+                />
+              </mat-form-field>
+            </section>
           }
         </mat-card-content>
 
@@ -409,65 +407,71 @@ export class AppComponent {{
           <br />
           @if (showColors) {
             <section>
-            <div class="button-label">Foreground:</div>
-            <div class="button-row">
-              <button
-                mat-stroked-button
-                [style.color]="'#ffffff'"
-                [style.background]="colorDark"
-                [cpPosition]="'top'"
-                [cpPositionOffset]="'50%'"
-                [cpPositionRelativeToArrow]="true"
-                [(colorPicker)]="colorDark"
-                [cpOutputFormat]="'hex'"
-              >
-                <mat-icon aria-hidden="false" aria-label="Color picker">format_color_fill</mat-icon>
-              </button>
-
-              <mat-button-toggle-group
-                name="colorDark"
-                aria-label="ColorDark"
-                [(ngModel)]="colorDark"
-                selected="colorDark"
-              >
-                <mat-button-toggle value="#3f51b5">Indigo</mat-button-toggle>
-                <mat-button-toggle value="#ff0000">Red</mat-button-toggle>
-                <mat-button-toggle value="#ffffff">White</mat-button-toggle>
-                <mat-button-toggle value="#000000">Default colorDark (#000000ff)</mat-button-toggle>
-              </mat-button-toggle-group>
-            </div>
-          </section>
-
-          <section>
-            <div class="button-label">Background:</div>
-            <div class="button-row">
-              <button
-                mat-stroked-button
-                [style.background]="colorLight"
-                [cpPosition]="'top'"
-                [cpPositionOffset]="'50%'"
-                [cpPositionRelativeToArrow]="true"
-                [(colorPicker)]="colorLight"
-                [cpOutputFormat]="'hex'"
-              >
-                <mat-icon aria-hidden="false" aria-label="Color picker">format_color_fill</mat-icon>
-              </button>
-
-              <mat-button-toggle-group
-                name="colorLight"
-                aria-label="ColorLight"
-                [(ngModel)]="colorLight"
-                selected="colorLight"
-              >
-                <mat-button-toggle value="#ff4081">Pink</mat-button-toggle>
-                <mat-button-toggle value="#ff0000">Red</mat-button-toggle>
-                <mat-button-toggle value="#000000">Black</mat-button-toggle>
-                <mat-button-toggle value="#ffffff"
-                  >Default colorLight (#ffffffff)</mat-button-toggle
+              <div class="button-label">Foreground:</div>
+              <div class="button-row">
+                <button
+                  mat-stroked-button
+                  [style.color]="'#ffffff'"
+                  [style.background]="colorDark"
+                  [cpPosition]="'top'"
+                  [cpPositionOffset]="'50%'"
+                  [cpPositionRelativeToArrow]="true"
+                  [(colorPicker)]="colorDark"
+                  [cpOutputFormat]="'hex'"
                 >
-              </mat-button-toggle-group>
-            </div>
-          </section>
+                  <mat-icon aria-hidden="false" aria-label="Color picker"
+                    >format_color_fill</mat-icon
+                  >
+                </button>
+
+                <mat-button-toggle-group
+                  name="colorDark"
+                  aria-label="ColorDark"
+                  [(ngModel)]="colorDark"
+                  selected="colorDark"
+                >
+                  <mat-button-toggle value="#3f51b5">Indigo</mat-button-toggle>
+                  <mat-button-toggle value="#ff0000">Red</mat-button-toggle>
+                  <mat-button-toggle value="#ffffff">White</mat-button-toggle>
+                  <mat-button-toggle value="#000000"
+                    >Default colorDark (#000000ff)</mat-button-toggle
+                  >
+                </mat-button-toggle-group>
+              </div>
+            </section>
+
+            <section>
+              <div class="button-label">Background:</div>
+              <div class="button-row">
+                <button
+                  mat-stroked-button
+                  [style.background]="colorLight"
+                  [cpPosition]="'top'"
+                  [cpPositionOffset]="'50%'"
+                  [cpPositionRelativeToArrow]="true"
+                  [(colorPicker)]="colorLight"
+                  [cpOutputFormat]="'hex'"
+                >
+                  <mat-icon aria-hidden="false" aria-label="Color picker"
+                    >format_color_fill</mat-icon
+                  >
+                </button>
+
+                <mat-button-toggle-group
+                  name="colorLight"
+                  aria-label="ColorLight"
+                  [(ngModel)]="colorLight"
+                  selected="colorLight"
+                >
+                  <mat-button-toggle value="#ff4081">Pink</mat-button-toggle>
+                  <mat-button-toggle value="#ff0000">Red</mat-button-toggle>
+                  <mat-button-toggle value="#000000">Black</mat-button-toggle>
+                  <mat-button-toggle value="#ffffff"
+                    >Default colorLight (#ffffffff)</mat-button-toggle
+                  >
+                </mat-button-toggle-group>
+              </div>
+            </section>
           }
         </mat-card-content>
 
@@ -484,23 +488,23 @@ export class AppComponent {{
 
           @if (showCss) {
             <section>
-            <mat-radio-group
-              aria-label="Select an option"
-              [(ngModel)]="cssClass"
-              class="radio-vertical"
-            >
-              <mat-radio-button value="left">Left</mat-radio-button>
-              <mat-radio-button value="center">Center</mat-radio-button>
-              <mat-radio-button value="right">Right</mat-radio-button>
-              <mat-radio-button value="demoBorder">Border</mat-radio-button>
-              <mat-radio-button value="demoBorderRadius" (click)="changeMargin(0)"
-                >BorderRadius without margin</mat-radio-button
+              <mat-radio-group
+                aria-label="Select an option"
+                [(ngModel)]="cssClass"
+                class="radio-vertical"
               >
-              <mat-radio-button value="demoBorderRadius" (click)="changeMargin(10)"
-                >BorderRadius with margin
-              </mat-radio-button>
-            </mat-radio-group>
-          </section>
+                <mat-radio-button value="left">Left</mat-radio-button>
+                <mat-radio-button value="center">Center</mat-radio-button>
+                <mat-radio-button value="right">Right</mat-radio-button>
+                <mat-radio-button value="demoBorder">Border</mat-radio-button>
+                <mat-radio-button value="demoBorderRadius" (click)="changeMargin(0)"
+                  >BorderRadius without margin</mat-radio-button
+                >
+                <mat-radio-button value="demoBorderRadius" (click)="changeMargin(10)"
+                  >BorderRadius with margin
+                </mat-radio-button>
+              </mat-radio-group>
+            </section>
           }
         </mat-card-content>
 
@@ -519,32 +523,37 @@ export class AppComponent {{
 
           @if (showA11y) {
             <section>
-            <form class="form-full-width">
-              <mat-form-field class="input-full-width" appearance="fill">
-                <mat-label>alt Attribute</mat-label>
-                <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" />
-                <mat-hint
-                  >alt attribute is only available for elementTypes "img" and "url"</mat-hint
-                >
-              </mat-form-field>
-              <br /><br />
+              <form class="form-full-width">
+                <mat-form-field class="input-full-width" appearance="fill">
+                  <mat-label>alt Attribute</mat-label>
+                  <input matInput name="alt" placeholder="alt" [(ngModel)]="alt" />
+                  <mat-hint
+                    >alt attribute is only available for elementTypes "img" and "url"</mat-hint
+                  >
+                </mat-form-field>
+                <br /><br />
 
-              <mat-form-field class="input-full-width" appearance="fill">
-                <mat-label>title Attribute</mat-label>
-                <input matInput name="title" placeholder="title" [(ngModel)]="title" />
-              </mat-form-field>
+                <mat-form-field class="input-full-width" appearance="fill">
+                  <mat-label>title Attribute</mat-label>
+                  <input matInput name="title" placeholder="title" [(ngModel)]="title" />
+                </mat-form-field>
 
-              <mat-form-field class="input-full-width" appearance="fill">
-                <mat-label>aria-label Attribute</mat-label>
-                <input matInput name="ariaLabel" placeholder="ariaLabel" [(ngModel)]="ariaLabel" />
-                <mat-hint
-                  >aria-label attribute is only available for elementTypes "canvas", "img" and
-                  "url"</mat-hint
-                >
-              </mat-form-field>
-            </form>
-            <br />
-          </section>
+                <mat-form-field class="input-full-width" appearance="fill">
+                  <mat-label>aria-label Attribute</mat-label>
+                  <input
+                    matInput
+                    name="ariaLabel"
+                    placeholder="ariaLabel"
+                    [(ngModel)]="ariaLabel"
+                  />
+                  <mat-hint
+                    >aria-label attribute is only available for elementTypes "canvas", "img" and
+                    "url"</mat-hint
+                  >
+                </mat-form-field>
+              </form>
+              <br />
+            </section>
           }
         </mat-card-content>
       </mat-card>

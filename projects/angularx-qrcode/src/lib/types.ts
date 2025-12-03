@@ -1,12 +1,12 @@
 export type QRCodeErrorCorrectionLevel =
-  | "L"
-  | "M"
-  | "Q"
-  | "H"
-  | "low"
-  | "medium"
-  | "quartile"
-  | "high"
+  | 'L'
+  | 'M'
+  | 'Q'
+  | 'H'
+  | 'low'
+  | 'medium'
+  | 'quartile'
+  | 'high'
 
 export interface QRCodeConfigType {
   color: {
@@ -20,7 +20,7 @@ export interface QRCodeConfigType {
   width: number
 }
 
-export type QRCodeElementType = "url" | "img" | "canvas" | "svg"
+export type QRCodeElementType = 'url' | 'img' | 'canvas' | 'svg'
 
 export type QRCodeVersion =
   | 0
@@ -69,4 +69,6 @@ export type QRCodeVersion =
 // https://stackoverflow.com/a/67511209
 export type RGBAColor = `#${string}`
 
+// TODO
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type FixMeLater = any

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common'
-import { Component, inject } from '@angular/core'
+import { Component, inject, OnInit, effect } from '@angular/core'
 import { FormsModule, FormControl } from '@angular/forms'
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar'
 import { SafeUrl } from '@angular/platform-browser'
@@ -18,6 +18,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatTooltipModule } from '@angular/material/tooltip'
+import { Router, ActivatedRoute } from '@angular/router'
 
 import {
   FixMeLater,
@@ -54,8 +55,11 @@ type ListType = { title: string; val: number }[]
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
 })
-export class App {
+export class App implements OnInit {
   private _snackBar = inject(MatSnackBar)
+  private router = inject(Router)
+  private route = inject(ActivatedRoute)
+  private isLoadingFromUrl = false
 
   public initial_state = {
     allowEmptyString: true,
@@ -158,9 +162,95 @@ export class App {
     ]
   }
 
+  ngOnInit(): void {
+    this.loadFromUrlParams()
+  }
+
+  private loadFromUrlParams(): void {
+    this.route.queryParams.subscribe((params) => {
+      this.isLoadingFromUrl = true
+
+      if (params['qrdata']) this.qrdata = params['qrdata']
+      if (params['allowEmptyString']) this.allowEmptyString = params['allowEmptyString'] === 'true'
+      if (params['alt']) this.alt = params['alt']
+      if (params['ariaLabel']) this.ariaLabel = params['ariaLabel']
+      if (params['colorDark']) this.colorDark = params['colorDark']
+      if (params['colorLight']) this.colorLight = params['colorLight']
+      if (params['cssClass']) this.cssClass = params['cssClass']
+      if (params['elementType']) this.elementType = params['elementType'] as QRCodeElementType
+      if (params['errorCorrectionLevel'])
+        this.errorCorrectionLevel = params['errorCorrectionLevel'] as QRCodeErrorCorrectionLevel
+      if (params['imageSrc']) this.imageSrc = params['imageSrc']
+      if (params['imageHeight']) this.imageHeight = Number(params['imageHeight'])
+      if (params['imageWidth']) this.imageWidth = Number(params['imageWidth'])
+      if (params['margin']) this.margin = Number(params['margin'])
+      if (params['scale']) this.scale = Number(params['scale'])
+      if (params['title']) this.title = params['title']
+      if (params['width']) this.width = Number(params['width'])
+
+      // Handle visibility toggles
+      if (params['showA11y'] !== undefined) this.showA11y = params['showA11y'] === 'true'
+      if (params['showColors'] !== undefined) this.showColors = params['showColors'] === 'true'
+      if (params['showCss'] !== undefined) this.showCss = params['showCss'] === 'true'
+      if (params['showImage'] !== undefined) {
+        this.showImage = params['showImage'] === 'true'
+        this.setImageVisibility(this.showImage)
+      }
+
+      this.isLoadingFromUrl = false
+    })
+  }
+
+  updateUrlParams(): void {
+    if (this.isLoadingFromUrl) return
+
+    const queryParams: { [key: string]: string | number | boolean } = {
+      qrdata: this.qrdata,
+      allowEmptyString: this.allowEmptyString,
+      elementType: this.elementType,
+      errorCorrectionLevel: this.errorCorrectionLevel,
+      margin: this.margin,
+      scale: this.scale,
+      width: this.width,
+    }
+
+    if (this.showA11y) {
+      queryParams['alt'] = this.alt
+      queryParams['ariaLabel'] = this.ariaLabel
+      queryParams['title'] = this.title
+      queryParams['showA11y'] = this.showA11y
+    }
+
+    if (this.showColors) {
+      queryParams['colorDark'] = this.colorDark
+      queryParams['colorLight'] = this.colorLight
+      queryParams['showColors'] = this.showColors
+    }
+
+    if (this.showCss) {
+      queryParams['cssClass'] = this.cssClass
+      queryParams['showCss'] = this.showCss
+    }
+
+    if (this.showImage) {
+      if (this.imageSrc) queryParams['imageSrc'] = this.imageSrc
+      if (this.imageHeight) queryParams['imageHeight'] = this.imageHeight
+      if (this.imageWidth) queryParams['imageWidth'] = this.imageWidth
+      queryParams['showImage'] = this.showImage
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    })
+  }
+
   // Change value programatically
   changeMargin(newValue: number): void {
     this.margin = newValue
+    this.updateUrlParams()
   }
 
   reset(): void {
@@ -187,6 +277,19 @@ export class App {
     this.setImageVisibility(true)
 
     this._snackBar.open('All values resetted', 'close')
+    this.updateUrlParams()
+  }
+
+  shareUrl(): void {
+    const currentUrl = window.location.href
+    navigator.clipboard.writeText(currentUrl).then(
+      () => {
+        this._snackBar.open('URL copied to clipboard!', 'close', { duration: 3000 })
+      },
+      () => {
+        this._snackBar.open('Failed to copy URL', 'close', { duration: 3000 })
+      }
+    )
   }
 
   setTabIndex(idx: number): boolean {
@@ -196,14 +299,17 @@ export class App {
 
   setA11yVisibility(enable?: boolean): void {
     this.showA11y = enable ? enable : !this.showA11y
+    this.updateUrlParams()
   }
 
   setColorsVisibility(enable?: boolean): void {
     this.showColors = enable ? enable : !this.showColors
+    this.updateUrlParams()
   }
 
   setCssVisibility(enable?: boolean): void {
     this.showCss = enable ? enable : !this.showCss
+    this.updateUrlParams()
   }
 
   setImageVisibility(enable?: boolean): void {
@@ -215,6 +321,7 @@ export class App {
       this.imageHeight = this.data_model.imageHeight
       this.imageWidth = this.data_model.imageWidth
     }
+    this.updateUrlParams()
   }
 
   // Re-enable, when a method to download images has been implemented

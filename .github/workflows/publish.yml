@@ -20,35 +20,35 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Check publish cooldown
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          # Cooldown period in seconds (24 hours)
-          COOLDOWN_SECONDS=86400
+      # - name: Check publish cooldown
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #   run: |
+      #     # Cooldown period in seconds (24 hours)
+      #     COOLDOWN_SECONDS=86400
 
-          # Fetch the last publish timestamp from repository variables
-          LAST_PUBLISH=$(gh api repos/${{ github.repository }}/actions/variables/LAST_NPM_PUBLISH_TIME --jq '.value' 2>/dev/null || echo "0")
+      #     # Fetch the last publish timestamp from repository variables
+      #     LAST_PUBLISH=$(gh api repos/${{ github.repository }}/actions/variables/LAST_NPM_PUBLISH_TIME --jq '.value' 2>/dev/null || echo "0")
 
-          if [ "$LAST_PUBLISH" != "0" ]; then
-            CURRENT_TIME=$(date +%s)
-            TIME_SINCE_LAST=$((CURRENT_TIME - LAST_PUBLISH))
-            TIME_REMAINING=$((COOLDOWN_SECONDS - TIME_SINCE_LAST))
+      #     if [ "$LAST_PUBLISH" != "0" ]; then
+      #       CURRENT_TIME=$(date +%s)
+      #       TIME_SINCE_LAST=$((CURRENT_TIME - LAST_PUBLISH))
+      #       TIME_REMAINING=$((COOLDOWN_SECONDS - TIME_SINCE_LAST))
 
-            if [ $TIME_SINCE_LAST -lt $COOLDOWN_SECONDS ]; then
-              HOURS_REMAINING=$((TIME_REMAINING / 3600))
-              MINUTES_REMAINING=$(( (TIME_REMAINING % 3600) / 60 ))
+      #       if [ $TIME_SINCE_LAST -lt $COOLDOWN_SECONDS ]; then
+      #         HOURS_REMAINING=$((TIME_REMAINING / 3600))
+      #         MINUTES_REMAINING=$(( (TIME_REMAINING % 3600) / 60 ))
 
-              echo "❌ Cooldown period is still active!"
-              echo "⏱️  Time since last publish: $((TIME_SINCE_LAST / 3600))h $(( (TIME_SINCE_LAST % 3600) / 60 ))m"
-              echo "⏰ Time remaining: ${HOURS_REMAINING}h ${MINUTES_REMAINING}m"
-              echo ""
-              echo "Please wait before publishing again."
-              exit 1
-            fi
-          fi
+      #         echo "❌ Cooldown period is still active!"
+      #         echo "⏱️  Time since last publish: $((TIME_SINCE_LAST / 3600))h $(( (TIME_SINCE_LAST % 3600) / 60 ))m"
+      #         echo "⏰ Time remaining: ${HOURS_REMAINING}h ${MINUTES_REMAINING}m"
+      #         echo ""
+      #         echo "Please wait before publishing again."
+      #         exit 1
+      #       fi
+      #     fi
 
-          echo "✅ Cooldown check passed. Proceeding with publish..."
+      #     echo "✅ Cooldown check passed. Proceeding with publish..."
 
       - uses: actions/setup-node@v6
         with:
@@ -77,24 +77,24 @@ jobs:
         working-directory: ./dist/angularx-qrcode
         run: npm publish --access public
 
-      - name: Update publish cooldown timestamp
-        if: success()
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          CURRENT_TIME=$(date +%s)
+      # - name: Update publish cooldown timestamp
+      #   if: success()
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #   run: |
+      #     CURRENT_TIME=$(date +%s)
 
-          # Check if variable exists
-          if gh api repos/${{ github.repository }}/actions/variables/LAST_NPM_PUBLISH_TIME 2>/dev/null; then
-            # Update existing variable
-            gh api --method PATCH repos/${{ github.repository }}/actions/variables/LAST_NPM_PUBLISH_TIME \
-              -f name='LAST_NPM_PUBLISH_TIME' \
-              -f value="$CURRENT_TIME"
-          else
-            # Create new variable
-            gh api --method POST repos/${{ github.repository }}/actions/variables \
-              -f name='LAST_NPM_PUBLISH_TIME' \
-              -f value="$CURRENT_TIME"
-          fi
+      #     # Check if variable exists
+      #     if gh api repos/${{ github.repository }}/actions/variables/LAST_NPM_PUBLISH_TIME 2>/dev/null; then
+      #       # Update existing variable
+      #       gh api --method PATCH repos/${{ github.repository }}/actions/variables/LAST_NPM_PUBLISH_TIME \
+      #         -f name='LAST_NPM_PUBLISH_TIME' \
+      #         -f value="$CURRENT_TIME"
+      #     else
+      #       # Create new variable
+      #       gh api --method POST repos/${{ github.repository }}/actions/variables \
+      #         -f name='LAST_NPM_PUBLISH_TIME' \
+      #         -f value="$CURRENT_TIME"
+      #     fi
 
-          echo "✅ Cooldown timestamp updated to $(date -d @$CURRENT_TIME '+%Y-%m-%d %H:%M:%S UTC')"
+      #     echo "✅ Cooldown timestamp updated to $(date -d @$CURRENT_TIME '+%Y-%m-%d %H:%M:%S UTC')"

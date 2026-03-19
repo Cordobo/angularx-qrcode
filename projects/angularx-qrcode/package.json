@@ -1,6 +1,6 @@
 {
   "name": "angularx-qrcode",
-  "version": "21.0.4",
+  "version": "21.0.5",
   "author": {
     "name": "Andreas Jacob <andreas@cordobo.de>",
     "url": "http://cordobo.com/"
@@ -18,6 +18,51 @@
   "devDependencies": {
     "@types/qrcode": "1.5.6"
   },
+  "keywords": [
+    "angularx-qrcode",
+    "angular-qrcode",
+    "ng-qrcode",
+    "ngx-qrcode",
+    "angular",
+    "angular4",
+    "angular5",
+    "angular6",
+    "angular7",
+    "angular8",
+    "angular9",
+    "angular10",
+    "angular11",
+    "angular12",
+    "angular13",
+    "angular14",
+    "angular15",
+    "angular16",
+    "angular17",
+    "angular18",
+    "angular19",
+    "angular20",
+    "angular21",
+    "ionic",
+    "ionic3",
+    "ionic4",
+    "ionic5",
+    "ionic6",
+    "ionic7",
+    "ionic8",
+    "aot",
+    "aot-compatible",
+    "aot-compilation",
+    "library",
+    "ng",
+    "ng-qrcode",
+    "ng2",
+    "ngx",
+    "ivy",
+    "qr",
+    "code",
+    "qrcode",
+    "qr-code"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Cordobo/angularx-qrcode"
@@ -25,6 +70,6 @@
   "bugs": {
     "url": "https://github.com/Cordobo/angularx-qrcode/issues"
   },
-  "homepage": "https://github.com/Cordobo/angularx-qrcode",
+  "homepage": "https://cordobo.github.io/angularx-qrcode/",
   "sideEffects": false
 }

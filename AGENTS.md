@@ -45,3 +45,16 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+
+## Output
+
+- Generate code files only; do not paste code into chat responses.
+- Keep chat responses brief and only include essential status updates.
+
+## GENERAL
+
+- Never use Zsh-History-Expansion
+- Always fix underlying root causes. Do not bypass feature guardrails or silence warnings/errors by changing response semantics unless explicitly requested.
+- Always resolve the root cause of issues. Do not repeat approaches that have already failed, and do not bypass feature guardrails or silence warnings/errors by changing response semantics unless explicitly requested.
+- At the end of each task, all changes and fixes are reviewed by another AI agent (for example: Claude, Google Gemini, or OpenAI Codex).
+- Change the AGENTS.md and README.md to reflect architectural changes.

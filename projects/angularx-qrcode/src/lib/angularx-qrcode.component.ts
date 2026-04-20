@@ -275,6 +275,18 @@ export class QRCodeComponent implements OnChanges {
               const svgElement = svgParentElement.firstChild as SVGSVGElement
               this.renderer.setAttribute(svgElement, "height", `${this.width}`)
               this.renderer.setAttribute(svgElement, "width", `${this.width}`)
+
+              if (this.title) {
+                const titleElement = this.renderer.createElement("title")
+                const titleText = this.renderer.createText(this.title)
+                this.renderer.appendChild(titleElement, titleText)
+                this.renderer.insertBefore(
+                  svgElement,
+                  titleElement,
+                  svgElement.firstChild
+                )
+              }
+
               this.renderElement(svgElement)
               this.emitQRCodeURL(svgElement)
             })

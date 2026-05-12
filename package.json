@@ -21,6 +21,8 @@
     "build": "npm run prepare:build && ng build --project angularx-qrcode --configuration production",
     "build:demo": "ng build --project demo-app",
     "publish": "node -e \"console.log('Publishing is only available via github. See .github/publish.yml')\"",
+    "security:cache": "bash scripts/security/github-actions-cache-check.sh",
+    "security:ioc": "bash scripts/security/npm-supply-chain-check.sh",
     "ci:build:lib": "ng build --project angularx-qrcode --configuration production",
     "ci:build:app": "ng build --project demo-app --configuration production --base-href=/angularx-qrcode/",
     "format": "prettier --write ."

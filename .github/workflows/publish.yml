@@ -18,7 +18,7 @@ jobs:
       contents: write
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       # - name: Check publish cooldown
       #   env:
@@ -50,7 +50,7 @@ jobs:
 
       #     echo "✅ Cooldown check passed. Proceeding with publish..."
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
           # cache: npm
           node-version-file: '.nvmrc'
@@ -68,7 +68,7 @@ jobs:
         run: npm -v # should be >= 11.5.1
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --ignore-scripts
 
       - name: Build library
         run: npm run ci:build:lib

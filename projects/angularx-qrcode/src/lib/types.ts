@@ -17,7 +17,7 @@ export interface QRCodeConfigType {
   margin: number
   scale: number
   version?: QRCodeVersion
-  width: number
+  width?: number
 }
 
 export type QRCodeElementType = 'url' | 'img' | 'canvas' | 'svg'

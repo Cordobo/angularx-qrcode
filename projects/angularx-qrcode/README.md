@@ -231,7 +231,7 @@ it returns an image as `.png`, if it's svg, returns a `.svg` file.
 | scale                | Number                  | 4           | Scale factor. A value of 1 means 1px per modules (black dots). |
 | title                | String                  | null        | HTML title attribute (supported by canvas, img, url)           |
 | version              | Number                  | (auto)      | 1-40                                                           |
-| width                | Number                  | 10          | Height/Width (any value)                                       |
+| width                | Number \| String        | 10          | Height/Width (any value, e.g. 256 or '100%')                   |
 
 ## QR Code capacity
 

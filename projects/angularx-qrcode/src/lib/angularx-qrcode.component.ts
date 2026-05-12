@@ -48,7 +48,7 @@ export class QRCodeComponent implements OnChanges {
   @Input() public qrdata = ''
   @Input() public scale = 4
   @Input() public version?: QRCodeVersion
-  @Input() public width = 10
+  @Input() public width: number | string = 10
 
   // Accessibility features introduced in 13.0.4+
   @Input() public alt?: string
@@ -153,6 +153,7 @@ export class QRCodeComponent implements OnChanges {
         this.qrdata = ' '
       }
 
+      const numericWidth = Number(this.width)
       const config: QRCodeConfigType = {
         color: {
           dark: this.colorDark,
@@ -162,7 +163,7 @@ export class QRCodeComponent implements OnChanges {
         margin: this.margin,
         scale: this.scale,
         version: this.version,
-        width: this.width,
+        width: Number.isFinite(numericWidth) ? numericWidth : undefined,
       }
 
       const centerImageSrc = this.imageSrc

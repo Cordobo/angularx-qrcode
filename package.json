@@ -47,23 +47,23 @@
     "qrcode": "1.5.4"
   },
   "peerDependencies": {
-    "@angular/core": ">= 21.0.0 < 22.0.0"
+    "@angular/core": ">= 21.0.0 < 23.0.0"
   },
   "devDependencies": {
     "@angular/build": "^22.0.1",
-    "@angular/cdk": "^21.0.7",
-    "@angular/cli": "^21.0.7",
+    "@angular/cdk": "^22.0.2",
+    "@angular/cli": "^22.0.2",
     "@angular/common": "^22.0.1",
     "@angular/compiler": "^22.0.1",
     "@angular/compiler-cli": "^22.0.1",
     "@angular/core": "^22.0.1",
     "@angular/forms": "^22.0.1",
-    "@angular/material": "^21.0.1",
+    "@angular/material": "^22.0.2",
     "@angular/platform-browser": "^22.0.1",
     "@angular/platform-browser-dynamic": "^22.0.1",
     "@angular/router": "^22.0.1",
     "@types/qrcode": "1.5.6",
-    "angular-eslint": "21.0.1",
+    "angular-eslint": "22.0.0",
     "eslint": "^9.39.1",
     "jsdom": "^27.1.0",
     "lite-server": "2.6.1",
@@ -73,8 +73,8 @@
     "rimraf": "6.1.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "typescript": "~5.9.2",
-    "typescript-eslint": "8.46.4",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "8.61.0",
     "vitest": "^4.0.8"
   },
   "keywords": [

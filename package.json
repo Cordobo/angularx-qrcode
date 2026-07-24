@@ -16,7 +16,7 @@
     "start": "ng serve demo-app --open",
     "start:dev": "npm run build && npm run build:demo -- --configuration development && npm run start:server",
     "start:prod": "npm run build && npm run build:demo -- --configuration production && npm run start:server",
-    "start:server": "lite-server --baseDir=\"dist/demo-app\"",
+    "start:server": "lite-server --baseDir=\"dist/demo-app/browser\"",
     "prepare:build": "rimraf .angular dist tmp && cp ./README.md ./LICENSE projects/angularx-qrcode/",
     "build": "npm run prepare:build && ng build --project angularx-qrcode --configuration production",
     "build:demo": "ng build --project demo-app",

@@ -3,10 +3,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "paths": {
-      "angularx-qrcode": ["dist/angularx-qrcode/angularx-qrcode", "dist/angularx-qrcode"]
+      "angularx-qrcode": [
+        "./dist/angularx-qrcode/angularx-qrcode",
+        "./dist/angularx-qrcode"
+      ]
     },
     "strict": true,
     "noImplicitOverride": true,

@@ -2,7 +2,7 @@
 
 `angularx-qrcode` - a fast and easy-to-use Angular QR Code Generator library
 
-- Compatible with **Angular 21** and **Ionic**
+- Compatible with **Angular 22** and **Ionic**
 - Under active development
 - Standalone component support
 - Ivy compiler support, AOT, SSR (Server Side Rendering)
@@ -11,7 +11,7 @@
 - Trusted and used by thousands of developers like you
 - Easy to use, [sample web app](#demo-app) included
 
-`angularx-qrcode` is compatible with Ionic 3-8 and Angular 4-21 with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
+`angularx-qrcode` is compatible with Ionic 3-8 and Angular 4-22 with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
 
 - [Installation](#installation)
 - [Demo App](#demo-app)
@@ -27,7 +27,7 @@ Different QR Code styles: regular, with image/logo, custom colors. Generate your
 
 ## Installation
 
-**Angular 21 and Ionic with angularx-qrcode 21**
+**Angular 22 and Ionic with angularx-qrcode 22**
 
 ```console
 # npm
@@ -36,6 +36,14 @@ npm install angularx-qrcode
 yarn add angularx-qrcode
 # pnpm
 pnpm add angularx-qrcode
+```
+
+**Angular 21 and Ionic with angularx-qrcode 21**
+
+```console
+npm install angularx-qrcode@21.0.5 --save
+# Or with yarn
+yarn add angularx-qrcode@21.0.5
 ```
 
 **Angular 20 and Ionic with angularx-qrcode 20**
@@ -66,6 +74,7 @@ yarn add angularx-qrcode@18.0.2
 
 | Angular Version | angularx-qrcode Version |
 | --------------- | ----------------------- |
+| ^22             | ^22.0.0                 |
 | ^21             | ^21.0.5                 |
 | ^20             | ^20.0.0                 |
 | ^19             | ^19.0.0                 |
@@ -209,6 +218,24 @@ export class QRCodeComponent {
 The file format obtained by `qrCodeURL` depends directly on the
 elementType of `<qrcode>`. If it's either canvas, url or image,
 it returns an image as `.png`, if it's svg, returns a `.svg` file.
+
+### Rendering Guarantees
+
+- Async rendering is latest-input-wins. Stale async QR renders are ignored if newer inputs were received.
+- Input values are not mutated during rendering. For `allowEmptyString=true`, an internal normalized render value is used.
+- Blob URLs emitted via `qrCodeURL` are lifecycle-managed and revoked on replacement/component destroy.
+
+### Testing
+
+- Demo app and library tests run with:
+
+```console
+npm test -- --watch=false
+```
+
+- Library behavior tests include:
+  - empty-string rendering without input mutation
+  - stale async render protection (newer input cannot be overwritten by older completion)
 
 ## Available Parameters
 

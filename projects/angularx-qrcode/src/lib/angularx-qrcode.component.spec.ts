@@ -2,6 +2,8 @@ import { TestBed } from '@angular/core/testing'
 import { QRCodeComponent } from './angularx-qrcode.component'
 import { vi } from 'vitest'
 
+const mocks = vi.hoisted(() => ({ toStringOptions: [] as unknown[] }))
+
 vi.mock('qrcode', () => {
   return {
     toCanvas: (
@@ -21,14 +23,18 @@ vi.mock('qrcode', () => {
     ) => cb(null, `data:image/png;base64,${btoa(text)}`),
     toString: (
       text: string,
-      _options: unknown,
+      options: unknown,
       cb: (error: Error | null | undefined, svg: string) => void
-    ) => cb(null, `<svg data-qr="${text}"></svg>`),
+    ) => {
+      mocks.toStringOptions.push(options)
+      cb(null, `<svg data-qr="${text}"></svg>`)
+    },
   }
 })
 
 describe('QRCodeComponent', () => {
   beforeEach(async () => {
+    mocks.toStringOptions.length = 0
     await TestBed.configureTestingModule({
       imports: [QRCodeComponent],
     }).compileComponents()
@@ -41,6 +47,17 @@ describe('QRCodeComponent', () => {
     fixture.detectChanges()
     await fixture.whenStable()
     expect(fixture.componentInstance.qrdata).toBe('')
+  })
+
+  it('requests the svg renderer explicitly', async () => {
+    const fixture = TestBed.createComponent(QRCodeComponent)
+    fixture.componentRef.setInput('elementType', 'svg')
+    fixture.componentRef.setInput('qrdata', 'svg-type')
+    fixture.detectChanges()
+    await fixture.whenStable()
+
+    expect(mocks.toStringOptions).toEqual([expect.objectContaining({ type: 'svg' })])
+    expect(fixture.nativeElement.querySelector('svg')).not.toBeNull()
   })
 
   it('keeps latest render result when async calls resolve out of order', async () => {

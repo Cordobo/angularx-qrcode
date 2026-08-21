@@ -114,7 +114,13 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
 
   private toSVG(data: string, qrCodeConfig: QRCodeToStringOptions): Promise<string> {
     return new Promise((resolve, reject) => {
-      toString(data, qrCodeConfig, (err: Error | null | undefined, url: string) => {
+      // Request the svg renderer explicitly. The `qrcode` package's Node entry point (used
+      // whenever a bundler's "browser" field remap does not apply, e.g. Vitest's SSR module
+      // resolution) falls back to a terminal/utf8 renderer when `type` is omitted, silently
+      // producing ASCII art instead of markup. The browser entry point always renders svg,
+      // so passing `type` there is a no-op.
+      const svgConfig: QRCodeToStringOptions = { ...qrCodeConfig, type: 'svg' }
+      toString(data, svgConfig, (err: Error | null | undefined, url: string) => {
         if (err) {
           reject(err)
         } else {

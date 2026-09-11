@@ -286,4 +286,4 @@ Support the development of angularx-qrcode (or even see your logo here?), consid
 
 MIT License
 
-Copyright (c) 2018 - present [Andreas Jacob (Cordobo.com)](http://cordobo.com/)
+Copyright (c) 2018 - present [Andreas Jacob (Cordobo.com)](https://cordobo.com/)

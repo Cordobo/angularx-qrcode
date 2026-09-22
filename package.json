@@ -56,7 +56,7 @@
     "@angular/common": "^22.0.7",
     "@angular/compiler": "^22.1.0",
     "@angular/compiler-cli": "^22.0.7",
-    "@angular/core": "^22.0.7",
+    "@angular/core": "^22.1.0",
     "@angular/forms": "^22.0.7",
     "@angular/material": "^22.0.5",
     "@angular/platform-browser": "^22.0.7",

@@ -10,8 +10,8 @@ export type QRCodeErrorCorrectionLevel =
 
 export interface QRCodeConfigType {
   color: {
-    dark: string
-    light: string
+    dark: RGBAColor
+    light: RGBAColor
   }
   errorCorrectionLevel: QRCodeErrorCorrectionLevel
   margin: number
@@ -65,9 +65,13 @@ export type QRCodeVersion =
   | 39
   | 40
 
-// TODO A little-bit-of-a-better solution
-// https://stackoverflow.com/a/67511209
-export type RGBAColor = `#${string}`
+/**
+ * Hex RGB/RGBA color, with 3, 4, 6 or 8 digits and an optional leading #.
+ * Uses string to accept dynamic values (including color-picker results), matching
+ * qrcode's public color contract. The renderer parses values at runtime;
+ * enumerating every hex combination exceeds TypeScript union limits.
+ */
+export type RGBAColor = string
 
 /** A failure from the current QR render; superseded and destroyed renders are silent. */
 export interface QRCodeGenerationError {

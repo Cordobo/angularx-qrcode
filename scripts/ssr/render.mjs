@@ -31,7 +31,7 @@ try {
         template: `<h1>Server application</h1><qrcode
           [elementType]="elementType" [qrdata]="qrdata" [width]="256"
           imageSrc="https://example.invalid/logo.png"
-          (qrCodeURL)="record($event)" (qrCodeError)="record($event)" />`,
+          (qrCodeURL)="record($event)" (qrCodeError)="record($event)" (rendered)="record($event)" />`,
       })(ServerHost)
       const html = await renderApplication(
         (context) =>

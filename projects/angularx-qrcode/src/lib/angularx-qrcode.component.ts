@@ -12,6 +12,7 @@ import {
   Output,
   output,
   Renderer2,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
@@ -24,6 +25,7 @@ import {
   toString,
 } from 'qrcode'
 import {
+  RGBAColor,
   QRCodeGenerationError,
   QRCodeVersion,
   QRCodeElementType,
@@ -39,8 +41,8 @@ import {
 })
 export class QRCodeComponent implements OnChanges, OnDestroy {
   @Input() public allowEmptyString = false
-  @Input() public colorDark = '#000000ff'
-  @Input() public colorLight = '#ffffffff'
+  @Input() public colorDark: RGBAColor = '#000000ff'
+  @Input() public colorLight: RGBAColor = '#ffffffff'
   @Input() public cssClass = 'qrcode'
   @Input() public elementType: QRCodeElementType = 'canvas'
   @Input()
@@ -61,10 +63,13 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
 
   @Output() qrCodeURL = new EventEmitter<SafeUrl>()
   readonly qrCodeError = output<QRCodeGenerationError>()
+  /** The current final visual is attached, image decoding/drawing and URL export succeeded. */
+  readonly rendered = output<void>()
 
-  @ViewChild('qrcElement', { static: true }) public qrcElement!: ElementRef
+  @ViewChild('qrcElement', { static: true }) public qrcElement!: ElementRef<HTMLDivElement>
 
   public context: CanvasRenderingContext2D | null = null
+  private renderedElement?: HTMLCanvasElement | HTMLImageElement | SVGSVGElement
   private renderVersion = 0
   private currentObjectUrl?: string
 
@@ -72,13 +77,21 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   private renderer = inject(Renderer2)
   private sanitizer = inject(DomSanitizer)
 
-  public async ngOnChanges(): Promise<void> {
-    this.renderVersion += 1
-    const currentVersion = this.renderVersion
-    // Server rendering preserves the host placeholder; QR visuals and exports need browser APIs.
+  public async ngOnChanges(changes?: SimpleChanges): Promise<void> {
     if (!this.isBrowser) {
       return
     }
+    if (
+      changes &&
+      Object.keys(changes).every((key) => ['title', 'ariaLabel', 'alt', 'cssClass'].includes(key))
+    ) {
+      if (this.renderedElement) {
+        this.setAccessibility(this.renderedElement)
+      }
+      return
+    }
+    this.renderVersion += 1
+    const currentVersion = this.renderVersion
     await this.createQRCode(currentVersion)
   }
 
@@ -139,17 +152,65 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
 
   private toSVG(data: string, qrCodeConfig: QRCodeToStringOptions): Promise<string> {
     return new Promise((resolve, reject) => {
-      toString(data, qrCodeConfig, (err: Error | null | undefined, url: string) => {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(url)
+      toString(
+        data,
+        { ...qrCodeConfig, type: 'svg' },
+        (err: Error | null | undefined, url: string) => {
+          if (err) {
+            reject(err)
+          } else {
+            resolve(url)
+          }
         }
-      })
+      )
     })
   }
 
-  private renderElement(element: Element): void {
+  private setSvgAccessibility(element: SVGSVGElement): void {
+    this.renderer.setAttribute(element, 'role', 'img')
+    if (this.ariaLabel) {
+      this.renderer.setAttribute(element, 'aria-label', this.ariaLabel)
+    } else {
+      this.renderer.removeAttribute(element, 'aria-label')
+    }
+    const previousTitle = element.querySelector('title')
+    if (previousTitle) {
+      this.renderer.removeChild(element, previousTitle)
+    }
+    if (this.title) {
+      const titleElement: SVGTitleElement = this.renderer.createElement('title', 'svg')
+      this.renderer.appendChild(titleElement, this.renderer.createText(this.title))
+      this.renderer.insertBefore(element, titleElement, element.firstChild)
+    }
+  }
+
+  private setAccessibility(element: HTMLCanvasElement | HTMLImageElement | SVGSVGElement): void {
+    if (element instanceof SVGSVGElement) {
+      this.setSvgAccessibility(element)
+      return
+    }
+    for (const [name, value] of [
+      ['aria-label', this.ariaLabel],
+      ['title', this.title],
+    ] as const) {
+      if (value) {
+        this.renderer.setAttribute(element, name, value)
+      } else {
+        this.renderer.removeAttribute(element, name)
+      }
+    }
+    if (element instanceof HTMLImageElement) {
+      if (this.alt !== undefined) {
+        this.renderer.setAttribute(element, 'alt', this.alt)
+      } else {
+        this.renderer.removeAttribute(element, 'alt')
+      }
+    }
+  }
+
+  private renderElement(element: HTMLCanvasElement | HTMLImageElement | SVGSVGElement): void {
+    this.setAccessibility(element)
+    this.renderedElement = element
     for (const node of this.qrcElement.nativeElement.childNodes) {
       this.renderer.removeChild(this.qrcElement.nativeElement, node)
     }
@@ -259,13 +320,6 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
               if (renderVersion !== this.renderVersion) {
                 return
               }
-              if (this.ariaLabel) {
-                this.renderer.setAttribute(canvasElement, 'aria-label', `${this.ariaLabel}`)
-              }
-              if (this.title) {
-                this.renderer.setAttribute(canvasElement, 'title', `${this.title}`)
-              }
-
               if (centerImageSrc) {
                 if (!canvasContext) {
                   throw new Error(
@@ -287,7 +341,8 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
               }
 
               this.renderElement(canvasElement)
-              this.emitQRCodeURL(canvasElement as HTMLCanvasElement)
+              this.emitQRCodeURL(canvasElement)
+              if (renderVersion === this.renderVersion) this.rendered.emit()
             })
             .catch((e: unknown) => {
               this.reportError(e, renderVersion, elementType, 'render-failure')
@@ -307,6 +362,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
               this.renderer.setAttribute(svgElement, 'width', `${this.width}`)
               this.renderElement(svgElement)
               this.emitQRCodeURL(svgElement)
+              if (renderVersion === this.renderVersion) this.rendered.emit()
             })
             .catch((e: unknown) => {
               this.reportError(e, renderVersion, elementType, 'render-failure')
@@ -318,22 +374,16 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
         default: {
           const imgElement: HTMLImageElement = this.renderer.createElement('img')
           await this.toDataURL(normalizedQrData, config)
-            .then((dataUrl: string) => {
+            .then(async (dataUrl: string) => {
               if (renderVersion !== this.renderVersion) {
                 return
               }
-              if (this.alt) {
-                imgElement.setAttribute('alt', this.alt)
-              }
-              if (this.ariaLabel) {
-                imgElement.setAttribute('aria-label', this.ariaLabel)
-              }
               imgElement.setAttribute('src', dataUrl)
-              if (this.title) {
-                imgElement.setAttribute('title', this.title)
-              }
+              await imgElement.decode()
+              if (renderVersion !== this.renderVersion) return
               this.renderElement(imgElement)
               this.emitQRCodeURL(imgElement)
+              if (renderVersion === this.renderVersion) this.rendered.emit()
             })
             .catch((e: unknown) => {
               this.reportError(e, renderVersion, elementType, 'render-failure')

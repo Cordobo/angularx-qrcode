@@ -1,3 +1,4 @@
+import { SimpleChange } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { QRCodeComponent } from './angularx-qrcode.component'
 import { vi } from 'vitest'
@@ -39,7 +40,44 @@ describe('QRCodeComponent', () => {
   const drawImage = vi.fn()
   const images: HTMLImageElement[] = []
 
+  function deferRenderer(elementType: QRCodeElementType): (error?: Error) => void {
+    let finish: (error?: Error) => void = () => {
+      throw new Error('Renderer has not started')
+    }
+    if (elementType === 'canvas') {
+      vi.mocked(toCanvas).mockImplementationOnce((_canvas, _text, _options, callback) => {
+        finish = (error) => callback?.(error)
+        return Promise.resolve()
+      })
+    } else if (elementType === 'svg') {
+      vi.mocked(toString).mockImplementationOnce((_text, _options, callback) => {
+        finish = (error) => callback?.(error ?? null, '<svg></svg>')
+        return Promise.resolve('')
+      })
+    } else {
+      vi.mocked(toDataURL).mockImplementationOnce((_text, _options, callback) => {
+        finish = (error) => callback?.(error ?? null, 'data:image/png;base64,cXI=')
+        return Promise.resolve('')
+      })
+    }
+    return (error) => finish(error)
+  }
+
+  const decode = vi.fn<() => Promise<void>>()
+  const originalDecode = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'decode')
+  beforeAll(() => {
+    Object.defineProperty(HTMLImageElement.prototype, 'decode', {
+      configurable: true,
+      value: decode,
+    })
+  })
+  afterAll(() => {
+    if (originalDecode) Object.defineProperty(HTMLImageElement.prototype, 'decode', originalDecode)
+    else Reflect.deleteProperty(HTMLImageElement.prototype, 'decode')
+  })
+
   beforeEach(async () => {
+    decode.mockReset().mockResolvedValue(undefined)
     images.length = 0
     drawImage.mockClear()
     vi.mocked(toCanvas).mockClear()
@@ -72,6 +110,356 @@ describe('QRCodeComponent', () => {
     vi.restoreAllMocks()
     vi.unstubAllGlobals()
   })
+
+  it('selects SVG explicitly without changing the supplied configuration', async () => {
+    const fixture = TestBed.createComponent(QRCodeComponent)
+    const config = Object.freeze({ width: 120, color: Object.freeze({ dark: '#123' }) })
+    const result = await fixture.componentInstance['toSVG']('svg test', config)
+    expect(toString).toHaveBeenCalledWith(
+      'svg test',
+      { ...config, type: 'svg' },
+      expect.any(Function)
+    )
+    expect(config).toEqual({ width: 120, color: { dark: '#123' } })
+    expect(result).toContain('<svg')
+  })
+
+  it.each<QRCodeElementType>(['canvas', 'img', 'url', 'svg'])(
+    'updates accessibility on the existing %s without generation or URL churn',
+    async (elementType) => {
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const component = fixture.componentInstance
+      component.qrdata = 'attributes'
+      component.elementType = elementType
+      await component.ngOnChanges()
+      const element = component.qrcElement.nativeElement.firstElementChild
+      vi.mocked(toCanvas).mockClear()
+      vi.mocked(toDataURL).mockClear()
+      vi.mocked(toString).mockClear()
+      const urls = vi.spyOn(component.qrCodeURL, 'emit')
+      component.title = 'Updated title'
+      component.ariaLabel = 'Updated name'
+      component.alt = ''
+      await component.ngOnChanges({ title: new SimpleChange(undefined, component.title, false) })
+      expect(component.qrcElement.nativeElement.firstElementChild).toBe(element)
+      expect(element?.getAttribute('aria-label')).toBe('Updated name')
+      expect(
+        elementType === 'svg'
+          ? element?.querySelector('title')?.textContent
+          : element?.getAttribute('title')
+      ).toBe('Updated title')
+      if (elementType === 'img' || elementType === 'url')
+        expect(element?.getAttribute('alt')).toBe('')
+      component.title = undefined
+      component.ariaLabel = undefined
+      component.alt = undefined
+      await component.ngOnChanges({ ariaLabel: new SimpleChange('Updated name', undefined, false) })
+      expect(element?.hasAttribute('aria-label')).toBe(false)
+      expect(element?.hasAttribute('title')).toBe(false)
+      expect(element?.hasAttribute('alt')).toBe(false)
+      expect(element?.querySelector('title')).toBeNull()
+      expect(toCanvas).not.toHaveBeenCalled()
+      expect(toDataURL).not.toHaveBeenCalled()
+      expect(toString).not.toHaveBeenCalled()
+      expect(urls).not.toHaveBeenCalled()
+    }
+  )
+
+  describe('rendered completion output', () => {
+    it.each<QRCodeElementType>(['canvas', 'svg', 'img', 'url'])(
+      'emits once after the current %s is attached and exported',
+      async (elementType) => {
+        const fixture = TestBed.createComponent(QRCodeComponent)
+        const component = fixture.componentInstance
+        component.elementType = elementType
+        component.qrdata = 'completion'
+        const sequence: string[] = []
+        component.qrCodeURL.subscribe(() => sequence.push('url'))
+        const complete = vi.fn(() => {
+          expect(component.qrcElement.nativeElement.firstElementChild?.localName).toBe(
+            elementType === 'url' ? 'img' : elementType
+          )
+          sequence.push('rendered')
+        })
+        component.rendered.subscribe(complete)
+        const finish = deferRenderer(elementType)
+        const pending = component.ngOnChanges()
+        expect(complete).not.toHaveBeenCalled()
+        finish()
+        await pending
+        expect(complete).toHaveBeenCalledTimes(1)
+        expect(sequence).toEqual(['url', 'rendered'])
+        component.title = 'Only a label'
+        await component.ngOnChanges({ title: new SimpleChange(undefined, component.title, false) })
+        expect(complete).toHaveBeenCalledTimes(1)
+      }
+    )
+
+    it.each<QRCodeElementType>(['canvas', 'svg', 'img', 'url'])(
+      'suppresses stale, destroyed and failed %s completion',
+      async (elementType) => {
+        vi.spyOn(console, 'error').mockImplementation(() => undefined)
+        const fixture = TestBed.createComponent(QRCodeComponent)
+        const component = fixture.componentInstance
+        component.elementType = elementType
+        component.qrdata = 'old'
+        const complete = vi.fn()
+        component.rendered.subscribe(complete)
+        const finishOld = deferRenderer(elementType)
+        const old = component.ngOnChanges()
+        component.qrdata = 'new'
+        await component.ngOnChanges()
+        expect(complete).toHaveBeenCalledTimes(1)
+        finishOld()
+        await old
+        expect(complete).toHaveBeenCalledTimes(1)
+        const finishError = deferRenderer(elementType)
+        const failed = component.ngOnChanges()
+        finishError(new Error('generation failed'))
+        await failed
+        expect(complete).toHaveBeenCalledTimes(1)
+        const finishDestroyed = deferRenderer(elementType)
+        const destroyed = component.ngOnChanges()
+        fixture.destroy()
+        finishDestroyed()
+        await destroyed
+        expect(complete).toHaveBeenCalledTimes(1)
+      }
+    )
+
+    it('waits for the center image to be drawn', async () => {
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const component = fixture.componentInstance
+      component.qrdata = 'logo completion'
+      component.imageSrc = 'logo.png'
+      const complete = vi.fn(() => expect(drawImage).toHaveBeenCalledTimes(1))
+      component.rendered.subscribe(complete)
+      const pending = component.ngOnChanges()
+      await vi.waitFor(() => expect(images).toHaveLength(1))
+      expect(complete).not.toHaveBeenCalled()
+      images[0].dispatchEvent(new Event('load'))
+      await pending
+      expect(complete).toHaveBeenCalledTimes(1)
+    })
+
+    it.each(['load', 'draw', 'export'])(
+      'does not emit completion after a canvas %s failure',
+      async (failure) => {
+        vi.spyOn(console, 'error').mockImplementation(() => undefined)
+        const fixture = TestBed.createComponent(QRCodeComponent)
+        const component = fixture.componentInstance
+        component.qrdata = 'failure'
+        component.imageSrc = 'logo.png'
+        const complete = vi.fn()
+        component.rendered.subscribe(complete)
+        if (failure === 'draw')
+          drawImage.mockImplementationOnce(() => {
+            throw new Error('draw failed')
+          })
+        if (failure === 'export')
+          vi.mocked(URL.createObjectURL).mockImplementationOnce(() => {
+            throw new Error('export failed')
+          })
+        const pending = component.ngOnChanges()
+        await vi.waitFor(() => expect(images).toHaveLength(1))
+        images[0].dispatchEvent(new Event(failure === 'load' ? 'error' : 'load'))
+        await pending
+        expect(complete).not.toHaveBeenCalled()
+      }
+    )
+
+    it.each<QRCodeElementType>(['img', 'url'])(
+      'waits for %s decoding and suppresses superseded decode completion',
+      async (elementType) => {
+        const fixture = TestBed.createComponent(QRCodeComponent)
+        const component = fixture.componentInstance
+        component.qrdata = 'decode old'
+        component.elementType = elementType
+        let finishDecode: () => void = () => {
+          throw new Error('Decode has not started')
+        }
+        decode.mockImplementationOnce(
+          () =>
+            new Promise<void>((resolve) => {
+              finishDecode = resolve
+            })
+        )
+        const complete = vi.fn()
+        component.rendered.subscribe(complete)
+        const pending = component.ngOnChanges()
+        await vi.waitFor(() => expect(decode).toHaveBeenCalledTimes(1))
+        expect(complete).not.toHaveBeenCalled()
+        expect(component.qrcElement.nativeElement.firstElementChild).toBeNull()
+        component.qrdata = 'decode new'
+        await component.ngOnChanges()
+        expect(complete).toHaveBeenCalledTimes(1)
+        finishDecode()
+        await pending
+        expect(complete).toHaveBeenCalledTimes(1)
+      }
+    )
+
+    it.each(['stale', 'destroyed'])('does not complete a %s canvas logo render', async (state) => {
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const component = fixture.componentInstance
+      component.qrdata = 'old logo'
+      component.imageSrc = 'logo.png'
+      const complete = vi.fn()
+      component.rendered.subscribe(complete)
+      const pending = component.ngOnChanges()
+      await vi.waitFor(() => expect(images).toHaveLength(1))
+      if (state === 'destroyed') fixture.destroy()
+      else {
+        component.imageSrc = undefined
+        component.qrdata = 'new visual'
+        await component.ngOnChanges()
+      }
+      images[0].dispatchEvent(new Event('load'))
+      await pending
+      expect(complete).toHaveBeenCalledTimes(state === 'stale' ? 1 : 0)
+      expect(drawImage).not.toHaveBeenCalled()
+    })
+
+    it('reports an image decode failure without successful completion', async () => {
+      vi.spyOn(console, 'error').mockImplementation(() => undefined)
+      decode.mockRejectedValueOnce(new Error('decode failed'))
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const component = fixture.componentInstance
+      component.qrdata = 'decode error'
+      component.elementType = 'img'
+      const complete = vi.fn()
+      const errors = vi.fn()
+      component.rendered.subscribe(complete)
+      component.qrCodeError.subscribe(errors)
+      await component.ngOnChanges()
+      expect(complete).not.toHaveBeenCalled()
+      expect(errors).toHaveBeenCalledTimes(1)
+      expect(component.qrcElement.nativeElement.firstElementChild).toBeNull()
+    })
+
+    it('does not complete when the URL subscriber destroys the component', async () => {
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const component = fixture.componentInstance
+      component.qrdata = 'reentrant destruction'
+      component.elementType = 'svg'
+      const complete = vi.fn()
+      component.rendered.subscribe(complete)
+      component.qrCodeURL.subscribe(() => fixture.destroy())
+      await component.ngOnChanges()
+      expect(complete).not.toHaveBeenCalled()
+    })
+  })
+
+  it.each([
+    'qrdata',
+    'colorDark',
+    'colorLight',
+    'errorCorrectionLevel',
+    'margin',
+    'scale',
+    'version',
+    'width',
+    'elementType',
+    'imageSrc',
+    'imageWidth',
+    'imageHeight',
+    'allowEmptyString',
+  ])('regenerates for a %s change', async (key) => {
+    const fixture = TestBed.createComponent(QRCodeComponent)
+    const component = fixture.componentInstance
+    component.qrdata = 'generation'
+    await component.ngOnChanges({ [key]: new SimpleChange(undefined, 'changed', false) })
+    expect(toCanvas).toHaveBeenCalledTimes(1)
+  })
+
+  it('updates the wrapper class through Angular without regenerating', async () => {
+    const fixture = TestBed.createComponent(QRCodeComponent)
+    fixture.componentRef.setInput('qrdata', 'class test')
+    fixture.detectChanges()
+    await fixture.whenStable()
+    vi.mocked(toCanvas).mockClear()
+    fixture.componentRef.setInput('cssClass', 'custom class')
+    fixture.detectChanges()
+    await fixture.whenStable()
+    expect([...fixture.componentInstance.qrcElement.nativeElement.classList].sort()).toEqual([
+      'class',
+      'custom',
+    ])
+    expect(toCanvas).not.toHaveBeenCalled()
+  })
+
+  it.each<QRCodeElementType>(['canvas', 'img', 'url', 'svg'])(
+    'preserves pending and superseded %s renders during accessibility updates',
+    async (elementType) => {
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const component = fixture.componentInstance
+      component.elementType = elementType
+      component.qrdata = 'old'
+      const finishOld = deferRenderer(elementType)
+      const old = component.ngOnChanges()
+      component.qrdata = 'winning'
+      const finishNew = deferRenderer(elementType)
+      const winning = component.ngOnChanges({ qrdata: new SimpleChange('old', 'winning', false) })
+      component.ariaLabel = 'Current name'
+      await component.ngOnChanges({ ariaLabel: new SimpleChange(undefined, 'Current name', false) })
+      finishNew()
+      await winning
+      const element = component.qrcElement.nativeElement.firstElementChild
+      expect(element?.getAttribute('aria-label')).toBe('Current name')
+      finishOld()
+      await old
+      expect(component.qrcElement.nativeElement.firstElementChild).toBe(element)
+      expect(
+        vi.mocked(toCanvas).mock.calls.length +
+          vi.mocked(toDataURL).mock.calls.length +
+          vi.mocked(toString).mock.calls.length
+      ).toBe(2)
+    }
+  )
+
+  it('uses the latest accessibility while a canvas logo is loading', async () => {
+    const fixture = TestBed.createComponent(QRCodeComponent)
+    const component = fixture.componentInstance
+    component.qrdata = 'pending logo'
+    component.imageSrc = 'logo.png'
+    const pending = component.ngOnChanges()
+    await vi.waitFor(() => expect(images).toHaveLength(1))
+    component.title = 'Latest title'
+    await component.ngOnChanges({ title: new SimpleChange(undefined, 'Latest title', false) })
+    images[0].dispatchEvent(new Event('load'))
+    await pending
+    expect(toCanvas).toHaveBeenCalledTimes(1)
+    expect(component.qrcElement.nativeElement.firstElementChild?.getAttribute('title')).toBe(
+      'Latest title'
+    )
+  })
+
+  it.each([undefined, '', 'Scan for details', '<script>alert("title")</script>&"'])(
+    'uses safe native SVG title text: %s',
+    async (title) => {
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const component = fixture.componentInstance
+      component.qrdata = 'accessible'
+      component.elementType = 'svg'
+      component.title = title
+      component.alt = 'Image only'
+      await component.ngOnChanges()
+      const svg: SVGSVGElement = fixture.nativeElement.querySelector('svg')
+      expect(svg.getAttribute('role')).toBe('img')
+      expect(svg.hasAttribute('alt')).toBe(false)
+      expect(svg.hasAttribute('aria-label')).toBe(false)
+      expect(svg.querySelector('script')).toBeNull()
+      expect(svg.querySelector('title')?.textContent).toBe(title || undefined)
+      if (title) {
+        expect(svg.firstElementChild?.namespaceURI).toBe('http://www.w3.org/2000/svg')
+      }
+      component.ariaLabel = 'Explicit accessible name'
+      await component.ngOnChanges()
+      const updated: SVGSVGElement = fixture.nativeElement.querySelector('svg')
+      expect(updated.getAttribute('aria-label')).toBe('Explicit accessible name')
+      expect(updated.querySelector('title')?.textContent).toBe(title || undefined)
+    }
+  )
 
   it.each([
     { input: 41, expected: 40, warning: '[angularx-qrcode] max value for `version` is 40' },
@@ -269,29 +657,6 @@ describe('QRCodeComponent', () => {
 
   describe('public qrCodeError output', () => {
     const renderers: QRCodeElementType[] = ['canvas', 'svg', 'img', 'url']
-
-    function deferRenderer(elementType: QRCodeElementType): (error?: Error) => void {
-      let finish: (error?: Error) => void = () => {
-        throw new Error('Renderer has not started')
-      }
-      if (elementType === 'canvas') {
-        vi.mocked(toCanvas).mockImplementationOnce((_canvas, _text, _options, callback) => {
-          finish = (error) => callback?.(error)
-          return Promise.resolve()
-        })
-      } else if (elementType === 'svg') {
-        vi.mocked(toString).mockImplementationOnce((_text, _options, callback) => {
-          finish = (error) => callback?.(error ?? null, '<svg></svg>')
-          return Promise.resolve('')
-        })
-      } else {
-        vi.mocked(toDataURL).mockImplementationOnce((_text, _options, callback) => {
-          finish = (error) => callback?.(error ?? null, 'data:image/png;base64,cXI=')
-          return Promise.resolve('')
-        })
-      }
-      return (error) => finish(error)
-    }
 
     it.each(['', 'null', null, undefined, 42])('reports invalid input %s', async (input) => {
       vi.spyOn(console, 'error').mockImplementation(() => undefined)

@@ -243,14 +243,73 @@ Emitted URLs are temporary Blob/object URLs. The component revokes the previous 
 
 ### Renderer capabilities
 
-| `elementType`      | Rendered output             | `qrCodeURL` export | Center image (`imageSrc`)                   | Applied accessibility inputs        |
-| ------------------ | --------------------------- | ------------------ | ------------------------------------------- | ----------------------------------- |
-| `canvas` (default) | `<canvas>`                  | PNG                | Yes; export waits for the image to be drawn | `ariaLabel`, `title`                |
-| `svg`              | Inline `<svg>`              | SVG                | No                                          | None of `alt`, `ariaLabel`, `title` |
-| `img`              | `<img>` with a PNG data URL | PNG                | No                                          | `alt`, `ariaLabel`, `title`         |
-| `url`              | Alias for `img`             | PNG                | No                                          | `alt`, `ariaLabel`, `title`         |
+| `elementType`      | Rendered output             | `qrCodeURL` export | Center image (`imageSrc`)                   | Applied accessibility inputs    |
+| ------------------ | --------------------------- | ------------------ | ------------------------------------------- | ------------------------------- |
+| `canvas` (default) | `<canvas>`                  | PNG                | Yes; export waits for the image to be drawn | `ariaLabel`, `title`            |
+| `svg`              | Inline `<svg>`              | SVG                | No                                          | `ariaLabel`, native SVG `title` |
+| `img`              | `<img>` with a PNG data URL | PNG                | No                                          | `alt`, `ariaLabel`, `title`     |
+| `url`              | Alias for `img`             | PNG                | No                                          | `alt`, `ariaLabel`, `title`     |
 
 For SVG downloads, use a `.svg` filename. `imageHeight` and `imageWidth` apply only to the canvas center image. Remote center images must permit cross-origin loading for canvas export. If the center image fails to load or draw, the component emits `qrCodeError` with code `render-failure` and logs a canvas error and keeps the previous rendered QR code and download URL; it does not emit an incomplete replacement. On an initial failure, no canvas is displayed. The accessibility inputs describe the rendered element; they do not change the encoded QR data.
+
+Changes to `title`, `ariaLabel`, `alt`, or `cssClass` update the displayed DOM without
+regenerating QR data or emitting another `qrCodeURL`. Pending renders use the latest
+accessibility values when displayed. Exported URLs remain snapshots of the completed
+render; SVG accessibility edits affect the inline SVG until the next QR render.
+
+`cssClass` applies to the inner QR wrapper. Styles targeting that wrapper belong in
+an application's global stylesheet because Angular's component-scoped styles do
+not cross the QR component boundary. The demo's generated CSS targets this wrapper
+with `.qrcodeImage > qrcode > .yourClass` and includes the host flex layout.
+
+### Render completion
+
+`(rendered)` emits once for each winning QR render after its final visual is attached
+and `qrCodeURL` export succeeds. Canvas completion includes loading and drawing the
+center image; `img`/`url` completion includes PNG decoding. SVG is ready in the DOM.
+This signals readiness for capture or printing, not a browser paint-frame timestamp.
+Errors, superseded renders, destroyed components, SSR, and accessibility/class-only
+updates do not emit completion. Existing `qrCodeURL` subscribers still receive the
+export before `rendered`; image exports now wait for image decoding too.
+
+```typescript
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core'
+import { QRCodeComponent } from 'angularx-qrcode'
+
+@Component({
+  selector: 'app-print-qr',
+  imports: [QRCodeComponent],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    <qrcode
+      qrdata="https://example.com"
+      [width]="256"
+      (rendered)="ready.set(true)"
+      (qrCodeError)="ready.set(false)"
+    />
+    <button [disabled]="!ready()" (click)="print()">Print QR code</button>
+  `,
+})
+export class PrintQrComponent {
+  readonly ready = signal(false)
+  print(): void {
+    window.print()
+  }
+}
+```
+
+For changing payloads, reset your readiness state when requesting a new QR render.
+
+### SVG accessibility
+
+For `elementType="svg"`, `title` creates a native `<title>` child using safe text nodes.
+The SVG has `role="img"`; `ariaLabel` supplies an explicit accessible name and takes
+precedence over the native title. Without `ariaLabel`, the native title names the SVG.
+`alt` applies only to `img` and `url`, never SVG.
+
+```html
+<qrcode qrdata="https://example.com" elementType="svg" title="Scan to visit our website"></qrcode>
+```
 
 ### Handling generation errors
 
@@ -286,27 +345,28 @@ npm test -- --watch=false
 
 ## Available Parameters
 
-| Attribute            | Type                                      | Default     | Description                                                                             |
-| -------------------- | ----------------------------------------- | ----------- | --------------------------------------------------------------------------------------- |
-| allowEmptyString     | Boolean                                   | false       | Allow qrdata to be an empty string                                                      |
-| alt                  | String                                    | null        | HTML alt attribute (supported by img, url)                                              |
-| ariaLabel            | String                                    | null        | HTML aria-label attribute (supported by canvas, img, url)                               |
-| colorDark            | String                                    | '#000000ff' | RGBA color, color of dark module (foreground)                                           |
-| colorLight           | String                                    | '#ffffffff' | RGBA color, color of light module (background)                                          |
-| cssClass             | String                                    | 'qrcode'    | CSS Class                                                                               |
-| elementType          | String                                    | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                                         |
-| errorCorrectionLevel | String                                    | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                                                |
-| imageSrc             | String                                    | null        | Canvas-only center image URL                                                            |
-| imageHeight          | Number                                    | null        | Canvas-only center image height                                                         |
-| imageWidth           | Number                                    | null        | Canvas-only center image width                                                          |
-| margin               | Number                                    | 4           | Define how much wide the quiet zone should be.                                          |
-| qrCodeURL            | EventEmitter\<SafeUrl\>                   |             | Emits a temporary QR Code download URL                                                  |
-| qrCodeError          | OutputEmitterRef\<QRCodeGenerationError\> |             | Emits a typed current-render failure; see [error handling](#handling-generation-errors) |
-| qrdata               | String                                    | ''          | String to encode                                                                        |
-| scale                | Number                                    | 4           | Scale factor. A value of 1 means 1px per modules (black dots).                          |
-| title                | String                                    | null        | HTML title attribute (supported by canvas, img, url)                                    |
-| version              | Number                                    | (auto)      | 1-40                                                                                    |
-| width                | Number                                    | 10          | Height/Width (any value)                                                                |
+| Attribute            | Type                                      | Default     | Description                                                                                          |
+| -------------------- | ----------------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------- |
+| allowEmptyString     | Boolean                                   | false       | Allow qrdata to be an empty string                                                                   |
+| alt                  | String                                    | null        | HTML alt attribute (supported by img, url)                                                           |
+| ariaLabel            | String                                    | null        | Accessible name (all renderers)                                                                      |
+| colorDark            | String                                    | '#000000ff' | Hex RGB/RGBA foreground (3, 4, 6 or 8 digits, optional #)                                            |
+| colorLight           | String                                    | '#ffffffff' | Hex RGB/RGBA background (3, 4, 6 or 8 digits, optional #)                                            |
+| cssClass             | String                                    | 'qrcode'    | CSS Class                                                                                            |
+| elementType          | String                                    | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                                                      |
+| errorCorrectionLevel | String                                    | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                                                             |
+| imageSrc             | String                                    | null        | Canvas-only center image URL                                                                         |
+| imageHeight          | Number                                    | null        | Canvas-only center image height                                                                      |
+| imageWidth           | Number                                    | null        | Canvas-only center image width                                                                       |
+| margin               | Number                                    | 4           | Define how much wide the quiet zone should be.                                                       |
+| qrCodeURL            | EventEmitter\<SafeUrl\>                   |             | Emits a temporary QR Code download URL                                                               |
+| rendered             | OutputEmitterRef\<void\>                  |             | Emits after the current final visual and export succeed; see [render completion](#render-completion) |
+| qrCodeError          | OutputEmitterRef\<QRCodeGenerationError\> |             | Emits a typed current-render failure; see [error handling](#handling-generation-errors)              |
+| qrdata               | String                                    | ''          | String to encode                                                                                     |
+| scale                | Number                                    | 4           | Scale factor. A value of 1 means 1px per modules (black dots).                                       |
+| title                | String                                    | null        | Native SVG title child; HTML title attribute for canvas, img, url                                    |
+| version              | Number                                    | (auto)      | 1-40                                                                                                 |
+| width                | Number                                    | 10          | Height/Width (any value)                                                                             |
 
 ## QR Code capacity
 

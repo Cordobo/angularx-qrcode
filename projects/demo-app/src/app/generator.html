@@ -15,7 +15,7 @@
               [scale]="scale"
               [width]="width"
               [allowEmptyString]="true"
-              [className]="cssClass"
+              [cssClass]="cssClass"
               [colorDark]="colorDark"
               [colorLight]="colorLight"
               [margin]="margin"
@@ -64,7 +64,7 @@
 
               <p>
                 Note: The surrounding
-                <code>&#60;div class="qrcodeImage"&#62;</code>-tag is optional, but should be
+                <code>&#60;div class="qrcodeImage"&#62;</code> tag is optional, but should be
                 included when using the generated CSS.
               </p>
             </mat-tab>
@@ -536,10 +536,7 @@ export class AppComponent {{
                     [(ngModel)]="ariaLabel"
                     (ngModelChange)="updateUrlParams()"
                   />
-                  <mat-hint
-                    >aria-label attribute is only available for elementTypes "canvas", "img" and
-                    "url"</mat-hint
-                  >
+                  <mat-hint>aria-label attribute is available for all elementTypes</mat-hint>
                 </mat-form-field>
               </form>
               <br />

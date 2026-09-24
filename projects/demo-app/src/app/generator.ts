@@ -199,7 +199,9 @@ export class Generator implements OnInit {
       if (params['showCss'] !== undefined) this.showCss = params['showCss'] === 'true'
       if (params['showImage'] !== undefined) {
         this.showImage = params['showImage'] === 'true'
-        this.setImageVisibility(this.showImage)
+        this.imageSrc = this.showImage
+          ? (params['imageSrc'] ?? this.data_model.imageSrc)
+          : undefined
       }
 
       this.isLoadingFromUrl = false
@@ -330,7 +332,6 @@ export class Generator implements OnInit {
     this.updateUrlParams()
   }
 
-  // Re-enable, when a method to download images has been implemented
   onChangeURL(url: SafeUrl) {
     this.qrCodeSrc = url
     this.changeDetector.markForCheck()
@@ -341,12 +342,16 @@ export class Generator implements OnInit {
 
     if (this.elementType === 'canvas') {
       // fetches base 64 data from canvas
-      parentElement = parent.qrcElement.nativeElement.querySelector('canvas').toDataURL('image/png')
+      const canvas = parent.qrcElement.nativeElement.querySelector('canvas')
+      if (!canvas) throw new Error('The canvas QR code has not rendered yet.')
+      parentElement = canvas.toDataURL('image/png')
     } else if (this.elementType === 'img' || this.elementType === 'url') {
       // fetches base 64 data from image
       // parentElement contains the base64 encoded image src
       // you might use to store somewhere
-      parentElement = parent.qrcElement.nativeElement.querySelector('img').src
+      const image = parent.qrcElement.nativeElement.querySelector('img')
+      if (!image) throw new Error('The image QR code has not rendered yet.')
+      parentElement = image.src
     } else {
       alert("Set elementType to 'canvas', 'img' or 'url'.")
     }
@@ -394,11 +399,7 @@ export class Generator implements OnInit {
     if (this.showA11y && this.alt && (this.elementType === 'img' || this.elementType === 'url')) {
       f.push(`[alt]="'${this.alt}'"`)
     }
-    if (
-      this.showA11y &&
-      this.ariaLabel &&
-      (this.elementType === 'canvas' || this.elementType === 'img' || this.elementType === 'url')
-    ) {
+    if (this.showA11y && this.ariaLabel) {
       f.push(`[ariaLabel]="'${this.ariaLabel}'"`)
     }
 
@@ -447,23 +448,23 @@ export class Generator implements OnInit {
   cssCodeBuilder(): string {
     switch (this.cssClass) {
       case 'center':
-        return `.center {
+        return `.qrcodeImage > qrcode > .center {
   display: flex;
   flex: 1;
   justify-content: center;
 }`
       case 'right':
-        return `.right {
+        return `.qrcodeImage > qrcode > .right {
   display: flex;
   flex: 1;
   justify-content: right;
 }`
       case 'demoBorder':
-        return `.demoBorder {
+        return `.qrcodeImage > qrcode > .demoBorder {
   border: 10px solid red;
 }`
       case 'demoBorderRadius':
-        return `.demoBorderRadius {
+        return `.qrcodeImage > qrcode > .demoBorderRadius {
   border: dashed;
   border-width: 2px 4px;
   border-radius: 40px;
@@ -471,7 +472,7 @@ export class Generator implements OnInit {
 }`
       case 'left':
       default:
-        return `.left {
+        return `.qrcodeImage > qrcode > .left {
   display: flex;
   flex: 1;
   justify-content: left;
@@ -480,7 +481,7 @@ export class Generator implements OnInit {
   }
 
   get renderSampleCssCode() {
-    return `/* Put this code in your CSS file, e.g. app.component.css */
+    return `/* Put this code in your global styles.css file */
 
 /* The div container */
 .qrcodeImage {
@@ -488,7 +489,13 @@ export class Generator implements OnInit {
   flex: 1;
 }
 
-/* Add custom styles here */
+.qrcodeImage > qrcode {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+/* The cssClass input styles the inner QR wrapper. */
 ${this.cssCodeBuilder()}
 `
   }

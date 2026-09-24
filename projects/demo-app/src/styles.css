@@ -195,5 +195,47 @@ section {
   right: 40px;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+/* QR wrapper classes cross the generator/component style boundary. */
+.qrcodeImage > qrcode {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.qrcodeImage > qrcode > .left {
+  display: flex;
+  flex: 1;
+  justify-content: left;
+}
+
+.qrcodeImage > qrcode > .center {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.qrcodeImage > qrcode > .right {
+  display: flex;
+  flex: 1;
+  justify-content: right;
+}
+
+.qrcodeImage > qrcode > .demoBorder {
+  border: 10px solid red;
+}
+
+.qrcodeImage > qrcode > .demoBorderRadius {
+  border: dashed;
+  border-width: 2px 4px;
+  border-radius: 40px;
+  overflow: hidden;
+}

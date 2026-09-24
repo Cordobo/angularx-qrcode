@@ -75,3 +75,11 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - SSR defers QR generation and validation on non-browser platforms, rendering only the host placeholder. `npm run test:ssr` must execute actual Angular server rendering for all renderers; hydration is not claimed. Keep the server framework dependency aligned and development-only.
 - The CI library build synchronizes the root README into the package. Published README links must use absolute repository URLs or valid same-document anchors; verify with `npm run check:docs` after building.
 - Curated releases use `.github/RELEASE_TEMPLATE.md` and `docs/releases/README.md`, keeping consumer security changes distinct from repository hardening.
+
+- SVG rendering explicitly selects the SVG renderer. SVG accessibility uses native title text nodes and role="img"; an explicit ariaLabel takes precedence over the native title. Never interpolate accessibility inputs into SVG markup.
+
+- Accessibility and wrapper-class changes update DOM without QR generation or URL churn. They do not invalidate pending renders; apply current accessibility inputs at visual commit, including after logo loading.
+
+- `rendered` emits once after a current final visual is attached and URL export succeeds, including canvas logo drawing and img/url decoding. Suppress completion for failures, superseded/destroyed renders, SSR, and presentation-only updates. Recheck currency after public URL emission.
+
+- The demo binds cssClass to the QR component input. QR wrapper styles live in global styles.css, scoped under .qrcodeImage > qrcode; generated CSS examples use the same selectors and host layout to cross Angular style encapsulation without disabling it.

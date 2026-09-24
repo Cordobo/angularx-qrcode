@@ -1,3 +1,4 @@
+import { isPlatformBrowser } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,7 +8,9 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  PLATFORM_ID,
   Output,
+  output,
   Renderer2,
   ViewChild,
 } from '@angular/core'
@@ -21,6 +24,7 @@ import {
   toString,
 } from 'qrcode'
 import {
+  QRCodeGenerationError,
   QRCodeVersion,
   QRCodeElementType,
   QRCodeConfigType,
@@ -56,6 +60,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   @Input() public title?: string
 
   @Output() qrCodeURL = new EventEmitter<SafeUrl>()
+  readonly qrCodeError = output<QRCodeGenerationError>()
 
   @ViewChild('qrcElement', { static: true }) public qrcElement!: ElementRef
 
@@ -63,12 +68,17 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   private renderVersion = 0
   private currentObjectUrl?: string
 
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID))
   private renderer = inject(Renderer2)
   private sanitizer = inject(DomSanitizer)
 
   public async ngOnChanges(): Promise<void> {
     this.renderVersion += 1
     const currentVersion = this.renderVersion
+    // Server rendering preserves the host placeholder; QR visuals and exports need browser APIs.
+    if (!this.isBrowser) {
+      return
+    }
     await this.createQRCode(currentVersion)
   }
 
@@ -78,10 +88,25 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   }
 
   protected isValidQrCodeText(data: string | null): boolean {
-    if (this.allowEmptyString === false) {
-      return !(typeof data === 'undefined' || data === '' || data === 'null' || data === null)
+    return typeof data === 'string' && (this.allowEmptyString || (data !== '' && data !== 'null'))
+  }
+
+  private reportError(
+    cause: unknown,
+    renderVersion: number,
+    elementType: QRCodeElementType,
+    code: QRCodeGenerationError['code']
+  ): void {
+    if (renderVersion !== this.renderVersion) {
+      return
     }
-    return !(typeof data === 'undefined')
+    const error = cause instanceof Error ? cause : new Error(String(cause))
+    const label =
+      code === 'invalid-input'
+        ? 'Error generating QR Code'
+        : `${elementType === 'img' || elementType === 'url' ? 'img/url' : elementType} error`
+    console.error(`[angularx-qrcode] ${label}:`, error)
+    this.qrCodeError.emit({ code, elementType, error })
   }
 
   private toDataURL(data: string, qrCodeConfig: QRCodeToDataURLOptions): Promise<string> {
@@ -194,12 +219,16 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
       normalizedVersion = 1
     }
 
+    const elementType = this.elementType
+    let errorCode: QRCodeGenerationError['code'] = 'invalid-input'
     try {
       if (!this.isValidQrCodeText(this.qrdata)) {
         throw new Error(
           '[angularx-qrcode] Field `qrdata` is empty, set \'allowEmptyString="true"\' to overwrite this behaviour.'
         )
       }
+
+      errorCode = 'render-failure'
 
       // This is a workaround to allow an empty string as qrdata
       const normalizedQrData = this.qrdata === '' ? ' ' : this.qrdata
@@ -220,7 +249,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
       const centerImageHeight = this.imageHeight ? +this.imageHeight : 40
       const centerImageWidth = this.imageWidth ? +this.imageWidth : 40
 
-      switch (this.elementType) {
+      switch (elementType) {
         case 'canvas': {
           const canvasElement: HTMLCanvasElement = this.renderer.createElement('canvas')
           const canvasContext = canvasElement.getContext('2d')
@@ -261,15 +290,13 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
               this.emitQRCodeURL(canvasElement as HTMLCanvasElement)
             })
             .catch((e: unknown) => {
-              if (renderVersion === this.renderVersion) {
-                console.error('[angularx-qrcode] canvas error:', e)
-              }
+              this.reportError(e, renderVersion, elementType, 'render-failure')
             })
           break
         }
         case 'svg': {
           const svgParentElement: HTMLElement = this.renderer.createElement('div')
-          this.toSVG(normalizedQrData, config)
+          await this.toSVG(normalizedQrData, config)
             .then((svgString: string) => {
               if (renderVersion !== this.renderVersion) {
                 return
@@ -281,8 +308,8 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
               this.renderElement(svgElement)
               this.emitQRCodeURL(svgElement)
             })
-            .catch((e) => {
-              console.error('[angularx-qrcode] svg error:', e)
+            .catch((e: unknown) => {
+              this.reportError(e, renderVersion, elementType, 'render-failure')
             })
           break
         }
@@ -290,7 +317,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
         case 'img':
         default: {
           const imgElement: HTMLImageElement = this.renderer.createElement('img')
-          this.toDataURL(normalizedQrData, config)
+          await this.toDataURL(normalizedQrData, config)
             .then((dataUrl: string) => {
               if (renderVersion !== this.renderVersion) {
                 return
@@ -308,14 +335,13 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
               this.renderElement(imgElement)
               this.emitQRCodeURL(imgElement)
             })
-            .catch((e) => {
-              console.error('[angularx-qrcode] img/url error:', e)
+            .catch((e: unknown) => {
+              this.reportError(e, renderVersion, elementType, 'render-failure')
             })
         }
       }
     } catch (e: unknown) {
-      const message = e instanceof Error ? e.message : String(e)
-      console.error('[angularx-qrcode] Error generating QR Code:', message)
+      this.reportError(e, renderVersion, elementType, errorCode)
     }
   }
 

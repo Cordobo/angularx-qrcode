@@ -1,24 +1,22 @@
 # angularx-qrcode - Angular QR Code Generator
 
-`angularx-qrcode` - a fast and easy-to-use Angular QR Code Generator library
+`angularx-qrcode` generates QR codes locally in Angular applications using the `qrcode` runtime dependency. The current **22.x release line targets Angular 22** and exposes a standalone component with canvas, SVG, and PNG image output, plus canvas logo overlays.
 
-- Compatible with **Angular 22** and **Ionic**
-- Under active development
-- Standalone component support
-- Ivy compiler support, AOT, SSR (Server Side Rendering)
-- Accessibility (a11y) attributes supported (alt, aria-label, title)
-- Support for images
-- Trusted and used by thousands of developers like you
-- Easy to use, [sample web app](#demo-app) included
+The project's Git history begins in [September 2017](https://github.com/Cordobo/angularx-qrcode/commit/55bd4a38b4cca61be615d3dde765415f88158fd0). Historical package lines support earlier Angular majors; they are listed separately in the [compatibility mapping](#compatibility-and-maintenance). That history is not an LTS commitment.
 
-`angularx-qrcode` is compatible with Ionic 3-8 and Angular 4-22 with support for the Ivy compiler. It is a drop-in replacement for the no-longer-maintained angular component ng2-qrcode and based on node-qrcode.
+The library is [MIT licensed](#license). For maintenance, support, runtime dependencies, verified SSR boundaries, and documented security/release-integrity controls, start with the [production-use and support reference](https://github.com/Cordobo/angularx-qrcode/blob/main/docs/production-use.md).
 
 - [Demo App](#demo-app)
 - [Installation](#installation)
 - [Build a minimal Angular app](#build-a-minimal-angular-app)
 - [Usage & Example Implementations](#usage-and-example-implementations)
 - [Available Parameters](#available-parameters)
+- [Local generation, external resources, and privacy](#local-generation-external-resources-and-privacy)
+- [Runtime dependencies](#runtime-dependencies)
+- [Production QR guidance](#production-qr-guidance)
 - [Compatibility and maintenance](#compatibility-and-maintenance)
+- [SSR scope](#ssr---server-side-rendering)
+- [Production use and support](https://github.com/Cordobo/angularx-qrcode/blob/main/docs/production-use.md)
 - [Security](#security)
 - [Contribute](#contribute)
 - [Sponsoring](#sponsoring)
@@ -47,7 +45,7 @@ npm start
 
 Open `http://localhost:4200/` if your browser does not open automatically. Change the QR text, renderer, colors, or logo to see the result and its corresponding template code.
 
-The demo source is in [`projects/demo-app`](projects/demo-app). Its QR controls and download handlers are in [`generator.ts`](projects/demo-app/src/app/generator.ts) and [`generator.html`](projects/demo-app/src/app/generator.html).
+The demo source is in [`projects/demo-app`](https://github.com/Cordobo/angularx-qrcode/tree/main/projects/demo-app). Its QR controls and download handlers are in [`generator.ts`](https://github.com/Cordobo/angularx-qrcode/blob/main/projects/demo-app/src/app/generator.ts) and [`generator.html`](https://github.com/Cordobo/angularx-qrcode/blob/main/projects/demo-app/src/app/generator.html).
 
 To preview a production build instead:
 
@@ -72,6 +70,20 @@ pnpm add angularx-qrcode
 ```
 
 For an existing Angular 22 application, continue with the [integration examples](#usage-and-example-implementations). For an older Angular major, use the [version mapping and installation commands](#compatibility-and-maintenance) below.
+
+## Local generation, external resources, and privacy
+
+QR payload generation happens locally in your application/browser through `angularx-qrcode` and its `qrcode` runtime dependency. `qrdata` does not need to be sent to a hosted angularx-qrcode QR-generation API. The hosted demo is optional; applications using the npm package do not depend on it.
+
+With the canvas renderer, an externally hosted `imageSrc` can cause the browser to request that image/logo from its host. For offline operation, make the application and its dependencies available offline and use locally available image/logo resources, such as bundled assets or data URLs. A local asset URL still needs to be available through the application's offline setup.
+
+These statements describe the library's QR-generation behavior. Network access and privacy for the consuming application also depend on its own code, resources, and services; local QR generation does not establish a privacy guarantee for the whole application.
+
+## Runtime dependencies
+
+The published package has two direct runtime dependencies: `qrcode`, which generates QR output, and `tslib`, which supplies TypeScript runtime helpers. `@angular/common` and `@angular/core` are peer dependencies supplied by the consuming Angular application. Consult the package's `package.json` for the authoritative dependency versions and peer ranges, and the [compatibility table](#compatibility-and-maintenance) for the Angular/package mapping.
+
+Direct dependencies are not the complete installed dependency graph: dependencies can have their own transitive dependencies, and the consuming application supplies its own framework and other packages. The repository's Angular CLI, build, lint, test, and demo tooling is development tooling, separate from the published library's runtime dependencies. The library is not dependency-free.
 
 ## Build a minimal Angular app
 
@@ -115,7 +127,7 @@ Open `http://localhost:4200/` to see the QR code. The remaining examples show ho
 
 ## Usage and Example Implementations
 
-The source for **[a live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)** and more examples how to implement angularx-qrcode is located in the directory [`projects/demo-app`](projects/demo-app/src/app) of this repository.
+The source for **[a live angularx-qrcode demo app](https://cordobo.github.io/angularx-qrcode/)** and more examples how to implement angularx-qrcode is located in the directory [`projects/demo-app`](https://github.com/Cordobo/angularx-qrcode/tree/main/projects/demo-app/src/app) of this repository.
 
 ### Import the component into an existing app
 
@@ -185,7 +197,7 @@ export class AppComponent {
 
 ### Download a QR Code
 
-The [online demo](https://cordobo.github.io/angularx-qrcode/) includes a [working download example](projects/demo-app/src/app/generator.ts).
+The [online demo](https://cordobo.github.io/angularx-qrcode/) includes a [working download example](https://github.com/Cordobo/angularx-qrcode/blob/main/projects/demo-app/src/app/generator.ts).
 
 ### Getting the QR Code URL
 
@@ -238,11 +250,25 @@ Emitted URLs are temporary Blob/object URLs. The component revokes the previous 
 | `img`              | `<img>` with a PNG data URL | PNG                | No                                          | `alt`, `ariaLabel`, `title`         |
 | `url`              | Alias for `img`             | PNG                | No                                          | `alt`, `ariaLabel`, `title`         |
 
-For SVG downloads, use a `.svg` filename. `imageHeight` and `imageWidth` apply only to the canvas center image. Remote center images must permit cross-origin loading for canvas export. If the center image fails to load or draw, the component logs a canvas error and keeps the previous rendered QR code and download URL; it does not emit an incomplete replacement. On an initial failure, no canvas is displayed. The accessibility inputs describe the rendered element; they do not change the encoded QR data.
+For SVG downloads, use a `.svg` filename. `imageHeight` and `imageWidth` apply only to the canvas center image. Remote center images must permit cross-origin loading for canvas export. If the center image fails to load or draw, the component emits `qrCodeError` with code `render-failure` and logs a canvas error and keeps the previous rendered QR code and download URL; it does not emit an incomplete replacement. On an initial failure, no canvas is displayed. The accessibility inputs describe the rendered element; they do not change the encoded QR data.
+
+### Handling generation errors
+
+Bind `(qrCodeError)="onQrCodeError($event)"` to react to a failure without intercepting console output. The package exports the `QRCodeGenerationError` type with these readonly fields:
+
+| Field         | Meaning                                                                                                                       |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `code`        | `invalid-input` for rejected `qrdata`; `render-failure` for QR generation, logo loading/drawing, or export failures.          |
+| `elementType` | The selected renderer (`canvas`, `svg`, `img`, or `url`) when that render started.                                            |
+| `error`       | An `Error` instance; non-Error rejections are wrapped. Use `code` for application decisions, rather than parsing the message. |
+
+In browser execution, empty `qrdata`, the literal string `'null'`, and non-string values are rejected by default. `allowEmptyString` permits empty and `'null'` strings; an allowed empty string is encoded as a space. It does not permit non-string values. Renderer failures (including payloads rejected by `qrcode`) use `render-failure`. Canvas logo load/draw failures retain the previous visual and download URL; an initial failure leaves the placeholder empty.
+
+Only a failure belonging to the current inputs emits this output. Failures arriving after newer inputs or component destruction are ignored, including their console logging, and cannot replace a newer successful render. Successful renders emit no error. Current failures still log for debugging. Server rendering defers both generation and input validation, so neither output fires there; see [SSR scope](#ssr---server-side-rendering).
 
 ### Rendering Guarantees
 
-- Async rendering is latest-input-wins. Stale async QR renders are ignored if newer inputs were received.
+- Async rendering and errors are latest-input-wins. Stale completions and errors are ignored if newer inputs were received or the component was destroyed.
 - Input values are not mutated during rendering. Empty-string and QR version normalization use local render values.
 - Blob URLs emitted via `qrCodeURL` are lifecycle-managed and revoked on replacement/component destroy.
 
@@ -260,42 +286,63 @@ npm test -- --watch=false
 
 ## Available Parameters
 
-| Attribute            | Type                    | Default     | Description                                                    |
-| -------------------- | ----------------------- | ----------- | -------------------------------------------------------------- |
-| allowEmptyString     | Boolean                 | false       | Allow qrdata to be an empty string                             |
-| alt                  | String                  | null        | HTML alt attribute (supported by img, url)                     |
-| ariaLabel            | String                  | null        | HTML aria-label attribute (supported by canvas, img, url)      |
-| colorDark            | String                  | '#000000ff' | RGBA color, color of dark module (foreground)                  |
-| colorLight           | String                  | '#ffffffff' | RGBA color, color of light module (background)                 |
-| cssClass             | String                  | 'qrcode'    | CSS Class                                                      |
-| elementType          | String                  | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                |
-| errorCorrectionLevel | String                  | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                       |
-| imageSrc             | String                  | null        | Canvas-only center image URL                                   |
-| imageHeight          | Number                  | null        | Canvas-only center image height                                |
-| imageWidth           | Number                  | null        | Canvas-only center image width                                 |
-| margin               | Number                  | 4           | Define how much wide the quiet zone should be.                 |
-| qrCodeURL            | EventEmitter\<SafeUrl\> |             | Emits a temporary QR Code download URL                         |
-| qrdata               | String                  | ''          | String to encode                                               |
-| scale                | Number                  | 4           | Scale factor. A value of 1 means 1px per modules (black dots). |
-| title                | String                  | null        | HTML title attribute (supported by canvas, img, url)           |
-| version              | Number                  | (auto)      | 1-40                                                           |
-| width                | Number                  | 10          | Height/Width (any value)                                       |
+| Attribute            | Type                                      | Default     | Description                                                                             |
+| -------------------- | ----------------------------------------- | ----------- | --------------------------------------------------------------------------------------- |
+| allowEmptyString     | Boolean                                   | false       | Allow qrdata to be an empty string                                                      |
+| alt                  | String                                    | null        | HTML alt attribute (supported by img, url)                                              |
+| ariaLabel            | String                                    | null        | HTML aria-label attribute (supported by canvas, img, url)                               |
+| colorDark            | String                                    | '#000000ff' | RGBA color, color of dark module (foreground)                                           |
+| colorLight           | String                                    | '#ffffffff' | RGBA color, color of light module (background)                                          |
+| cssClass             | String                                    | 'qrcode'    | CSS Class                                                                               |
+| elementType          | String                                    | 'canvas'    | 'canvas', 'svg', 'img', 'url' (alias for 'img')                                         |
+| errorCorrectionLevel | String                                    | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                                                |
+| imageSrc             | String                                    | null        | Canvas-only center image URL                                                            |
+| imageHeight          | Number                                    | null        | Canvas-only center image height                                                         |
+| imageWidth           | Number                                    | null        | Canvas-only center image width                                                          |
+| margin               | Number                                    | 4           | Define how much wide the quiet zone should be.                                          |
+| qrCodeURL            | EventEmitter\<SafeUrl\>                   |             | Emits a temporary QR Code download URL                                                  |
+| qrCodeError          | OutputEmitterRef\<QRCodeGenerationError\> |             | Emits a typed current-render failure; see [error handling](#handling-generation-errors) |
+| qrdata               | String                                    | ''          | String to encode                                                                        |
+| scale                | Number                                    | 4           | Scale factor. A value of 1 means 1px per modules (black dots).                          |
+| title                | String                                    | null        | HTML title attribute (supported by canvas, img, url)                                    |
+| version              | Number                                    | (auto)      | 1-40                                                                                    |
+| width                | Number                                    | 10          | Height/Width (any value)                                                                |
 
 ## QR Code capacity
 
-Depending on the amount of data of the **qrdata** to encode, a minimum **width** is required.
+Capacity depends on the payload, QR `version`, encoding, and `errorCorrectionLevel`. Increasing the encoded data generally increases the number of modules and the code's density at a fixed `width`. See the practical guidance below when choosing dimensions and preparing payloads.
+
+## Production QR guidance
+
+- **Payload size and dimensions:** Keep `qrdata` as short as your use case allows. More data generally needs a more complex QR code and may require a larger rendered `width` so scanners can distinguish its modules. Leave `version` automatic unless you have a specific constraint; a fixed version may not have enough capacity for your payload and error-correction level.
+- **Quiet zone:** Preserve the clear border around the QR code so scanners can separate it from surrounding content. The `margin` option controls this quiet zone in modules and defaults to `4`. Avoid cropping the border or covering it with neighboring content in your page or print layout.
+- **Error correction:** `errorCorrectionLevel` accepts `L`, `M`, `Q`, and `H` (default `M`). Higher levels provide more error-correction redundancy, reducing data capacity at a given version and potentially requiring a denser or larger code. Choose the level together with payload size and output dimensions; it is not a guarantee of successful scanning.
+- **Logo overlays:** A center logo obscures QR modules and can reduce scanability. Canvas supports `imageSrc`, `imageWidth`, and `imageHeight`; keep the overlay small, consider higher error correction such as `Q` or `H`, and test the exact result on real devices. No logo size/error-correction combination guarantees a readable code. See [renderer capabilities](#renderer-capabilities) for export and cross-origin image requirements.
+- **Vector output:** Use `elementType="svg"` when scalable vector output is useful, for example when resizing artwork or incorporating it into a print workflow. SVG preserves vector geometry when scaled; it does not guarantee print quality or scanability. Center-image overlays are supported only by the canvas renderer.
+- **Strings and Unicode:** `qrdata` is a string and can contain Unicode text. Encoded size depends on the text's encoding, so character count alone does not determine capacity. Applications are responsible for constructing and validating domain-specific payload formats, such as URLs, Wi-Fi configuration strings, or contact details; the component encodes the supplied string.
+- **Real-world validation:** Test the generated code with representative devices and scanner applications at the intended output sizes. Include actual display conditions and, when applicable, the final print material, printing process, lighting, and scanning distance. Recheck after changing payloads, colors, margins, dimensions, error correction, or logos.
 
 ## AOT - Ahead Of Time Compilation
 
-`angularx-qrcode` supports AOT Compilation (Ahead-of-Time Compilation) which results in significant faster rendering. An AOT-enabled module is included. Further reading: https://angular.io/guide/aot-compiler
+The library is built with Angular's compiler in partial compilation mode and can be consumed by Angular AOT applications. The repository's production demo build exercises this integration.
 
 ## SSR - Server Side Rendering
 
-As of version 1.6.0, SSR support is fully implemented, the following workaround is no longer needed. [HowTo use Angular QRCode with SSR](https://github.com/Cordobo/angularx-qrcode/issues/5)
+Supported scenario: an Angular 22 application can server-render a template containing `QRCodeComponent`. On the server the component renders its host and empty `<div class="qrcode"></div>` placeholder, and defers generation and input validation. It emits neither `qrCodeURL` nor `qrCodeError`, and does not load `imageSrc`.
+
+All four `elementType` values (`canvas`, `svg`, `img`, `url`) defer their QR visuals to browser execution. Canvas, logo loading via `Image`, DOM-based rendering, and Blob/object-URL exports are browser-only component features. Even SVG output is not generated by this component on the server. A normally bootstrapped browser application generates the QR code when Angular applies the component inputs. **Hydration has not been validated and is not claimed by this test.**
+
+Maintainers can reproduce the supported server behavior after `npm ci --ignore-scripts`:
+
+```console
+npm run test:ssr
+```
+
+This builds the published library and executes Angular `renderApplication` in Node for each renderer with Unicode and empty payloads and an external logo source. It asserts a server-rendered application and empty QR placeholder, no QR visuals, no output events, and no render errors. It uses no browser-global shims. The [executable harness](https://github.com/Cordobo/angularx-qrcode/blob/main/scripts/ssr/render.mjs) also runs in CI; it does not test hydration or server-side QR image generation.
 
 ## Compatibility and maintenance
 
-Normal fixes currently focus on the 22.x release line, whose peer dependencies require Angular 22. The table below records historical compatibility, not ongoing maintenance for every listed version. Older lines receive attention on a best-effort basis; fixes and security backports are not guaranteed. There is no formal LTS commitment or guaranteed support period. See the [security policy](SECURITY.md) for vulnerability reporting and security-fix expectations.
+Normal fixes currently focus on the 22.x release line, whose peer dependencies require Angular 22. The table below records historical compatibility, not ongoing maintenance for every listed version. Older lines receive attention on a best-effort basis; fixes and security backports are not guaranteed. There is no formal LTS commitment or guaranteed support period. See the [security policy](https://github.com/Cordobo/angularx-qrcode/blob/main/SECURITY.md) for vulnerability reporting and security-fix expectations.
 
 **Angular/package compatibility mapping**
 
@@ -371,7 +418,7 @@ For more uses with angular 18 and earlier see: [angularx/qrcode as ngModule](htt
 
 ## Security
 
-Report suspected vulnerabilities privately using the [security policy](SECURITY.md). It explains the security-fix policy and what to include in a report.
+Report suspected vulnerabilities privately using the [security policy](https://github.com/Cordobo/angularx-qrcode/blob/main/SECURITY.md). It explains the security-fix policy and what to include in a report.
 
 Repository development and release controls include:
 
@@ -380,9 +427,11 @@ Repository development and release controls include:
 - Repository-local `.npmrc` settings: `ignore-scripts=true`, `save-exact=true`, and `min-release-age=7`. The release-age setting requires a compatible npm version; see the hardening guide.
 - Read-only checks available through `npm run security:ioc` and `npm run security:cache`.
 
-These controls apply to this repository's development, build, and release process. Installing `angularx-qrcode` does not apply this repository's `.npmrc` settings to a downstream application. For implementation details and limitations, see [npm supply-chain hardening](docs/security/npm-supply-chain-hardening.md) and [GitHub Actions cache-poisoning guidance](docs/security/github-actions-cache-poisoning.md). These guides cover build practices, separately from private vulnerability reporting.
+These controls apply to this repository's development, build, and release process. Installing `angularx-qrcode` does not apply this repository's `.npmrc` settings to a downstream application. For implementation details and limitations, see [npm supply-chain hardening](https://github.com/Cordobo/angularx-qrcode/blob/main/docs/security/npm-supply-chain-hardening.md) and [GitHub Actions cache-poisoning guidance](https://github.com/Cordobo/angularx-qrcode/blob/main/docs/security/github-actions-cache-poisoning.md). These guides cover build practices, separately from private vulnerability reporting. Published package provenance is version-specific: it was verified for [`angularx-qrcode@22.0.1`](https://www.npmjs.com/package/angularx-qrcode/v/22.0.1). The [npm supply-chain hardening guide](https://github.com/Cordobo/angularx-qrcode/blob/main/docs/security/npm-supply-chain-hardening.md#verify-a-releases-provenance) explains how to verify a package's provenance and what the attestation establishes.
 
 ## Contribute
+
+Maintainers: use the [curated release-note template and instructions](https://github.com/Cordobo/angularx-qrcode/blob/main/docs/releases/README.md) for both major and patch releases.
 
 Install development dependencies with `npm ci --ignore-scripts`. Run `npm start` for the Angular development server, or build with `npm run build:demo` and preview the built application with `npm run start:server` at `http://localhost:3000`. The preview uses `sirv-cli` with SPA fallback and listens on localhost.
 

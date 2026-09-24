@@ -41,3 +41,9 @@ jobs:
 
       - name: Build library
         run: npm run ci:build:lib
+      - name: Validate actual Angular server rendering
+        run: npm run test:ssr
+      - name: Validate documentation links and release template
+        run: |
+          npm run check:docs
+          node scripts/releases/validate-release-notes.mjs

@@ -70,3 +70,8 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - The demo bootstraps a router shell and lazy-loads the generator at the existing root URL. Preserve query parameters and the 500 kB initial bundle budget.
 - Development previews use `sirv-cli` on localhost with SPA fallback. The obsolete lite-server/Axios chain and its Socket patches must not be restored.
 - Dependency updates must retain script-disabled installation and the minimum release age; keep Angular framework and compiler versions aligned.
+
+- `qrCodeError` exposes `QRCodeGenerationError` for current input/renderer/logo/export failures. Stale and destroyed renders must suppress public errors and error logging consistently across all renderers.
+- SSR defers QR generation and validation on non-browser platforms, rendering only the host placeholder. `npm run test:ssr` must execute actual Angular server rendering for all renderers; hydration is not claimed. Keep the server framework dependency aligned and development-only.
+- The CI library build synchronizes the root README into the package. Published README links must use absolute repository URLs or valid same-document anchors; verify with `npm run check:docs` after building.
+- Curated releases use `.github/RELEASE_TEMPLATE.md` and `docs/releases/README.md`, keeping consumer security changes distinct from repository hardening.

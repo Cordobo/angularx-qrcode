@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing'
 import { QRCodeComponent } from './angularx-qrcode.component'
 import { vi } from 'vitest'
-import { toCanvas } from 'qrcode'
+import { toCanvas, toDataURL, toString } from 'qrcode'
+import { QRCodeElementType } from './types'
 
 vi.mock('qrcode', () => {
   return {
@@ -17,16 +18,20 @@ vi.mock('qrcode', () => {
         setTimeout(() => cb(null), delay)
       }
     ),
-    toDataURL: (
-      text: string,
-      _options: unknown,
-      cb: (error: Error | null | undefined, url: string) => void
-    ) => cb(null, `data:image/png;base64,${btoa(text)}`),
-    toString: (
-      text: string,
-      _options: unknown,
-      cb: (error: Error | null | undefined, svg: string) => void
-    ) => cb(null, `<svg data-qr="${text}"></svg>`),
+    toDataURL: vi.fn(
+      (
+        text: string,
+        _options: unknown,
+        cb: (error: Error | null | undefined, url: string) => void
+      ) => cb(null, `data:image/png;base64,${btoa(text)}`)
+    ),
+    toString: vi.fn(
+      (
+        text: string,
+        _options: unknown,
+        cb: (error: Error | null | undefined, svg: string) => void
+      ) => cb(null, `<svg data-qr="${text}"></svg>`)
+    ),
   }
 })
 
@@ -38,6 +43,8 @@ describe('QRCodeComponent', () => {
     images.length = 0
     drawImage.mockClear()
     vi.mocked(toCanvas).mockClear()
+    vi.mocked(toDataURL).mockClear()
+    vi.mocked(toString).mockClear()
     vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({
       drawImage,
     } as unknown as CanvasRenderingContext2D)
@@ -211,10 +218,17 @@ describe('QRCodeComponent', () => {
     fixture.componentRef.setInput('qrdata', 'logo')
     fixture.componentRef.setInput('imageSrc', '/logo.png')
     const emit = vi.spyOn(fixture.componentInstance.qrCodeURL, 'emit')
+    const errors = vi.fn()
+    fixture.componentInstance.qrCodeError.subscribe(errors)
     fixture.detectChanges()
     await vi.waitFor(() => expect(images).toHaveLength(1))
     images[0].dispatchEvent(new Event('load'))
     await vi.waitFor(() => expect(error).toHaveBeenCalled())
+    expect(errors).toHaveBeenCalledExactlyOnceWith({
+      code: 'render-failure',
+      elementType: 'canvas',
+      error: expect.any(Error),
+    })
     expect(emit).not.toHaveBeenCalled()
     expect(fixture.nativeElement.querySelector('canvas')).toBeNull()
   })
@@ -226,8 +240,15 @@ describe('QRCodeComponent', () => {
     fixture.componentRef.setInput('qrdata', 'logo')
     fixture.componentRef.setInput('imageSrc', '/logo.png')
     const emit = vi.spyOn(fixture.componentInstance.qrCodeURL, 'emit')
+    const errors = vi.fn()
+    fixture.componentInstance.qrCodeError.subscribe(errors)
     fixture.detectChanges()
     await vi.waitFor(() => expect(error).toHaveBeenCalled())
+    expect(errors).toHaveBeenCalledExactlyOnceWith({
+      code: 'render-failure',
+      elementType: 'canvas',
+      error: expect.any(Error),
+    })
     expect(emit).not.toHaveBeenCalled()
     expect(fixture.nativeElement.querySelector('canvas')).toBeNull()
   })
@@ -244,5 +265,161 @@ describe('QRCodeComponent', () => {
     await Promise.resolve()
     expect(drawImage).not.toHaveBeenCalled()
     expect(emit).not.toHaveBeenCalled()
+  })
+
+  describe('public qrCodeError output', () => {
+    const renderers: QRCodeElementType[] = ['canvas', 'svg', 'img', 'url']
+
+    function deferRenderer(elementType: QRCodeElementType): (error?: Error) => void {
+      let finish: (error?: Error) => void = () => {
+        throw new Error('Renderer has not started')
+      }
+      if (elementType === 'canvas') {
+        vi.mocked(toCanvas).mockImplementationOnce((_canvas, _text, _options, callback) => {
+          finish = (error) => callback?.(error)
+          return Promise.resolve()
+        })
+      } else if (elementType === 'svg') {
+        vi.mocked(toString).mockImplementationOnce((_text, _options, callback) => {
+          finish = (error) => callback?.(error ?? null, '<svg></svg>')
+          return Promise.resolve('')
+        })
+      } else {
+        vi.mocked(toDataURL).mockImplementationOnce((_text, _options, callback) => {
+          finish = (error) => callback?.(error ?? null, 'data:image/png;base64,cXI=')
+          return Promise.resolve('')
+        })
+      }
+      return (error) => finish(error)
+    }
+
+    it.each(['', 'null', null, undefined, 42])('reports invalid input %s', async (input) => {
+      vi.spyOn(console, 'error').mockImplementation(() => undefined)
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const errors = vi.fn()
+      fixture.componentInstance.qrCodeError.subscribe(errors)
+      fixture.componentRef.setInput('qrdata', input)
+      fixture.detectChanges()
+      await fixture.whenStable()
+      expect(errors).toHaveBeenCalledExactlyOnceWith({
+        code: 'invalid-input',
+        elementType: 'canvas',
+        error: expect.any(Error),
+      })
+      expect(toCanvas).not.toHaveBeenCalled()
+    })
+
+    it.each(renderers)('reports a current %s failure', async (elementType) => {
+      const log = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+      const finish = deferRenderer(elementType)
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const errors = vi.fn()
+      fixture.componentInstance.qrCodeError.subscribe(errors)
+      fixture.componentRef.setInput('qrdata', 'failure')
+      fixture.componentRef.setInput('elementType', elementType)
+      fixture.detectChanges()
+      const error = new Error('generation failed')
+      finish(error)
+      await vi.waitFor(() => expect(errors).toHaveBeenCalledOnce())
+      expect(errors).toHaveBeenCalledExactlyOnceWith({ code: 'render-failure', elementType, error })
+      expect(log).toHaveBeenCalledOnce()
+      expect(fixture.nativeElement.querySelector('canvas, svg, img')).toBeNull()
+    })
+
+    it.each(renderers)('does not report successful %s rendering', async (elementType) => {
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const errors = vi.fn()
+      const urls = vi.fn()
+      fixture.componentInstance.qrCodeError.subscribe(errors)
+      fixture.componentInstance.qrCodeURL.subscribe(urls)
+      fixture.componentRef.setInput('qrdata', 'success')
+      fixture.componentRef.setInput('elementType', elementType)
+      fixture.detectChanges()
+      await vi.waitFor(() => expect(urls).toHaveBeenCalledOnce())
+      expect(errors).not.toHaveBeenCalled()
+    })
+
+    it.each(renderers)(
+      'ignores stale %s failures and keeps the newer render and URL',
+      async (elementType) => {
+        const log = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+        const finish = deferRenderer(elementType)
+        const fixture = TestBed.createComponent(QRCodeComponent)
+        const errors = vi.fn()
+        const urls = vi.fn()
+        fixture.componentInstance.qrCodeError.subscribe(errors)
+        fixture.componentInstance.qrCodeURL.subscribe(urls)
+        fixture.componentRef.setInput('qrdata', 'old')
+        fixture.componentRef.setInput('elementType', elementType)
+        fixture.detectChanges()
+        fixture.componentRef.setInput('qrdata', 'new')
+        fixture.detectChanges()
+        await vi.waitFor(() => expect(urls).toHaveBeenCalledOnce())
+        const current = fixture.nativeElement.querySelector('canvas, svg, img')
+        finish(new Error('stale failure'))
+        await new Promise((resolve) => setTimeout(resolve, 0))
+        expect(fixture.nativeElement.querySelector('canvas, svg, img')).toBe(current)
+        expect(errors).not.toHaveBeenCalled()
+        expect(log).not.toHaveBeenCalled()
+        expect(urls).toHaveBeenCalledOnce()
+        expect(URL.revokeObjectURL).not.toHaveBeenCalled()
+      }
+    )
+
+    it.each(renderers)('ignores a %s failure after destruction', async (elementType) => {
+      const log = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+      const finish = deferRenderer(elementType)
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const errors = vi.fn()
+      fixture.componentInstance.qrCodeError.subscribe(errors)
+      fixture.componentRef.setInput('qrdata', 'destroyed')
+      fixture.componentRef.setInput('elementType', elementType)
+      fixture.detectChanges()
+      fixture.destroy()
+      finish(new Error('destroyed failure'))
+      await new Promise((resolve) => setTimeout(resolve, 0))
+      expect(errors).not.toHaveBeenCalled()
+      expect(log).not.toHaveBeenCalled()
+    })
+
+    it.each(['current', 'stale', 'destroyed'])('handles a %s logo failure', async (state) => {
+      const log = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const errors = vi.fn()
+      const urls = vi.fn()
+      fixture.componentInstance.qrCodeError.subscribe(errors)
+      fixture.componentInstance.qrCodeURL.subscribe(urls)
+      fixture.componentRef.setInput('qrdata', 'previous')
+      fixture.detectChanges()
+      await vi.waitFor(() => expect(urls).toHaveBeenCalledOnce())
+      const previous = fixture.nativeElement.querySelector('canvas')
+      fixture.componentRef.setInput('qrdata', 'logo')
+      fixture.componentRef.setInput('imageSrc', '/missing.png')
+      fixture.detectChanges()
+      await vi.waitFor(() => expect(images).toHaveLength(1))
+      if (state === 'stale') {
+        fixture.componentRef.setInput('qrdata', 'new')
+        fixture.componentRef.setInput('imageSrc', undefined)
+        fixture.detectChanges()
+        await vi.waitFor(() => expect(urls).toHaveBeenCalledTimes(2))
+      } else if (state === 'destroyed') {
+        fixture.destroy()
+      }
+      images[0].dispatchEvent(new Event('error'))
+      await new Promise((resolve) => setTimeout(resolve, 0))
+      if (state === 'current') {
+        expect(errors).toHaveBeenCalledExactlyOnceWith({
+          code: 'render-failure',
+          elementType: 'canvas',
+          error: expect.any(Error),
+        })
+        expect(fixture.nativeElement.querySelector('canvas')).toBe(previous)
+        expect(URL.revokeObjectURL).not.toHaveBeenCalled()
+      } else {
+        expect(errors).not.toHaveBeenCalled()
+        expect(log).not.toHaveBeenCalled()
+      }
+      expect(urls).toHaveBeenCalledTimes(state === 'stale' ? 2 : 1)
+    })
   })
 })

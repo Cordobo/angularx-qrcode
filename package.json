@@ -23,10 +23,12 @@
     "publish": "node -e \"console.log('Publishing is only available via github. See .github/publish.yml')\"",
     "security:cache": "bash scripts/security/github-actions-cache-check.sh",
     "security:ioc": "bash scripts/security/npm-supply-chain-check.sh",
-    "ci:build:lib": "ng build --project angularx-qrcode --configuration production",
+    "ci:build:lib": "cp README.md projects/angularx-qrcode/README.md && ng build --project angularx-qrcode --configuration production",
     "ci:build:app": "ng build --project demo-app --configuration production --base-href=/angularx-qrcode/",
     "format": "prettier --write .",
-    "security:cache:test": "node --test scripts/security/github-actions-cache-check.test.mjs"
+    "security:cache:test": "node --test scripts/security/github-actions-cache-check.test.mjs",
+    "test:ssr": "npm run ci:build:lib && node scripts/ssr/render.mjs",
+    "check:docs": "node scripts/docs/check-links.mjs"
   },
   "prettier": {
     "printWidth": 100,
@@ -59,6 +61,7 @@
     "@angular/forms": "22.1.7",
     "@angular/material": "22.1.7",
     "@angular/platform-browser": "22.1.7",
+    "@angular/platform-server": "22.1.7",
     "@angular/router": "22.1.7",
     "@eslint/js": "^10.0.1",
     "@types/qrcode": "1.5.6",

@@ -68,3 +68,13 @@ export type QRCodeVersion =
 // TODO A little-bit-of-a-better solution
 // https://stackoverflow.com/a/67511209
 export type RGBAColor = `#${string}`
+
+/** A failure from the current QR render; superseded and destroyed renders are silent. */
+export interface QRCodeGenerationError {
+  /** Input rejection or a renderer/export/logo failure. */
+  readonly code: 'invalid-input' | 'render-failure'
+  /** The renderer selected when the failed render started. */
+  readonly elementType: QRCodeElementType
+  /** The original Error, or an Error wrapping a non-Error rejection. */
+  readonly error: Error
+}

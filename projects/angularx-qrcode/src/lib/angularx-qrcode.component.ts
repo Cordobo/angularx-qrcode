@@ -60,7 +60,6 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   @ViewChild('qrcElement', { static: true }) public qrcElement!: ElementRef
 
   public context: CanvasRenderingContext2D | null = null
-  private centerImage?: HTMLImageElement
   private renderVersion = 0
   private currentObjectUrl?: string
 
@@ -74,6 +73,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.renderVersion += 1
     this.revokeCurrentObjectUrl()
   }
 
@@ -131,17 +131,67 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
     this.renderer.appendChild(this.qrcElement.nativeElement, element)
   }
 
+  private drawCenterImage(
+    canvas: HTMLCanvasElement,
+    context: CanvasRenderingContext2D,
+    source: string,
+    width: number,
+    height: number,
+    renderVersion: number
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const image = new Image(width, height)
+      const clearHandlers = (): void => {
+        image.onload = null
+        image.onerror = null
+      }
+      image.onload = () => {
+        clearHandlers()
+        if (renderVersion !== this.renderVersion) {
+          resolve()
+          return
+        }
+        try {
+          context.drawImage(
+            image,
+            canvas.width / 2 - width / 2,
+            canvas.height / 2 - height / 2,
+            width,
+            height
+          )
+          resolve()
+        } catch (error: unknown) {
+          reject(error)
+        }
+      }
+      image.onerror = () => {
+        clearHandlers()
+        reject(new Error('[angularx-qrcode] Failed to load center image.'))
+      }
+      image.crossOrigin = 'anonymous'
+      image.src = source
+    })
+  }
+
   private async createQRCode(renderVersion: number): Promise<void> {
-    // Set sensitive defaults
-    if (this.version && this.version > 40) {
-      console.warn('[angularx-qrcode] max value for `version` is 40')
-      this.version = 40
-    } else if (this.version && this.version < 1) {
-      console.warn('[angularx-qrcode]`min value for `version` is 1')
-      this.version = 1
-    } else if (this.version !== undefined && isNaN(this.version)) {
+    // Accept numeric strings for compatibility with runtime template bindings, but
+    // reject values whose coercion would disguise an invalid version (null, booleans, etc.).
+    const runtimeVersion: unknown = this.version
+    const isNumericVersion =
+      (typeof runtimeVersion === 'number' && !Number.isNaN(runtimeVersion)) ||
+      (typeof runtimeVersion === 'string' &&
+        runtimeVersion.trim() !== '' &&
+        !Number.isNaN(Number(runtimeVersion)))
+    let normalizedVersion = this.version
+    if (runtimeVersion !== undefined && !isNumericVersion) {
       console.warn('[angularx-qrcode] version should be a number, defaulting to auto.')
-      this.version = undefined
+      normalizedVersion = undefined
+    } else if (normalizedVersion !== undefined && normalizedVersion > 40) {
+      console.warn('[angularx-qrcode] max value for `version` is 40')
+      normalizedVersion = 40
+    } else if (normalizedVersion !== undefined && normalizedVersion < 1) {
+      console.warn('[angularx-qrcode]`min value for `version` is 1')
+      normalizedVersion = 1
     }
 
     try {
@@ -162,7 +212,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
         errorCorrectionLevel: this.errorCorrectionLevel,
         margin: this.margin,
         scale: this.scale,
-        version: this.version,
+        version: normalizedVersion,
         width: this.width,
       }
 
@@ -175,8 +225,8 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
           const canvasElement: HTMLCanvasElement = this.renderer.createElement('canvas')
           const canvasContext = canvasElement.getContext('2d')
           this.context = canvasContext
-          this.toCanvas(canvasElement, normalizedQrData, config)
-            .then(() => {
+          await this.toCanvas(canvasElement, normalizedQrData, config)
+            .then(async () => {
               if (renderVersion !== this.renderVersion) {
                 return
               }
@@ -187,45 +237,33 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
                 this.renderer.setAttribute(canvasElement, 'title', `${this.title}`)
               }
 
-              if (centerImageSrc && canvasContext) {
-                this.centerImage = new Image(centerImageWidth, centerImageHeight)
-
-                if (centerImageSrc !== this.centerImage.src) {
-                  this.centerImage.crossOrigin = 'anonymous'
-                  this.centerImage.src = centerImageSrc
+              if (centerImageSrc) {
+                if (!canvasContext) {
+                  throw new Error(
+                    '[angularx-qrcode] Canvas context is unavailable for center image.'
+                  )
                 }
+                await this.drawCenterImage(
+                  canvasElement,
+                  canvasContext,
+                  centerImageSrc,
+                  centerImageWidth,
+                  centerImageHeight,
+                  renderVersion
+                )
+              }
 
-                if (centerImageHeight !== this.centerImage.height) {
-                  this.centerImage.height = centerImageHeight
-                }
-
-                if (centerImageWidth !== this.centerImage.width) {
-                  this.centerImage.width = centerImageWidth
-                }
-
-                const centerImage = this.centerImage
-
-                if (centerImage) {
-                  centerImage.onload = () => {
-                    if (renderVersion !== this.renderVersion) {
-                      return
-                    }
-                    canvasContext.drawImage(
-                      centerImage,
-                      canvasElement.width / 2 - centerImageWidth / 2,
-                      canvasElement.height / 2 - centerImageHeight / 2,
-                      centerImageWidth,
-                      centerImageHeight
-                    )
-                  }
-                }
+              if (renderVersion !== this.renderVersion) {
+                return
               }
 
               this.renderElement(canvasElement)
               this.emitQRCodeURL(canvasElement as HTMLCanvasElement)
             })
-            .catch((e) => {
-              console.error('[angularx-qrcode] canvas error:', e)
+            .catch((e: unknown) => {
+              if (renderVersion === this.renderVersion) {
+                console.error('[angularx-qrcode] canvas error:', e)
+              }
             })
           break
         }

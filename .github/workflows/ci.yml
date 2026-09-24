@@ -17,13 +17,27 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Setup Node.js
         uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f
         with:
-          cache: npm
+          package-manager-cache: false
           node-version-file: '.nvmrc'
           registry-url: 'https://registry.npmjs.org'
+      - name: Install reviewed npm version
+        run: npm install --global npm@11.12.1 --ignore-scripts
+      - name: Show Node & npm versions
+        run: |
+          node -v
+          npm -v
       - name: Install dependencies
         run: npm ci --ignore-scripts
+      - name: Test workflow security checks
+        run: npm run security:cache:test
+      - name: Check workflow cache isolation
+        run: npm run security:cache
+      - name: Test library
+        run: npm test -- --watch=false
+
       - name: Build library
         run: npm run ci:build:lib

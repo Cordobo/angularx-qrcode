@@ -65,3 +65,8 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Never mutate incoming component inputs while rendering. Derive normalized local values instead.
 - `qrCodeURL` blob/object URLs must be lifecycle-managed: revoke previous URLs before emitting a new one and on component destroy.
 - Keep strict typing in render helpers and error handling; avoid fallback utility aliases such as `FixMeLater`.
+
+- Canvas logo rendering completes before the canvas is displayed or exported. Logo load/draw failures retain the previous render and URL and report a canvas error; stale or destroyed renders cannot export.
+- The demo bootstraps a router shell and lazy-loads the generator at the existing root URL. Preserve query parameters and the 500 kB initial bundle budget.
+- Development previews use `sirv-cli` on localhost with SPA fallback. The obsolete lite-server/Axios chain and its Socket patches must not be restored.
+- Dependency updates must retain script-disabled installation and the minimum release age; keep Angular framework and compiler versions aligned.

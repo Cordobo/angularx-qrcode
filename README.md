@@ -243,6 +243,13 @@ Emitted URLs are temporary Blob/object URLs. The component revokes the previous 
 
 ### Renderer capabilities
 
+Custom finder (corner) colors/shapes, rounded modules, and configurable module merging
+are **not supported** by the installed `qrcode@1.5.4` renderer in any output type.
+`colorDark` and `colorLight` apply to the whole symbol; `cssClass` styles the wrapper,
+not individual QR modules. These features require a different or custom renderer,
+not additional wrapper inputs. See the [renderer styling investigation](https://github.com/Cordobo/angularx-qrcode/blob/main/docs/implementation/renderer-styling.md)
+for the upstream source evidence and resolution of #181.
+
 | `elementType`      | Rendered output             | `qrCodeURL` export | Center image (`imageSrc`)                   | Applied accessibility inputs    |
 | ------------------ | --------------------------- | ------------------ | ------------------------------------------- | ------------------------------- |
 | `canvas` (default) | `<canvas>`                  | PNG                | Yes; export waits for the image to be drawn | `ariaLabel`, `title`            |

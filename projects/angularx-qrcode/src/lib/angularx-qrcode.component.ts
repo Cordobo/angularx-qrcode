@@ -6,6 +6,7 @@ import {
   EventEmitter,
   inject,
   Input,
+  input,
   OnChanges,
   OnDestroy,
   PLATFORM_ID,
@@ -15,6 +16,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core'
+import { encodeLogo } from './logo-encoder'
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser'
 import {
   QRCodeRenderersOptions,
@@ -47,6 +49,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   @Input() public elementType: QRCodeElementType = 'canvas'
   @Input()
   public errorCorrectionLevel: QRCodeErrorCorrectionLevel = 'M'
+  readonly imagePadding = input(0)
   @Input() public imageSrc?: string
   @Input() public imageHeight?: number | string
   @Input() public imageWidth?: number | string
@@ -315,7 +318,17 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
           const canvasElement: HTMLCanvasElement = this.renderer.createElement('canvas')
           const canvasContext = canvasElement.getContext('2d')
           this.context = canvasContext
-          await this.toCanvas(canvasElement, normalizedQrData, config)
+          const logoEncoding = centerImageSrc
+            ? encodeLogo(normalizedQrData, config, {
+                width: centerImageWidth,
+                height: centerImageHeight,
+                padding: this.imagePadding(),
+              })
+            : undefined
+          const canvasConfig = logoEncoding
+            ? { ...config, maskPattern: logoEncoding.maskPattern }
+            : config
+          await this.toCanvas(canvasElement, normalizedQrData, canvasConfig)
             .then(async () => {
               if (renderVersion !== this.renderVersion) {
                 return

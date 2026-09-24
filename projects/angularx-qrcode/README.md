@@ -252,6 +252,38 @@ Emitted URLs are temporary Blob/object URLs. The component revokes the previous 
 
 For SVG downloads, use a `.svg` filename. `imageHeight` and `imageWidth` apply only to the canvas center image. Remote center images must permit cross-origin loading for canvas export. If the center image fails to load or draw, the component emits `qrCodeError` with code `render-failure` and logs a canvas error and keeps the previous rendered QR code and download URL; it does not emit an incomplete replacement. On an initial failure, no canvas is displayed. The accessibility inputs describe the rendered element; they do not change the encoded QR data.
 
+Canvas center images use encoder-aware mask selection, never a destructive rectangular
+knockout. The encoder evaluates all eight legal masks using the normal QR N1–N4
+penalties, then prefers more light modules underneath the logo **among masks tied
+for the lowest penalty**. This conservative optimization can leave the normal QR
+unchanged. It preserves the chosen error correction level, version selection,
+segments, payload and Reed–Solomon codewords. No payload data is silently appended
+or changed to manufacture optimization freedom.
+
+`imagePadding` (default `0`) expands the target by that many canvas pixels on each
+side; it does not enlarge the image or paint a background. Positive image dimensions
+(default 40 × 40 pixels) and non-negative finite padding are required. The centered
+target rounds outward to QR module boundaries using the actual canvas scale and
+margin. Structural modules and remainder bits are excluded, and the quiet zone is
+never targeted. Structural patterns remain intact in the encoded matrix; as with
+any image overlay, opaque logo pixels can still obscure them on the canvas.
+
+This is a limited mask-aware fallback, **not full QArt artwork or a guaranteed light
+rectangle**. With fixed payload segments, terminator and standard pad bytes there
+are no free RS input bits; parity is derived, not independently editable. Transparent
+logo areas therefore show any remaining valid dark modules. Larger logos would
+require more controllable encoding freedom for full light coverage; increasing
+padding, version or error correction does not create arbitrary free payload bits.
+Full QArt would require a separate explicit API authorizing mutable payload data
+and exposing the resulting decoded string. See the
+[encoding investigation](https://github.com/Cordobo/angularx-qrcode/blob/main/docs/implementation/logo-encoding.md).
+
+The optimized matrix itself consumes no error-correction budget. Drawing opaque
+logo pixels can still damage the visible symbol, so keep logos small, choose an
+appropriate `errorCorrectionLevel` and test the final image with real scanners.
+The library never upgrades the selected level automatically. `qrCodeURL` and
+`rendered` wait for the final logo drawing, including transparent images.
+
 Changes to `title`, `ariaLabel`, `alt`, or `cssClass` update the displayed DOM without
 regenerating QR data or emitting another `qrCodeURL`. Pending renders use the latest
 accessibility values when displayed. Exported URLs remain snapshots of the completed
@@ -357,6 +389,7 @@ npm test -- --watch=false
 | errorCorrectionLevel | String                                    | 'M'         | QR Correction level ('L', 'M', 'Q', 'H')                                                             |
 | imageSrc             | String                                    | null        | Canvas-only center image URL                                                                         |
 | imageHeight          | Number                                    | null        | Canvas-only center image height                                                                      |
+| imagePadding         | Number                                    | 0           | Canvas-only target padding in pixels; no background clearing                                         |
 | imageWidth           | Number                                    | null        | Canvas-only center image width                                                                       |
 | margin               | Number                                    | 4           | Define how much wide the quiet zone should be.                                                       |
 | qrCodeURL            | EventEmitter\<SafeUrl\>                   |             | Emits a temporary QR Code download URL                                                               |

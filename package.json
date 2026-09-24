@@ -68,6 +68,7 @@
     "angular-eslint": "^22.1.0",
     "eslint": "^10.7.0",
     "jsdom": "^29.1.1",
+    "jsqr": "1.4.0",
     "ng-packagr": "22.1.1",
     "ngx-color-picker": "20.1.1",
     "prettier": "3.6.2",

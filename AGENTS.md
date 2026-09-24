@@ -83,3 +83,6 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - `rendered` emits once after a current final visual is attached and URL export succeeds, including canvas logo drawing and img/url decoding. Suppress completion for failures, superseded/destroyed renders, SSR, and presentation-only updates. Recheck currency after public URL emission.
 
 - The demo binds cssClass to the QR component input. QR wrapper styles live in global styles.css, scoped under .qrcodeImage > qrcode; generated CSS examples use the same selectors and host layout to cross Angular style encapsulation without disabling it.
+
+- Canvas logos use `logo-encoder.ts` to evaluate all eight upstream masks and maximize eligible light modules only among minimum N1–N4 penalty ties. Do not replace standard padding or introduce fake RS freedom: fixed segments have zero controllable RS input bits. No-image rendering retains its original path.
+- Keep qrcode@1.5.4 internal contracts isolated in the logo encoder adapter. Module/codeword/RS-block mapping is read-only; target bounds follow upstream canvas geometry, exclude reserved/remainder modules and quiet zones, and never clear logo rectangles. `imagePadding` is a non-negative pixel preference, not a background fill.

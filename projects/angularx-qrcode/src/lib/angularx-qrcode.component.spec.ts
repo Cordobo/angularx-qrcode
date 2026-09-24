@@ -1,12 +1,14 @@
+import { create as realCreate } from 'qrcode/lib/core/qrcode.js'
 import { SimpleChange } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 import { QRCodeComponent } from './angularx-qrcode.component'
 import { vi } from 'vitest'
-import { toCanvas, toDataURL, toString } from 'qrcode'
+import { create, toCanvas, toDataURL, toString } from 'qrcode'
 import { QRCodeElementType } from './types'
 
 vi.mock('qrcode', () => {
   return {
+    create: vi.fn((...args: Parameters<typeof realCreate>) => realCreate(...args)),
     toCanvas: vi.fn(
       (
         canvas: HTMLCanvasElement,
@@ -38,6 +40,8 @@ vi.mock('qrcode', () => {
 
 describe('QRCodeComponent', () => {
   const drawImage = vi.fn()
+  const clearRect = vi.fn()
+  const fillRect = vi.fn()
   const images: HTMLImageElement[] = []
 
   function deferRenderer(elementType: QRCodeElementType): (error?: Error) => void {
@@ -80,11 +84,16 @@ describe('QRCodeComponent', () => {
     decode.mockReset().mockResolvedValue(undefined)
     images.length = 0
     drawImage.mockClear()
+    clearRect.mockClear()
+    fillRect.mockClear()
+    vi.mocked(create).mockClear()
     vi.mocked(toCanvas).mockClear()
     vi.mocked(toDataURL).mockClear()
     vi.mocked(toString).mockClear()
     vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue({
       drawImage,
+      clearRect,
+      fillRect,
     } as unknown as CanvasRenderingContext2D)
     vi.spyOn(HTMLCanvasElement.prototype, 'toDataURL').mockReturnValue('data:image/png;base64,cXI=')
     vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:test-qr')
@@ -534,6 +543,7 @@ describe('QRCodeComponent', () => {
     fixture.detectChanges()
     await vi.waitFor(() => expect(emit).toHaveBeenCalledOnce())
     expect(images).toHaveLength(0)
+    expect(create).not.toHaveBeenCalled()
     expect(drawImage).not.toHaveBeenCalled()
   })
 
@@ -547,14 +557,56 @@ describe('QRCodeComponent', () => {
     expect(emit).not.toHaveBeenCalled()
     expect(fixture.nativeElement.querySelector('canvas')).toBeNull()
     expect(images[0].crossOrigin).toBe('anonymous')
+    expect(create).toHaveBeenCalledTimes(8)
+    expect(vi.mocked(create).mock.invocationCallOrder[7]).toBeLessThan(
+      vi.mocked(toCanvas).mock.invocationCallOrder[0]
+    )
+    expect(toCanvas).toHaveBeenCalledWith(
+      expect.any(HTMLCanvasElement),
+      'logo',
+      expect.objectContaining({ version: undefined, maskPattern: expect.any(Number) }),
+      expect.any(Function)
+    )
 
     images[0].dispatchEvent(new Event('load'))
     await vi.waitFor(() => expect(emit).toHaveBeenCalledOnce())
+    expect(clearRect).not.toHaveBeenCalled()
+    expect(fillRect).not.toHaveBeenCalled()
     expect(drawImage).toHaveBeenCalledWith(images[0], 130, 55, 40, 40)
     expect(drawImage.mock.invocationCallOrder[0]).toBeLessThan(
       vi.mocked(HTMLCanvasElement.prototype.toDataURL).mock.invocationCallOrder[0]
     )
     expect(fixture.nativeElement.querySelector('canvas')).not.toBeNull()
+  })
+
+  it('rerenders with new signal padding and rejects invalid padding without exporting', async () => {
+    const fixture = TestBed.createComponent(QRCodeComponent)
+    fixture.componentRef.setInput('qrdata', 'logo')
+    fixture.componentRef.setInput('imageSrc', '/logo.png')
+    fixture.detectChanges()
+    await vi.waitFor(() => expect(images).toHaveLength(1))
+    images[0].dispatchEvent(new Event('load'))
+    await fixture.whenStable()
+    const previous = fixture.componentInstance.qrcElement.nativeElement.firstChild
+    const emit = vi.spyOn(fixture.componentInstance.qrCodeURL, 'emit')
+    fixture.componentRef.setInput('imagePadding', 8)
+    fixture.detectChanges()
+    await vi.waitFor(() => expect(images).toHaveLength(2))
+    expect(emit).not.toHaveBeenCalled()
+    images[1].dispatchEvent(new Event('load'))
+    await vi.waitFor(() => expect(emit).toHaveBeenCalledOnce())
+    expect(fixture.componentInstance.qrcElement.nativeElement.firstChild).not.toBe(previous)
+    const current = fixture.componentInstance.qrcElement.nativeElement.firstChild
+    const error = vi.spyOn(fixture.componentInstance.qrCodeError, 'emit')
+    vi.spyOn(console, 'error').mockImplementation(() => undefined)
+    fixture.componentRef.setInput('imagePadding', -1)
+    fixture.detectChanges()
+    await fixture.whenStable()
+    expect(error).toHaveBeenCalledWith(
+      expect.objectContaining({ code: 'render-failure', elementType: 'canvas' })
+    )
+    expect(emit).toHaveBeenCalledOnce()
+    expect(fixture.componentInstance.qrcElement.nativeElement.firstChild).toBe(current)
   })
 
   it('does not replace or export a newer canvas after a stale logo loads', async () => {

@@ -22,7 +22,13 @@ function validateDraft(markdown) {
     const heading = matching[0]
     const next = headings.find((candidate) => candidate.index > heading.index)
     const body = markdown.slice(heading.index + heading[0].length, next?.index).trim()
-    assert.ok(body.replace(/<!--[\s\S]*?-->/g, '').trim(), `Empty section: ${section}`)
+    let bodyWithoutComments = body
+    let previous
+    do {
+      previous = bodyWithoutComments
+      bodyWithoutComments = bodyWithoutComments.replace(/<!--[\s\S]*?-->/g, '')
+    } while (bodyWithoutComments !== previous)
+    assert.ok(bodyWithoutComments.trim(), `Empty section: ${section}`)
   }
   const comparison = markdown.slice(markdown.indexOf('## Full comparison / changelog'))
   assert.match(

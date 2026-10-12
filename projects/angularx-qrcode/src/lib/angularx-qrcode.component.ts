@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common'
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   EventEmitter,
   inject,
@@ -31,7 +32,6 @@ import {
   QRCodeGenerationError,
   QRCodeVersion,
   QRCodeElementType,
-  QRCodeConfigType,
   QRCodeErrorCorrectionLevel,
 } from './types'
 
@@ -57,7 +57,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   @Input() public qrdata = ''
   @Input() public scale = 4
   @Input() public version?: QRCodeVersion
-  @Input() public width = 10
+  readonly width = input<number | string>(10)
 
   // Accessibility features introduced in 13.0.4+
   @Input() public alt?: string
@@ -75,6 +75,10 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   private renderedElement?: HTMLCanvasElement | HTMLImageElement | SVGSVGElement
   private renderVersion = 0
   private currentObjectUrl?: string
+  private readonly numericWidth = computed(() => {
+    const width = Number(this.width())
+    return Number.isFinite(width) ? width : undefined
+  })
 
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID))
   private renderer = inject(Renderer2)
@@ -297,7 +301,11 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
       // This is a workaround to allow an empty string as qrdata
       const normalizedQrData = this.qrdata === '' ? ' ' : this.qrdata
 
-      const config: QRCodeConfigType = {
+      // SVG lengths control display size; qrcode accepts only numeric output widths.
+      const width = this.width()
+      const numericWidth = this.numericWidth()
+      const svgWidth = String(numericWidth ?? width)
+      const config: QRCodeRenderersOptions = {
         color: {
           dark: this.colorDark,
           light: this.colorLight,
@@ -306,7 +314,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
         margin: this.margin,
         scale: this.scale,
         version: normalizedVersion,
-        width: this.width,
+        width: numericWidth,
       }
 
       const centerImageSrc = this.imageSrc
@@ -371,8 +379,8 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
               }
               this.renderer.setProperty(svgParentElement, 'innerHTML', svgString)
               const svgElement = svgParentElement.firstChild as SVGSVGElement
-              this.renderer.setAttribute(svgElement, 'height', `${this.width}`)
-              this.renderer.setAttribute(svgElement, 'width', `${this.width}`)
+              this.renderer.setAttribute(svgElement, 'height', svgWidth)
+              this.renderer.setAttribute(svgElement, 'width', svgWidth)
               this.renderElement(svgElement)
               this.emitQRCodeURL(svgElement)
               if (renderVersion === this.renderVersion) this.rendered.emit()

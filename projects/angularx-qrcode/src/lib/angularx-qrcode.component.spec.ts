@@ -133,6 +133,83 @@ describe('QRCodeComponent', () => {
     expect(result).toContain('<svg')
   })
 
+  it.each(['completion', 'failure', 'destruction'] as const)(
+    'suppresses superseded SVG width %s without replacing the winning export',
+    async (outcome) => {
+      const fixture = TestBed.createComponent(QRCodeComponent)
+      const component = fixture.componentInstance
+      component.qrdata = 'width update'
+      component.elementType = 'svg'
+      const urls = vi.fn()
+      const complete = vi.fn()
+      const errors = vi.fn()
+      const log = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+      component.qrCodeURL.subscribe(urls)
+      component.rendered.subscribe(complete)
+      component.qrCodeError.subscribe(errors)
+
+      fixture.componentRef.setInput('width', '50%')
+      const finishOld = deferRenderer('svg')
+      const old = component.ngOnChanges()
+      expect(toString).toHaveBeenLastCalledWith(
+        'width update',
+        expect.objectContaining({ width: undefined, type: 'svg' }),
+        expect.any(Function)
+      )
+      fixture.componentRef.setInput('width', '256')
+      const finishNew = deferRenderer('svg')
+      const winning = component.ngOnChanges({ width: new SimpleChange('50%', '256', false) })
+      expect(toString).toHaveBeenLastCalledWith(
+        'width update',
+        expect.objectContaining({ width: 256, type: 'svg' }),
+        expect.any(Function)
+      )
+      finishNew()
+      await winning
+      const svg = component.qrcElement.nativeElement.firstElementChild
+      expect(svg?.getAttribute('width')).toBe('256')
+      expect(svg?.getAttribute('height')).toBe('256')
+      if (outcome === 'destruction') fixture.destroy()
+      finishOld(outcome === 'completion' ? undefined : new Error('Superseded width failed'))
+      await old
+      expect(component.qrcElement.nativeElement.firstElementChild).toBe(svg)
+      expect(urls).toHaveBeenCalledOnce()
+      expect(complete).toHaveBeenCalledOnce()
+      expect(URL.createObjectURL).toHaveBeenCalledOnce()
+      expect(errors).not.toHaveBeenCalled()
+      expect(log).not.toHaveBeenCalled()
+    }
+  )
+
+  it('retains the previous SVG and URL when a new width render fails', async () => {
+    const fixture = TestBed.createComponent(QRCodeComponent)
+    const component = fixture.componentInstance
+    component.qrdata = 'width failure'
+    component.elementType = 'svg'
+    await component.ngOnChanges()
+    const previous = component.qrcElement.nativeElement.firstElementChild
+    const errors = vi.fn()
+    const complete = vi.fn()
+    component.qrCodeError.subscribe(errors)
+    component.rendered.subscribe(complete)
+    vi.spyOn(console, 'error').mockImplementation(() => undefined)
+    fixture.componentRef.setInput('width', '100%')
+    const finish = deferRenderer('svg')
+    const pending = component.ngOnChanges({
+      width: new SimpleChange<number | string>(10, '100%', false),
+    })
+    finish(new Error('SVG generation failed'))
+    await pending
+    expect(component.qrcElement.nativeElement.firstElementChild).toBe(previous)
+    expect(component.width()).toBe('100%')
+    expect(errors).toHaveBeenCalledExactlyOnceWith(
+      expect.objectContaining({ code: 'render-failure', elementType: 'svg' })
+    )
+    expect(URL.createObjectURL).toHaveBeenCalledOnce()
+    expect(URL.revokeObjectURL).not.toHaveBeenCalled()
+    expect(complete).not.toHaveBeenCalled()
+  })
+
   it.each<QRCodeElementType>(['canvas', 'img', 'url', 'svg'])(
     'updates accessibility on the existing %s without generation or URL churn',
     async (elementType) => {

@@ -303,6 +303,31 @@ an application's global stylesheet because Angular's component-scoped styles do
 not cross the QR component boundary. The demo's generated CSS targets this wrapper
 with `.qrcodeImage > qrcode > .yourClass` and includes the host flex layout.
 
+### Width and SVG sizing
+
+`width` accepts numbers and strings, including literal attributes in strict Angular
+templates. Numeric strings such as `width="256"` have the same rendering behavior
+as `[width]="256"`. The default remains `10`; raster sizing retains upstream rules
+for `scale`, `margin`, and widths too small for the QR symbol and quiet zone.
+
+For SVG, valid length strings such as `"100%"`, `"256px"`, or `"12em"` set both SVG
+width and height. The QR paths and `viewBox` stay unchanged, and the exported SVG
+includes those dimensions. Percentage dimensions depend on the containing layout.
+
+```html
+<qrcode qrdata="https://example.com" elementType="svg" width="100%" />
+```
+
+For `canvas`, `img`, and `url`, nonnumeric strings use the existing scale-based
+bitmap sizing. A percentage width does not make these raster outputs responsive.
+Only finite numeric widths are passed to the QR renderer.
+
+**Direct TypeScript access:** `width` is now a read-only signal input, matching
+`imagePadding`. Read its value with `component.width()` instead of `component.width`.
+Update it through template bindings or `ComponentRef.setInput('width', value)`
+instead of assigning the component property. Existing template input names and
+numeric bindings remain supported.
+
 ### Render completion
 
 `(rendered)` emits once for each winning QR render after its final visual is attached
@@ -408,7 +433,7 @@ npm test -- --watch=false
 | scale                | Number                                    | 4           | Scale factor. A value of 1 means 1px per modules (black dots).                                       |
 | title                | String                                    | null        | Native SVG title child; HTML title attribute for canvas, img, url                                    |
 | version              | Number                                    | (auto)      | 1-40                                                                                                 |
-| width                | Number                                    | 10          | Height/Width (any value)                                                                             |
+| width                | Number \| String                          | 10          | Numeric output width; SVG also accepts length strings (see width and SVG sizing above).              |
 
 ## QR Code capacity
 

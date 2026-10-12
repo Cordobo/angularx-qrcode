@@ -1,6 +1,13 @@
 import { expectTypeOf, it, expect } from 'vitest'
 import { toString } from 'qrcode'
-import { RGBAColor } from './types'
+import { RGBAColor, QRCodeConfigType } from './types'
+import { QRCodeComponent } from './angularx-qrcode.component'
+import { InputSignal } from '@angular/core'
+
+it('accepts string or numeric width inputs while keeping the exported config numeric', () => {
+  expectTypeOf<QRCodeComponent['width']>().toEqualTypeOf<InputSignal<number | string>>()
+  expectTypeOf<QRCodeConfigType['width']>().toEqualTypeOf<number>()
+})
 
 it('accepts dynamic string colors without requiring a hash prefix', () => {
   expectTypeOf<string>().toExtend<RGBAColor>()

@@ -63,6 +63,7 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 
 - QR rendering must be latest-input-wins: asynchronous QR generation results from older input versions must not overwrite newer renders.
 - Never mutate incoming component inputs while rendering. Derive normalized local values instead.
+- `width` is a `number | string` signal input (default 10). Read it with `width()` and update it through template bindings or `ComponentRef.setInput`. Capture its display/numeric values before asynchronous rendering; only finite numeric widths reach qrcode options. SVG preserves length strings in both dimensions, while nonnumeric raster widths retain upstream scale fallback. Keep exported `QRCodeConfigType.width` numeric and required.
 - `qrCodeURL` blob/object URLs must be lifecycle-managed: revoke previous URLs before emitting a new one and on component destroy.
 - Keep strict typing in render helpers and error handling; avoid fallback utility aliases such as `FixMeLater`.
 

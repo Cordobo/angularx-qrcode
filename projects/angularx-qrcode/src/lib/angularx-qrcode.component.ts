@@ -57,7 +57,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   @Input() public qrdata = ''
   @Input() public scale = 4
   @Input() public version?: QRCodeVersion
-  @Input() public width = 10
+  @Input() public width: number | string = 10
 
   // Accessibility features introduced in 13.0.4+
   @Input() public alt?: string
@@ -81,6 +81,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
   private sanitizer = inject(DomSanitizer)
 
   public async ngOnChanges(changes?: SimpleChanges): Promise<void> {
+    console.log('ngOnChanges', this.width, changes)
     if (!this.isBrowser) {
       return
     }
@@ -306,7 +307,7 @@ export class QRCodeComponent implements OnChanges, OnDestroy {
         margin: this.margin,
         scale: this.scale,
         version: normalizedVersion,
-        width: this.width,
+        width: typeof this.width === 'number' ? this.width : Number(this.width.replace('%', '')),
       }
 
       const centerImageSrc = this.imageSrc

@@ -191,7 +191,7 @@ export class Generator implements OnInit {
       if (params['margin']) this.margin = Number(params['margin'])
       if (params['scale']) this.scale = Number(params['scale'])
       if (params['title']) this.title = params['title']
-      if (params['width']) this.width = Number(params['width'])
+      if (params['width']) this.width = params['width']
 
       // Handle visibility toggles
       if (params['showA11y'] !== undefined) this.showA11y = params['showA11y'] === 'true'

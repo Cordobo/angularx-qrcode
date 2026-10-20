@@ -62,7 +62,7 @@
     "@angular/material": "22.1.7",
     "@angular/platform-browser": "22.1.7",
     "@angular/platform-server": "22.1.7",
-    "@angular/router": "22.1.7",
+    "@angular/router": "22.2.1",
     "@eslint/js": "^10.0.1",
     "@types/qrcode": "1.5.6",
     "angular-eslint": "^22.1.0",
